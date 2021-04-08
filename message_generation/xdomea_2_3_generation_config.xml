@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+  <file_number>1</file_number>
+  <process_number>1</process_number>
+  <document_number>1</document_number>
+  <evaluation>random</evaluation>
+  <test_root>Z:\Projekt Digitales Magazin\Testdaten\Funktionspruefung\v9\01_Einzeldateien</test_root>
+  <test_folder>Primaer_valide\zugelassen_AF</test_folder>
+
+</config>

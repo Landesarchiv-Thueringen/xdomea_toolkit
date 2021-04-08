@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xdomea:Aussonderung.Anbieteverzeichnis.0501
+  xmlns:xdomea="urn:xoev-de:xdomea:schema:2.3.0"
+  xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+  xmlns:xoev-lc="http://xoev.de/latinchars/1_1/datatypes"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:xoev-de:xdomea:schema:2.3.0 http://xdomea.de/schemata/230/xdomea-Nachrichten-AussonderungDurchfuehren.xsd">
+  <xdomea:Kopf>
+    <xdomea:ProzessID>242f44e8-bebf-4503-a086-db252c6a4277</xdomea:ProzessID>
+    <xdomea:Nachrichtentyp>
+      <code>0501</code>
+    </xdomea:Nachrichtentyp>
+    <xdomea:Erstellungszeitpunkt>2018-07-24T17:21:25</xdomea:Erstellungszeitpunkt>
+    <xdomea:Absender>
+      <xdomea:Behoerdenkennung>
+        <xdomea:Kennung listURI="" listVersionID="">
+          <code>LATh</code>
+          <name>AbsBehoerdenkennungKennungName</name>
+        </xdomea:Kennung>
+        <xdomea:Praefix listURI="" listVersionID="">
+          <code>AbsBehoerdenkennungPraefixCode</code>
+          <name>AbsBehoerdenkennungPraefixName</name>
+        </xdomea:Praefix>
+      </xdomea:Behoerdenkennung>
+      <xdomea:Institution>
+        <xdomea:Name>AbsXdomeaInstitutionName</xdomea:Name>
+        <xdomea:Kurzbezeichnung>AbsXdomeaInstitutionKurzbezeichnung</xdomea:Kurzbezeichnung>
+      </xdomea:Institution>
+      <xdomea:Organisationseinheit>
+        <xdomea:Name>AbsXdomeaOrgeinheitName</xdomea:Name>
+      </xdomea:Organisationseinheit>
+      <xdomea:Name>
+        <xdomea:Anrede>AbsNameAnrede</xdomea:Anrede>
+        <xdomea:Titel>AbsNameTitel</xdomea:Titel>
+        <xdomea:Familienname>
+          <xdomea:Name>AbsNameFamilienname</xdomea:Name>
+        </xdomea:Familienname>
+        <xdomea:Vorname>
+          <xdomea:Name>AbsNameVorname</xdomea:Name>
+        </xdomea:Vorname>
+      </xdomea:Name>
+      <xdomea:Taetigkeit>AbsXdoemaTaetigkeit</xdomea:Taetigkeit>
+      <xdomea:Zustaendigkeit>AbsXdomeaZustaendigkeit</xdomea:Zustaendigkeit>
+      <xdomea:Anschrift>
+        <xdomea:Staat>
+          <xdomea:Staat listVersionID="">
+            <code>FR</code>
+            <name>Frankreich</name>
+          </xdomea:Staat>
+        </xdomea:Staat>
+        <xdomea:Strasse>Abs rue de exemple</xdomea:Strasse>
+        <xdomea:Hausnummer>Abs 123</xdomea:Hausnummer>
+        <xdomea:Postfach>Abs bp987</xdomea:Postfach>
+        <xdomea:Postleitzahl>Abs 12 345</xdomea:Postleitzahl>
+        <xdomea:Ort>Abs quelque part</xdomea:Ort>
+        <xdomea:Zusatz>AbsXdomeaZusatz</xdomea:Zusatz>
+        <xdomea:Typ>
+          <code>001</code>
+          <name>AbsXdomeaTyp001Name</name>
+        </xdomea:Typ>
+      </xdomea:Anschrift>
+      <xdomea:Kommunikation>
+        <xdomea:IstDienstlich>true</xdomea:IstDienstlich>
+        <xdomea:Kanal>
+          <code>002</code>
+          <name>AbsXdomeaKommunikationKanalName</name>
+        </xdomea:Kanal>
+        <xdomea:Kennung>AbsXdomeaKommunikationKennung+49123456789</xdomea:Kennung>
+        <xdomea:Zusatz>AbsXdomeaKommunikationZusatz</xdomea:Zusatz>
+      </xdomea:Kommunikation>
+      <xdomea:Rolle>
+        <code>AbsXdomeaRolleCode</code>
+        <name>AbsXdomeaRolleName</name>
+      </xdomea:Rolle>
+      <xdomea:UnstrukturierteAnschrift>
+        <xdomea:Typ>
+          <code>003</code>
+          <name>AbsXdomeaUnstrAnschriftTypName</name>
+        </xdomea:Typ>
+        <xdomea:Zeile1>AbsXdomeaUnstrAnschriftZeile1</xdomea:Zeile1>
+        <xdomea:Zusatz>AbsXdomeaUnstrAnschriftZusatz</xdomea:Zusatz>
+      </xdomea:UnstrukturierteAnschrift>
+      <xdomea:Geburt>
+        <xdomea:Datum>2013-12-30</xdomea:Datum>
+      </xdomea:Geburt>
+    </xdomea:Absender>
+    <xdomea:Empfaenger>
+      <xdomea:Behoerdenkennung>
+        <xdomea:Kennung listURI="" listVersionID="">
+          <code>LATh</code>
+          <name>Landesarchiv Thüringen</name>
+        </xdomea:Kennung>
+        <xdomea:Praefix listURI="" listVersionID="">
+          <code>EmpBehoerdenkennungPraefixCode</code>
+          <name>EmpBehoerdenkennungPraefixName</name>
+        </xdomea:Praefix>
+      </xdomea:Behoerdenkennung>
+      <xdomea:Institution>
+        <xdomea:Name>EmpXdomeaInstitutionName</xdomea:Name>
+        <xdomea:Kurzbezeichnung>EmpXdomeaInstitutionKurzbezeichnung</xdomea:Kurzbezeichnung>
+      </xdomea:Institution>
+      <xdomea:Organisationseinheit>
+        <xdomea:Name>EmpXdomeaOrgeinheitName</xdomea:Name>
+      </xdomea:Organisationseinheit>
+      <xdomea:Name>
+        <xdomea:Anrede>EmpNameAnrede</xdomea:Anrede>
+        <xdomea:Titel>EmpNameTitel</xdomea:Titel>
+        <xdomea:Familienname>
+          <xdomea:Name>EmpNameFamilienname</xdomea:Name>
+        </xdomea:Familienname>
+        <xdomea:Vorname>
+          <xdomea:Name>EmpNameVorname</xdomea:Name>
+        </xdomea:Vorname>
+      </xdomea:Name>
+      <xdomea:Taetigkeit>EmpXdoemaTaetigkeit</xdomea:Taetigkeit>
+      <xdomea:Zustaendigkeit>EmpXdomeaZustaendigkeit</xdomea:Zustaendigkeit>
+      <xdomea:Anschrift>
+        <xdomea:Staat>
+          <xdomea:Staat listVersionID="">
+            <code>DE</code>
+            <name>Deutschland</name>
+          </xdomea:Staat>
+        </xdomea:Staat>
+        <xdomea:Strasse>EmpMusterstr</xdomea:Strasse>
+        <xdomea:Hausnummer>Emp 65</xdomea:Hausnummer>
+        <xdomea:Postfach>Emp PF 4321</xdomea:Postfach>
+        <xdomea:Postleitzahl>Emp 98765</xdomea:Postleitzahl>
+        <xdomea:Ort>EmpMusterroda</xdomea:Ort>
+        <xdomea:Zusatz>EmpXdomeaZusatz</xdomea:Zusatz>
+        <xdomea:Typ>
+          <code>001</code>
+          <name>EmpXdomeaTyp001Name</name>
+        </xdomea:Typ>
+      </xdomea:Anschrift>
+      <xdomea:Kommunikation>
+        <xdomea:IstDienstlich>true</xdomea:IstDienstlich>
+        <xdomea:Kanal>
+          <code>002</code>
+          <name>EmpXdomeaKommunikationKanalName</name>
+        </xdomea:Kanal>
+        <xdomea:Kennung>EmpAbsXdomeaKommunikationKennung+499876543210</xdomea:Kennung>
+        <xdomea:Zusatz>EmpXdomeaKommunikationZusatz</xdomea:Zusatz>
+      </xdomea:Kommunikation>
+      <xdomea:Rolle>
+        <code>empXdomeaRolleCode</code>
+        <name>EmpXdomeaRolleName</name>
+      </xdomea:Rolle>
+      <xdomea:UnstrukturierteAnschrift>
+        <xdomea:Typ>
+          <code>003</code>
+          <name>EmpXdomeaUnstrAnschriftTypName</name>
+        </xdomea:Typ>
+        <xdomea:Zeile1>EmpXdomeaUnstrAnschriftZeile1</xdomea:Zeile1>
+        <xdomea:Zusatz>EmpXdomeaUnstrAnschriftZusatz</xdomea:Zusatz>
+      </xdomea:UnstrukturierteAnschrift>
+      <xdomea:Geburt>
+        <xdomea:Datum>2016-07-16</xdomea:Datum>
+      </xdomea:Geburt>
+    </xdomea:Empfaenger>
+    <xdomea:SendendesSystem>
+      <xdomea:InstanzID>184b15e3-baca-4b66-bb1b-fad9058410af</xdomea:InstanzID>
+      <xdomea:Produktname>LAThDMeACU-Dummy</xdomea:Produktname>
+      <xdomea:Version>20200729</xdomea:Version>
+    </xdomea:SendendesSystem>
+    <xdomea:Hinweis>xdomea Hinweis</xdomea:Hinweis>
+    <xdomea:Empfangsbestaetigung>true</xdomea:Empfangsbestaetigung>
+  </xdomea:Kopf>
+  <xdomea:Schriftgutobjekt>
+    <xdomea:Akte>
+      <xdomea:Identifikation>
+        <xdomea:ID>cbdbfccc-72e5-44b2-9e71-937e6f4f8ce9</xdomea:ID>
+      </xdomea:Identifikation>
+      <xdomea:AllgemeineMetadaten>
+        <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
+        <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+        <xdomea:Aktenplaneinheit>
+          <xdomea:Kennzeichen>Aktenplan-Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+        </xdomea:Aktenplaneinheit>
+      </xdomea:AllgemeineMetadaten>
+      <xdomea:ArchivspezifischeMetadaten>
+        <xdomea:Aussonderungsart
+          listURI="urn:xoev-de:xdomea:codeliste:aussonderungsart" listVersionID="1.0">
+          <code>B</code>
+        </xdomea:Aussonderungsart>
+      </xdomea:ArchivspezifischeMetadaten>
+      <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
+      <xdomea:Laufzeit>
+        <xdomea:Beginn>2018-07-24+02:00</xdomea:Beginn>
+        <xdomea:Ende>2018-07-24+02:00</xdomea:Ende>
+      </xdomea:Laufzeit>
+      <xdomea:Akteninhalt>
+        <xdomea:Vorgang>
+          <xdomea:Identifikation>
+            <xdomea:ID>bf675c60-12c2-4ab1-826f-dcdf306d1733</xdomea:ID>
+          </xdomea:Identifikation>
+          <xdomea:AllgemeineMetadaten>
+            <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
+            <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+          </xdomea:AllgemeineMetadaten>
+          <xdomea:ArchivspezifischeMetadaten>
+            <xdomea:Aussonderungsart
+              listURI="urn:xoev-de:xdomea:codeliste:aussonderungsart" listVersionID="1.0">
+              <code>B</code>
+            </xdomea:Aussonderungsart>
+          </xdomea:ArchivspezifischeMetadaten>
+          <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
+          <xdomea:ZdA>true</xdomea:ZdA>
+          <xdomea:Laufzeit>
+            <xdomea:Beginn>2018-07-24+02:00</xdomea:Beginn>
+            <xdomea:Ende>2018-07-24+02:00</xdomea:Ende>
+          </xdomea:Laufzeit>
+          <xdomea:Dokument>
+            <xdomea:Identifikation>
+              <xdomea:ID>d9fc876a-3838-4e15-9203-15c703afe730</xdomea:ID>
+            </xdomea:Identifikation>
+            <xdomea:AllgemeineMetadaten>
+              <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
+              <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+            </xdomea:AllgemeineMetadaten>
+            <xdomea:Posteingangsdatum>2018-07-24+02:00</xdomea:Posteingangsdatum>
+            <xdomea:Postausgangsdatum>2018-07-24+02:00</xdomea:Postausgangsdatum>
+            <xdomea:DatumDesSchreibens>2018-07-24+02:00</xdomea:DatumDesSchreibens>
+            <xdomea:Bezug>Referenz (Testdaten)</xdomea:Bezug>
+            <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
+          </xdomea:Dokument>
+        </xdomea:Vorgang>
+      </xdomea:Akteninhalt>
+    </xdomea:Akte>
+  </xdomea:Schriftgutobjekt>
+</xdomea:Aussonderung.Anbieteverzeichnis.0501>
