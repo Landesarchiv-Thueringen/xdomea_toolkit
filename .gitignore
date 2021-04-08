@@ -1,0 +1,15 @@
+# whitelist init
+*
+!*/
+
+# allow gitignore
+!.gitignore
+
+# allow all python files
+!**/*.py
+
+# allow all xml files
+!**/*.xml
+
+# allow all xml schema files
+!**/*.xsd
