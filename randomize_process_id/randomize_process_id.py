@@ -91,7 +91,7 @@ def main() :
     new_message_path = os.path.join(message_folder, new_message_name)
     et_message.write(new_message_path, \
                      xml_declaration = True, encoding = 'utf-8', method = "xml")
-    os.remove(xdomea_xml_path)
+    os.remove(xdomea_xml_path)  # remove old .xml-file
 
     new_container_name = new_process_id + xdomea_name_pattern + ".zip"
     new_container_path = os.path.join(os.path.dirname(message_path), new_container_name)
@@ -102,9 +102,21 @@ def main() :
     zip_corrected = zipfile.ZipFile(new_container_path, "w", zipfile.ZIP_DEFLATED)
     for file_path in xdomea_file_path_list :
       zip_corrected.write(file_path, os.path.relpath(file_path, message_folder))
-    zip_corrected.close();
+    
+    namelist_corrected = zip_corrected.namelist() 
+    orig_namelist = zipfile.ZipFile(message_path, 'r').namelist()
+    # create list of 'Primaerdateien'
+    set_namelist = list(set(namelist_corrected).intersection(orig_namelist))
+    orig_zipfile = zipfile.ZipFile(message_path, 'r')
 
-    os.remove(message_path)
+    # iterate over 'Primaerdateien' and preserve original modification date
+    for name in set_namelist:
+      orig_date_time = orig_zipfile.getinfo(name).date_time
+      zip_corrected.getinfo(name).date_time = orig_date_time
+    orig_zipfile.close()
+    zip_corrected.close()
+
+    os.remove(message_path)  # remove old .zip-file
     delete_message_folder(message_folder)
 
     evaluation_generic_file_name = "_Bewertungsentscheidung.txt"
