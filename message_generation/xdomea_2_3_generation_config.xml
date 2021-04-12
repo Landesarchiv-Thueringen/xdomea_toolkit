@@ -8,5 +8,35 @@
   <evaluation>random</evaluation>
   <test_root>Z:\Projekt Digitales Magazin\Testdaten\Funktionspruefung\v9\01_Einzeldateien</test_root>
   <test_folder>Primaer_valide\zugelassen_AF</test_folder>
+  <transmitter_list>
+    <transmitter>Abgebende Stelle</transmitter>
+    <transmitter>AAEF</transmitter>
+    <transmitter>AAGTH</transmitter>
+    <transmitter>TMIK</transmitter>
+    <transmitter>LPD</transmitter>
+    <transmitter>AAJ</transmitter>
+    <transmitter>TMMJV</transmitter>
+    <transmitter>LATh</transmitter>
+    <transmitter>LFD</transmitter>
+    <transmitter>TMIL</transmitter>
+    <transmitter>TSK</transmitter>
+    <transmitter>TMUEN</transmitter>
+    <transmitter>TMBJS</transmitter>
+    <transmitter>TMASGFF</transmitter>
+    <transmitter>AANDH</transmitter>
+    <transmitter>TFM</transmitter>
+    <transmitter>TLVwA</transmitter>
+    <transmitter>AASHL</transmitter>
+    <transmitter>LKA</transmitter>
+    <transmitter>TMWWDG</transmitter>
+    <transmitter>PIGRZ</transmitter>
+    <transmitter>AGGRZ</transmitter>
+    <transmitter>JVAHL</transmitter>
+    <transmitter>JCHBN</transmitter>
+    <transmitter>JCSON</transmitter>
+    <transmitter>HZAEF</transmitter>
+    <transmitter>THW</transmitter>
+    <transmitter>XDOMEA</transmitter>
+  </transmitter_list>
 
 </config>
