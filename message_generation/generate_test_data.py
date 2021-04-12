@@ -42,7 +42,7 @@ for transmitter in transmitter_list :
     # damaged zip file
     except zipfile.BadZipfile :
       delete_message_folder(message_folder)
-      continue;
+      continue
     # damaged zip file
     except OSError:
       delete_message_folder(message_folder)
@@ -81,6 +81,6 @@ for transmitter in transmitter_list :
     zip_corrected = zipfile.ZipFile(message_path, "w")
     for file_path in xdomea_file_path_list :
       zip_corrected.write(file_path, os.path.relpath(file_path, message_folder))
-    zip_corrected.close();
+    zip_corrected.close()
 
     delete_message_folder(message_folder)
