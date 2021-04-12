@@ -6,11 +6,9 @@ import shutil
 import os
 import zipfile
 
-
-transmitter_list = ["Abgebende Stelle", "AAEF", "AAGTH", "TMIK", "LPD", "AAJ", "TMMJV", "LATh",    \
-                    "LFD", "TMIL", "TSK", "TMUEN","TMBJS", "TMASGFF", "AANDH", "TFM", "TLVwA",     \
-                    "AASHL", "LKA", "TMWWDG", "PIGRZ", "AGGRZ", "JVAHL", "JCHBN", "JCSON", "HZAEF",\
-                    "THW", "XDOMEA"]
+config_path = "xdomea_2_3_generation_config.xml"
+config_et = cElementTree.parse(config_path)
+transmitter_list = [transmitter.text for transmitter in config_et.find("transmitter_list").findall("transmitter")]
 
 data_path = "C:\\Users\\Grochow.TSA\\Desktop\\LATh"
 target    = "C:\\Users\\Grochow.TSA\\Desktop\\E-Akten"
