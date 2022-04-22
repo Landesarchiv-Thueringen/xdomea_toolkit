@@ -32,10 +32,6 @@ def get_ntfs_zip_info(path):
                + ntfs_ctime_windows_timestamp
     return ntfs_block
 
-def main():
-    path = 'test.txt'
-    zip = ZipFile('test.zip', 'w')
-    zip.write(path)
-    info = zip.getinfo(path)
-    info.extra = get_ntfs_zip_info(path)
-    zip.close()
+def add_ntfs_info(zip_file, file_path):
+    info = zip_file.getinfo(file_path)
+    info.extra = get_ntfs_zip_info(file_path)
