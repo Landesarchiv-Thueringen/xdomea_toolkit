@@ -88,11 +88,14 @@ class XdomeaMessageEditor:
         )
 
     def rename_xdomea_file(self, xdomea_xml_path: str, new_message_ID: str):
-        print(xdomea_xml_path)
         xml_message_file_name = os.path.basename(xdomea_xml_path)
         new_xml_message_file_name = re.sub(self.config.uuid_regex, new_message_ID,
             xml_message_file_name)
-        print(new_xml_message_file_name)
+        new_xml_file_path = os.path.join(
+            os.path.dirname(xdomea_xml_path),
+            new_xml_message_file_name
+        )
+        os.rename(xdomea_xml_path, new_xml_file_path)
 
     def set_new_message_ID(self, temp_message_path: str, message_ID: str, new_message_ID: str):
         generic_xml_path = os.path.join(temp_message_path, self.config.generic_xml_path)
@@ -122,7 +125,7 @@ class XdomeaMessageEditor:
                 print(zip_extract_exception)
                 continue
             self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
-            #self.delete_temp_message_folder(temp_message_path)
+            self.delete_temp_message_folder(temp_message_path)
 
 
 def main():
