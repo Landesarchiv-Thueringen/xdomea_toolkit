@@ -20,7 +20,6 @@ class Config(NamedTuple):
     xdomea_503_name_pattern: str
     xdomea_namespace: XMLNamespace
     uuid_regex: str
-    optional_appraisal_file_pattern: str
 
 class XdomeaMessageEditor:
     config: Config
@@ -40,7 +39,6 @@ class XdomeaMessageEditor:
                 short_name = 'xdomea',
                 full_name = "{urn:xoev-de:xdomea:schema:2.3.0}",
             ),
-            optional_appraisal_file_pattern = '_Bewertungsentscheidung.txt',
         )
         ET.register_namespace(
             self.config.xdomea_namespace.short_name,
@@ -61,7 +59,9 @@ class XdomeaMessageEditor:
     def get_temp_message_path(self, message_path: str):
         temp_dir = tempfile.gettempdir()
         message_name = self.get_message_name(message_path)
-        return os.path.join(temp_dir, message_name)
+        # add a random part to dir name to secure that directory doesn't already exists
+        dir_name = message_name + '_' + str(uuid.uuid4())
+        return os.path.join(temp_dir, dir_name)
 
     def delete_temp_message_folder(self, message_path: str):
         # assert message path is in the temporary directory
@@ -108,8 +108,21 @@ class XdomeaMessageEditor:
         self.set_xml_process_id(target_xdomea_path, new_message_ID)
         self.rename_xdomea_file(target_xdomea_path, new_message_ID)
 
+    def create_new_message(self, message_path: str, temp_message_path: str, new_message_ID: str):
+        target_dir = os.path.dirname(message_path)
+        old_message_name = os.path.basename(message_path)
+        new_message_name = re.sub(self.config.uuid_regex, new_message_ID, old_message_name)
+        new_message_path = os.path.join(target_dir, new_message_name)
+        generic_temp_file_path = os.path.join(temp_message_path, '*')
+        temp_file_list = glob(generic_temp_file_path, recursive = False)
+        new_zip_file = zipfile.ZipFile(new_message_path, "w", zipfile.ZIP_DEFLATED)
+        for file_path in temp_file_list :
+          new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
+        new_zip_file.close()
+
 
     def randomize_all_message_IDs(self, target_dir: str):
+        id_mapping = {}
         message_path_list = self.get_message_path_list(target_dir)
         for message_path in message_path_list:
             #print(message_path)
@@ -117,16 +130,22 @@ class XdomeaMessageEditor:
             if message_ID_match is None:
                 continue
             message_ID = message_ID_match[0] # get matched string (uuid)
-            new_message_ID = str(uuid.uuid4())
+            new_message_ID = ''
+            if message_ID in id_mapping:
+                new_message_ID = id_mapping[message_ID]
+            else:
+                new_message_ID = str(uuid.uuid4())
+                id_mapping[message_ID] = new_message_ID
             temp_message_path = ''
             try :
                 temp_message_path = self.extract_message_archive(message_path)
-            except zip_extract_exception:
-                print(zip_extract_exception)
+                self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
+                self.create_new_message(message_path, temp_message_path, new_message_ID)
+                self.delete_temp_message_folder(temp_message_path)
+                os.remove(message_path)
+            except exception:
+                print(exception)
                 continue
-            self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
-            self.delete_temp_message_folder(temp_message_path)
-
 
 def main():
     editor = XdomeaMessageEditor()
