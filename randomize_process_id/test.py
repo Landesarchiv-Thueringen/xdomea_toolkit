@@ -1,5 +1,5 @@
 from glob import glob
-from typing import NamedTuple
+from typing import Dict, List, NamedTuple
 import os
 import re
 import shutil
@@ -8,46 +8,35 @@ import uuid
 import xml.etree.ElementTree as ET
 import zipfile
 
-class XMLNamespace(NamedTuple):
-    short_name: str
-    full_name:str
-
 class Config(NamedTuple):
     generic_message_path: str
     generic_xml_path: str
-    xdomea_message_type_prefix: str
-    xdomea_501_name_pattern: str
-    xdomea_503_name_pattern: str
-    xdomea_namespace: XMLNamespace
     uuid_regex: str
+    ignore_path_regex_list: List[str]
 
 class XdomeaMessageEditor:
     config: Config
 
     def __init__(self):
-        uuid_pattern = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
         message_type_prefix = '_Aussonderung.'
         self.config = Config(
             generic_message_path = '**/*' + message_type_prefix + '*.zip',
             generic_xml_path = '**/*' + message_type_prefix + '*.xml',
-            uuid_regex = uuid_pattern,
-            xdomea_message_type_prefix = message_type_prefix,
-            xdomea_501_name_pattern =
-                uuid_pattern + message_type_prefix + 'Anbieteverzeichnis.0501.',
-            xdomea_503_name_pattern = uuid_pattern + message_type_prefix + 'Aussonderung.0503.',
-            xdomea_namespace = XMLNamespace(
-                short_name = 'xdomea',
-                full_name = "{urn:xoev-de:xdomea:schema:2.3.0}",
-            ),
-        )
-        ET.register_namespace(
-            self.config.xdomea_namespace.short_name,
-            self.config.xdomea_namespace.full_name
+            uuid_regex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            ignore_path_regex_list = [
+                'Container_invalide'
+            ]
         )
 
     def get_message_path_list(self, target_dir: str):
         message_path = os.path.join(target_dir, self.config.generic_message_path)
-        return glob(message_path, recursive = True)
+        full_message_list = glob(message_path, recursive = True)
+        filtered_message_list = full_message_list
+        for ignore_path_regex in self.config.ignore_path_regex_list:
+            regex = re.compile(ignore_path_regex)
+            filtered_message_list = \
+                [ message for message in filtered_message_list if regex.search(message) is None ]
+        return filtered_message_list
 
     def get_message_ID(self, message_path: str):
         message_name = os.path.basename(message_path)
@@ -75,12 +64,25 @@ class XdomeaMessageEditor:
         zip_message.close()
         return temp_message_path
 
-    def set_xml_process_id(self, xdomea_xml_path, process_ID) :
-        xdomea_root_element = ET.parse(xdomea_xml_path)
-        xdomea_header_node = xdomea_root_element.find('{urn:xoev-de:xdomea:schema:2.3.0}Kopf')
-        xdomea_process_id_node = xdomea_header_node.find('{urn:xoev-de:xdomea:schema:2.3.0}ProzessID')
+    def get_xml_namespace_dict(self, xml_path: str):
+        return dict([
+            node for _, node in ET.iterparse(
+                xml_path, events=['start-ns']
+            )
+        ])
+
+    def set_xml_process_id(self, xdomea_xml_path: str, process_ID: str):
+        xml_tree = ET.parse(xdomea_xml_path)
+        xdomea_namespace_dict = self.get_xml_namespace_dict(xdomea_xml_path)
+        xdomea_header_node = \
+            xml_tree.find('xdomea:Kopf', xdomea_namespace_dict)
+        xdomea_process_id_node = \
+            xdomea_header_node.find('xdomea:ProzessID', xdomea_namespace_dict)
         xdomea_process_id_node.text = process_ID
-        xdomea_root_element.write(
+        # register xdomea namespace for serialization
+        for prefix, uri in xdomea_namespace_dict.items():
+            ET.register_namespace(prefix, uri)
+        xml_tree.write(
             xdomea_xml_path,
             xml_declaration = True,
             encoding = 'utf-8',
