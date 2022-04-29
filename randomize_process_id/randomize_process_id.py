@@ -1,4 +1,5 @@
 from glob import glob
+from dataclasses import dataclass
 from typing import Dict, List, NamedTuple
 import os
 import re
@@ -14,10 +15,11 @@ class Config(NamedTuple):
     uuid_regex: str
     ignore_path_regex_list: List[str]
 
-class Statistic(NamedTuple):
+@dataclass
+class Statistic:
     count_messages_total: int
     count_messages_ignored: int
-    count_messages_failed: int
+    count_messages_success: int
 
 class XdomeaMessageEditor:
     config: Config
@@ -45,7 +47,7 @@ class XdomeaMessageEditor:
         self.statistic = Statistic(
             count_messages_total = len(full_message_list),
             count_messages_ignored = len(full_message_list) - len(filtered_message_list),
-            count_messages_failed = 0
+            count_messages_success = 0
         )
         return filtered_message_list
 
@@ -132,6 +134,25 @@ class XdomeaMessageEditor:
         for file_path in temp_file_list :
           new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
         new_zip_file.close()
+        return new_message_path
+
+    def sync_zip_info(
+        self,
+        message_path: str,
+        new_message_path: str,
+        message_id: str,
+        new_message_ID: str
+    ):
+        zip = zipfile.ZipFile(message_path, 'r')
+        info_list = zip.infolist()
+        zip.close()
+        new_zip = zipfile.ZipFile(new_message_path, 'r')
+        for file_info in info_list:
+            new_file_name = file_info.filename.replace(message_id, new_message_ID)
+            new_file_info = new_zip.getinfo(new_file_name)
+            new_file_info.date_time = file_info.date_time
+            new_file_info.extra = file_info.extra
+        new_zip.close()
 
     def print_ID_change_general_info(self, target_dir: str):
         print('\nBeginne Wechsel aller Prozess-IDs in Ordner: ' + target_dir)
@@ -140,12 +161,17 @@ class XdomeaMessageEditor:
         print('\n\nWechsel Prozess-ID der Nachricht: ' + self.get_message_name(message_path))
         print('\n\t' + message_ID + '\t--->\t' + new_message_ID)
 
+    def print_ID_change_error_message(self):
+        print('\nWechel der Prozess-ID ist fehlgeschlagen')
+
     def print_ID_change_statistic(self):
-          print('\n\nProzess-ID-Wechsel Gesamtergebnis\n')
-          print('\terfolgreich:\t' + str(self.statistic.count_messages_total))
-          print('\tfehlgeschlagen:\t' + str(self.statistic.count_messages_failed))
-          print('\tignoriert:\t' + str(self.statistic.count_messages_ignored))
-          print('\n')
+        count_message_failed = \
+            self.statistic.count_messages_total - self.statistic.count_messages_success
+        print('\n\nProzess-ID-Wechsel Gesamtergebnis\n')
+        print('\terfolgreich:\t', self.statistic.count_messages_success)
+        print('\tfehlgeschlagen:\t', count_message_failed)
+        print('\tignoriert:\t', self.statistic.count_messages_ignored)
+        print('\n')
 
     def randomize_all_message_IDs(self, target_dir: str):
         id_mapping = {}
@@ -154,7 +180,7 @@ class XdomeaMessageEditor:
         for message_path in message_path_list:
             message_ID_match = self.get_message_ID(message_path)
             if message_ID_match is None:
-                self.statistic.count_messages_failed += 1
+                self.print_ID_change_error_message()
                 continue
             message_ID = message_ID_match[0] # get matched string (uuid)
             new_message_ID = ''
@@ -167,13 +193,15 @@ class XdomeaMessageEditor:
             try :
                 temp_message_path = self.extract_message_archive(message_path)
                 self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
-                self.create_new_message(message_path, temp_message_path, new_message_ID)
+                new_message_path = \
+                    self.create_new_message(message_path, temp_message_path, new_message_ID)
+                self.sync_zip_info(message_path, new_message_path, message_ID, new_message_ID)
                 self.delete_temp_message_folder(temp_message_path)
                 os.remove(message_path)
-            except e:
-                self.statistic.count_messages_failed += 1
-                print(e)
+            except:
+                self.print_ID_change_error_message()
                 continue
+            self.statistic.count_messages_success += 1
         self.print_ID_change_statistic()
 
 def main():
