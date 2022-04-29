@@ -1,147 +1,184 @@
-from   glob      import iglob
-from   xml.etree import cElementTree
+from glob import glob
+from typing import Dict, List, NamedTuple
 import os
+import re
 import shutil
 import tempfile
 import uuid
+import xml.etree.ElementTree as ET
 import zipfile
 
-def delete_message_folder(path) :
-  # security check important for critical operation
-  if os.path.commonprefix([tempfile.gettempdir(), path]) == tempfile.gettempdir() :
-    shutil.rmtree(path)
+class Config(NamedTuple):
+    generic_message_path: str
+    generic_xml_path: str
+    uuid_regex: str
+    ignore_path_regex_list: List[str]
 
-def set_xdomea_process_id(xdomea_root_element, process_id) :
-  scheme_namespace            = "{urn:xoev-de:xdomea:schema:2.3.0}"
-  xdomea_header_node          = xdomea_root_element.find(scheme_namespace + "Kopf")
-  xdomea_process_id_node      = xdomea_header_node.find(scheme_namespace + "ProzessID")
-  xdomea_process_id_node.text = process_id
+class Statistic(NamedTuple):
+    count_messages_total: int
+    count_messages_ignored: int
+    count_messages_failed: int
 
-def main() :
+class XdomeaMessageEditor:
+    config: Config
+    statistic: Statistic
 
-  xdomea_501_name_pattern = "_Aussonderung.Anbieteverzeichnis.0501"
-  xdomea_503_name_pattern = "_Aussonderung.Aussonderung.0503"
+    def __init__(self):
+        message_type_prefix = '_Aussonderung.'
+        self.config = Config(
+            generic_message_path = '**/*' + message_type_prefix + '*.zip',
+            generic_xml_path = '**/*' + message_type_prefix + '*.xml',
+            uuid_regex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            ignore_path_regex_list = [
+                'Container_invalide'
+            ]
+        )
 
-  cElementTree.register_namespace("xdomea", "urn:xoev-de:xdomea:schema:2.3.0")
+    def get_message_path_list(self, target_dir: str):
+        message_path = os.path.join(target_dir, self.config.generic_message_path)
+        full_message_list = glob(message_path, recursive = True)
+        filtered_message_list = full_message_list
+        for ignore_path_regex in self.config.ignore_path_regex_list:
+            regex = re.compile(ignore_path_regex)
+            filtered_message_list = \
+                [ message for message in filtered_message_list if regex.search(message) is None ]
+        self.statistic = Statistic(
+            count_messages_total = len(full_message_list),
+            count_messages_ignored = len(full_message_list) - len(filtered_message_list),
+            count_messages_failed = 0
+        )
+        return filtered_message_list
 
-  generic_message_path = os.path.join(os.getcwd(), "**\\*Aussonderung*.zip")
-  message_path_list    = list(iglob(generic_message_path, recursive = True))
+    def get_message_ID(self, message_path: str):
+        message_name = os.path.basename(message_path)
+        return re.search(self.config.uuid_regex, message_name)
 
-  prev_message_path = ""
+    def get_message_name(self, message_path: str):
+        return os.path.basename(os.path.splitext(message_path)[0])
 
-  success_count = 0
-  fail_count  = 0
-  ignore_count = 0
+    def get_temp_message_path(self, message_path: str):
+        temp_dir = tempfile.gettempdir()
+        message_name = self.get_message_name(message_path)
+        # add a random part to dir name to secure that directory doesn't already exists
+        dir_name = message_name + '_' + str(uuid.uuid4())
+        return os.path.join(temp_dir, dir_name)
 
-  # important message_path_list must be sorted
-  for message_path in message_path_list :
+    def delete_temp_message_folder(self, message_path: str):
+        # assert message path is in the temporary directory
+        assert os.path.commonprefix([tempfile.gettempdir(), message_path]) == tempfile.gettempdir()
+        shutil.rmtree(message_path)
 
-    print(message_path)
+    def extract_message_archive(self, message_path: str):
+        zip_message = zipfile.ZipFile(message_path, 'r')
+        temp_message_path = self.get_temp_message_path(message_path)
+        zip_message.extractall(temp_message_path)
+        zip_message.close()
+        return temp_message_path
 
-    if "Container_invalide" in message_path or "Nachrichten_invalide" in message_path :
-      ignore_count += 1
-      continue
+    def get_xml_namespace_dict(self, xml_path: str):
+        return dict([
+            node for _, node in ET.iterparse(
+                xml_path, events = ['start-ns']
+            )
+        ])
 
-    common_dir = os.path.commonprefix([os.path.dirname(prev_message_path), \
-                                       os.path.dirname(message_path)])
-    if common_dir != os.path.dirname(message_path) :
-      new_process_id = str(uuid.uuid4())
-      prev_message_path = message_path
+    def set_xml_process_id(self, xdomea_xml_path: str, process_ID: str):
+        xml_tree = ET.parse(xdomea_xml_path)
+        xdomea_namespace_dict = self.get_xml_namespace_dict(xdomea_xml_path)
+        xdomea_header_node = \
+            xml_tree.find('xdomea:Kopf', xdomea_namespace_dict)
+        xdomea_process_id_node = \
+            xdomea_header_node.find('xdomea:ProzessID', xdomea_namespace_dict)
+        xdomea_process_id_node.text = process_ID
+        # register xdomea namespace for serialization
+        for prefix, uri in xdomea_namespace_dict.items():
+            ET.register_namespace(prefix, uri)
+        xml_tree.write(
+            xdomea_xml_path,
+            xml_declaration = True,
+            encoding = 'utf-8',
+            method = 'xml'
+        )
 
-    try :
-      zip_message = zipfile.ZipFile(message_path, 'r')
-      message_folder = os.path.join(tempfile.gettempdir(), \
-        os.path.basename(os.path.dirname(os.path.splitext(message_path)[0])))
-      zip_message.extractall(message_folder)
-      zip_message.close()
+    def rename_xdomea_file(self, xdomea_xml_path: str, new_message_ID: str):
+        xml_message_file_name = os.path.basename(xdomea_xml_path)
+        new_xml_message_file_name = re.sub(self.config.uuid_regex, new_message_ID,
+            xml_message_file_name)
+        new_xml_file_path = os.path.join(
+            os.path.dirname(xdomea_xml_path),
+            new_xml_message_file_name
+        )
+        os.rename(xdomea_xml_path, new_xml_file_path)
 
-    # damaged zip file
-    except zipfile.BadZipfile :
-      fail_count += 1
-      delete_message_folder(message_folder)
-      continue
+    def set_new_message_ID(self, temp_message_path: str, message_ID: str, new_message_ID: str):
+        generic_xml_path = os.path.join(temp_message_path, self.config.generic_xml_path)
+        xdomea_xml_path_list = glob(generic_xml_path, recursive = True)
+        # filter out all paths that don't contain the current message ID
+        target_xdomea_path_list = [path for path in xdomea_xml_path_list if message_ID in path]
+        # assert that only one target message exists
+        assert len(target_xdomea_path_list) == 1
+        target_xdomea_path = target_xdomea_path_list[0]
+        self.set_xml_process_id(target_xdomea_path, new_message_ID)
+        self.rename_xdomea_file(target_xdomea_path, new_message_ID)
 
-    generic_xml_path = os.path.join(message_folder, "**\\*Aussonderung*.xml")
-    xdomea_xml_path_list = list(iglob(generic_xml_path, recursive = True))
-    xdomea_xml_path = xdomea_xml_path_list[0]
+    def create_new_message(self, message_path: str, temp_message_path: str, new_message_ID: str):
+        target_dir = os.path.dirname(message_path)
+        old_message_name = os.path.basename(message_path)
+        new_message_name = re.sub(self.config.uuid_regex, new_message_ID, old_message_name)
+        new_message_path = os.path.join(target_dir, new_message_name)
+        generic_temp_file_path = os.path.join(temp_message_path, '*')
+        temp_file_list = glob(generic_temp_file_path, recursive = False)
+        new_zip_file = zipfile.ZipFile(new_message_path, 'w', zipfile.ZIP_DEFLATED)
+        for file_path in temp_file_list :
+          new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
+        new_zip_file.close()
 
-    xml_filename = os.path.basename(xdomea_xml_path)
+    def print_ID_change_general_info(self, target_dir: str):
+        print('\nBeginne Wechsel aller Prozess-IDs in Ordner: ' + target_dir)
 
-    if xdomea_501_name_pattern in xml_filename :
-      xdomea_name_pattern = xdomea_501_name_pattern
+    def print_ID_change_info(self, message_path: str, message_ID: str, new_message_ID: str):
+        print('\n\nWechsel Prozess-ID der Nachricht: ' + self.get_message_name(message_path))
+        print('\n\t' + message_ID + '\t--->\t' + new_message_ID)
 
-    elif xdomea_503_name_pattern in xml_filename :
-      xdomea_name_pattern = xdomea_503_name_pattern
+    def print_ID_change_statistic(self):
+          print('\n\nProzess-ID-Wechsel Gesamtergebnis\n')
+          print('\terfolgreich:\t' + str(self.statistic.count_messages_total))
+          print('\tfehlgeschlagen:\t' + str(self.statistic.count_messages_failed))
+          print('\tignoriert:\t' + str(self.statistic.count_messages_ignored))
+          print('\n')
 
-    else :
-      continue
+    def randomize_all_message_IDs(self, target_dir: str):
+        id_mapping = {}
+        message_path_list = self.get_message_path_list(target_dir)
+        self.print_ID_change_general_info(target_dir)
+        for message_path in message_path_list:
+            message_ID_match = self.get_message_ID(message_path)
+            if message_ID_match is None:
+                self.statistic.count_messages_failed += 1
+                continue
+            message_ID = message_ID_match[0] # get matched string (uuid)
+            new_message_ID = ''
+            if message_ID in id_mapping:
+                new_message_ID = id_mapping[message_ID]
+            else:
+                new_message_ID = str(uuid.uuid4())
+                id_mapping[message_ID] = new_message_ID
+            self.print_ID_change_info(message_path, message_ID, new_message_ID)
+            try :
+                temp_message_path = self.extract_message_archive(message_path)
+                self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
+                self.create_new_message(message_path, temp_message_path, new_message_ID)
+                self.delete_temp_message_folder(temp_message_path)
+                os.remove(message_path)
+            except e:
+                self.statistic.count_messages_failed += 1
+                print(e)
+                continue
+        self.print_ID_change_statistic()
 
-    try :
-      et_message = cElementTree.parse(xdomea_xml_path)
+def main():
+    editor = XdomeaMessageEditor()
+    editor.randomize_all_message_IDs(os.getcwd())
 
-    # invalid xml message
-    except ParseError:
-      fail_count += 1
-      delete_message_folder(message_folder)
-      continue
-
-    set_xdomea_process_id(et_message, new_process_id)
-
-    new_message_name = new_process_id + xdomea_name_pattern + ".xml"
-    new_message_path = os.path.join(message_folder, new_message_name)
-    et_message.write(new_message_path, \
-                     xml_declaration = True, encoding = 'utf-8', method = "xml")
-    os.remove(xdomea_xml_path)  # remove old .xml-file
-
-    new_container_name = new_process_id + xdomea_name_pattern + ".zip"
-    new_container_path = os.path.join(os.path.dirname(message_path), new_container_name)
-
-    generic_message_file_path = os.path.join(message_folder, "**\\*.*")
-    xdomea_file_path_list     = list(iglob(generic_message_file_path, recursive = True))
-
-    zip_corrected = zipfile.ZipFile(new_container_path, "w", zipfile.ZIP_DEFLATED)
-    for file_path in xdomea_file_path_list :
-      zip_corrected.write(file_path, os.path.relpath(file_path, message_folder))
-    
-    namelist_corrected = zip_corrected.namelist() 
-    orig_namelist = zipfile.ZipFile(message_path, 'r').namelist()
-    # create list of 'Primaerdateien'
-    set_namelist = list(set(namelist_corrected).intersection(orig_namelist))
-    orig_zipfile = zipfile.ZipFile(message_path, 'r')
-
-    # iterate over 'Primaerdateien' and preserve original modification date
-    for name in set_namelist:
-      orig_date_time = orig_zipfile.getinfo(name).date_time
-      zip_corrected.getinfo(name).date_time = orig_date_time
-    orig_zipfile.close()
-    zip_corrected.close()
-
-    os.remove(message_path)  # remove old .zip-file
-    delete_message_folder(message_folder)
-
-    evaluation_generic_file_name = "_Bewertungsentscheidung.txt"
-    evaluation_generic_file_path = os.path.join(os.path.dirname(message_path), \
-    "*" + evaluation_generic_file_name)
-    new_evaluation_name = new_process_id + evaluation_generic_file_name
-    new_evaluation_path = os.path.join(os.path.dirname(message_path), new_evaluation_name)
-    evaluation_file_path_list = list(iglob(evaluation_generic_file_path))
-
-    for evaluation_file_path in evaluation_file_path_list :
-
-      os.rename(evaluation_file_path, new_evaluation_path)
-
-    success_count += 1
-
-  print("\n\n")
-  print("UUID-Wechsel Ergebnis")
-  print("\n")
-  print("erfolgreich:\t" + str(success_count))
-  print("fehlgeschlagen:\t" + str(fail_count))
-  print("ignoriert:\t" + str(ignore_count))
-  print("\n\n")
-
-  os.system("PAUSE")
-
-
-if __name__== "__main__" :
-  main()
+if __name__== '__main__' :
+    main()
