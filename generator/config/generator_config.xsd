@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="generator_config">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="structure">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="files">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="min_number" type="xs:positiveInteger"/>
+                    <xs:element name="max_number" type="xs:positiveInteger"/>
+                    <xs:element name="evaluation" type="file_evaluation_type"/>
+                    <xs:element name="processes">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="min_number" type="xs:positiveInteger"/>
+                          <xs:element name="max_number" type="xs:positiveInteger"/>
+                          <xs:element name="evaluation" type="process_evaluation_type"/>
+                          <xs:element name="documents">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="min_number" type="xs:positiveInteger"/>
+                                <xs:element name="max_number" type="xs:positiveInteger"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="message_pattern">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="xdomea_0501_path" type="xs:string"/>
+              <xs:element name="xdomea_0503_path" type="xs:string"/>
+              <xs:element name="schema_path" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="test_data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="root_dir" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="file_evaluation_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="archive"/>
+      <xs:enumeration value="random"/>
+    </xs:restriction>
+  </xs:simpleType >
+
+  <xs:simpleType name="process_evaluation_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="inherit"/>
+      <xs:enumeration value="random"/>
+    </xs:restriction>
+  </xs:simpleType >
+
+</xs:schema>

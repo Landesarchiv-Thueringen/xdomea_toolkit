@@ -1,6 +1,12 @@
-# whitelist init
+# whitelist init (prohibit everything, allow all directories)
 *
 !*/
+
+# prohibit virtual environment directories
+*-env
+
+# prohibit xml schema directory
+schema
 
 # allow gitignore
 !.gitignore
