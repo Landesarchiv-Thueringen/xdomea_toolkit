@@ -9,17 +9,20 @@ import uuid
 import xml.etree.ElementTree as ET
 import zipfile
 
+
 class Config(NamedTuple):
     generic_message_path: str
     generic_xml_path: str
     uuid_regex: str
     ignore_path_regex_list: List[str]
 
+
 @dataclass
 class Statistic:
     count_messages_total: int
     count_messages_ignored: int
     count_messages_success: int
+
 
 class XdomeaMessageEditor:
     config: Config
@@ -28,26 +31,26 @@ class XdomeaMessageEditor:
     def __init__(self):
         message_type_prefix = '_Aussonderung.'
         self.config = Config(
-            generic_message_path = '**/*' + message_type_prefix + '*.zip',
-            generic_xml_path = '**/*' + message_type_prefix + '*.xml',
-            uuid_regex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            ignore_path_regex_list = [
+            generic_message_path='**/*' + message_type_prefix + '*.zip',
+            generic_xml_path='**/*' + message_type_prefix + '*.xml',
+            uuid_regex='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            ignore_path_regex_list=[
                 'Container_invalide'
             ]
         )
 
     def get_message_path_list(self, target_dir: str):
         message_path = os.path.join(target_dir, self.config.generic_message_path)
-        full_message_list = glob(message_path, recursive = True)
+        full_message_list = glob(message_path, recursive=True)
         filtered_message_list = full_message_list
         for ignore_path_regex in self.config.ignore_path_regex_list:
             regex = re.compile(ignore_path_regex)
             filtered_message_list = \
-                [ message for message in filtered_message_list if regex.search(message) is None ]
+                [message for message in filtered_message_list if regex.search(message) is None]
         self.statistic = Statistic(
-            count_messages_total = len(full_message_list),
-            count_messages_ignored = len(full_message_list) - len(filtered_message_list),
-            count_messages_success = 0
+            count_messages_total=len(full_message_list),
+            count_messages_ignored=len(full_message_list) - len(filtered_message_list),
+            count_messages_success=0
         )
         return filtered_message_list
 
@@ -80,7 +83,7 @@ class XdomeaMessageEditor:
     def get_xml_namespace_dict(self, xml_path: str):
         return dict([
             node for _, node in ET.iterparse(
-                xml_path, events = ['start-ns']
+                xml_path, events=['start-ns']
             )
         ])
 
@@ -97,15 +100,18 @@ class XdomeaMessageEditor:
             ET.register_namespace(prefix, uri)
         xml_tree.write(
             xdomea_xml_path,
-            xml_declaration = True,
-            encoding = 'utf-8',
-            method = 'xml'
+            xml_declaration=True,
+            encoding='utf-8',
+            method='xml'
         )
 
     def rename_xdomea_file(self, xdomea_xml_path: str, new_message_ID: str):
         xml_message_file_name = os.path.basename(xdomea_xml_path)
-        new_xml_message_file_name = re.sub(self.config.uuid_regex, new_message_ID,
-            xml_message_file_name)
+        new_xml_message_file_name = re.sub(
+            self.config.uuid_regex,
+            new_message_ID,
+            xml_message_file_name
+        )
         new_xml_file_path = os.path.join(
             os.path.dirname(xdomea_xml_path),
             new_xml_message_file_name
@@ -114,7 +120,7 @@ class XdomeaMessageEditor:
 
     def set_new_message_ID(self, temp_message_path: str, message_ID: str, new_message_ID: str):
         generic_xml_path = os.path.join(temp_message_path, self.config.generic_xml_path)
-        xdomea_xml_path_list = glob(generic_xml_path, recursive = True)
+        xdomea_xml_path_list = glob(generic_xml_path, recursive=True)
         # filter out all paths that don't contain the current message ID
         target_xdomea_path_list = [path for path in xdomea_xml_path_list if message_ID in path]
         # assert that only one target message exists
@@ -129,10 +135,10 @@ class XdomeaMessageEditor:
         new_message_name = re.sub(self.config.uuid_regex, new_message_ID, old_message_name)
         new_message_path = os.path.join(target_dir, new_message_name)
         generic_temp_file_path = os.path.join(temp_message_path, '*')
-        temp_file_list = glob(generic_temp_file_path, recursive = False)
+        temp_file_list = glob(generic_temp_file_path, recursive=False)
         new_zip_file = zipfile.ZipFile(new_message_path, 'w', zipfile.ZIP_DEFLATED)
-        for file_path in temp_file_list :
-          new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
+        for file_path in temp_file_list:
+            new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
         new_zip_file.close()
         return new_message_path
 
@@ -182,7 +188,7 @@ class XdomeaMessageEditor:
             if message_ID_match is None:
                 self.print_ID_change_error_message()
                 continue
-            message_ID = message_ID_match[0] # get matched string (uuid)
+            message_ID = message_ID_match[0]  # get matched string (uuid)
             new_message_ID = ''
             if message_ID in id_mapping:
                 new_message_ID = id_mapping[message_ID]
@@ -190,7 +196,7 @@ class XdomeaMessageEditor:
                 new_message_ID = str(uuid.uuid4())
                 id_mapping[message_ID] = new_message_ID
             self.print_ID_change_info(message_path, message_ID, new_message_ID)
-            try :
+            try:
                 temp_message_path = self.extract_message_archive(message_path)
                 self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
                 new_message_path = \
@@ -204,9 +210,11 @@ class XdomeaMessageEditor:
             self.statistic.count_messages_success += 1
         self.print_ID_change_statistic()
 
+
 def main():
     editor = XdomeaMessageEditor()
     editor.randomize_all_message_IDs(os.getcwd())
 
-if __name__== '__main__' :
+
+if __name__ == '__main__':
     main()
