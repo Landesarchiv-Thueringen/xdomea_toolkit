@@ -5,7 +5,7 @@
   <structure>
     <!-- de: Akten -->
     <files>
-      <min_number>1</min_number>
+      <min_number>2</min_number>
       <max_number>3</max_number>
       <!-- possible values: archive, random -->
       <evaluation>random</evaluation>
@@ -14,7 +14,7 @@
         <min_number>1</min_number>
         <max_number>4</max_number>
         <!-- possible values: inherit, random -->
-        <evaluation>inherit</evaluation>
+        <evaluation>random</evaluation>
         <!-- de: Dokumente -->
         <documents>
           <min_number>1</min_number>
@@ -27,13 +27,11 @@
   <message_pattern>
     <xdomea_0501_path>pattern/xx_Aussonderung.Anbieteverzeichnis.0501.xml</xdomea_0501_path>
     <xdomea_0503_path>pattern/xx_Aussonderung.Aussonderung.0503.xml</xdomea_0503_path>
-    <schema_path>schema/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema_path>
+    <schema_path>schema/xdomea_2.3.0/xdomea-Baukasten.xsd</schema_path>
   </message_pattern>
 
   <test_data>
-    <root_dir>
-      Z:/Projekt Digitales Magazin/Testdaten/Funktionspruefung/v9/01_Einzeldateien/Primaer_valide
-    </root_dir>
+    <root_dir>Z:/Projekt Digitales Magazin/Testdaten/Funktionspruefung/v9/01_Einzeldateien/Primaer_valide</root_dir>
   </test_data>
 
 </generator_config>
