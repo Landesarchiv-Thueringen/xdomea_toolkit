@@ -59,28 +59,30 @@ class XdomeaMessageGenerator:
     config: GeneratorConfig
 
     def read_config(self, config_path: str, config_schema_path: str):
-        config_doc = etree.parse(config_path)
-        config_schema_doc = etree.parse(config_schema_path)
-        config_schema = etree.XMLSchema(config_schema_doc)
-        assert config_schema.validate(config_doc)
-        config = GeneratorConfig(
-            structure_config=self.__read_structure_config(config_doc),
-            message_pattern_config=self.__read_message_pattern_config(config_doc),
-            test_data_config=self.__read_test_data_config(config_doc),
+        config_root = etree.parse(config_path)
+        config_schema_root = etree.parse(config_schema_path)
+        config_schema = etree.XMLSchema(config_schema_root)
+        assert config_schema.validate(config_root),\
+            'Schemaprüfung Konfigurationsdatei: ' + config_path + ' invalide'
+        self.config = GeneratorConfig(
+            structure_config=self.__read_structure_config(config_root),
+            message_pattern_config=self.__read_message_pattern_config(config_root),
+            test_data_config=self.__read_test_data_config(config_root),
         )
+        self.__validate_config()
 
-    def __read_structure_config(self, config_doc) -> FileStructureConfig:
-        files_min_number = int(config_doc.findtext('/structure/files/min_number'))
-        files_max_number = int(config_doc.findtext('/structure/files/max_number'))
-        files_evaluation = FileEvaluationConfig[config_doc.findtext(
+    def __read_structure_config(self, config_root: etree.Element) -> FileStructureConfig:
+        files_min_number = int(config_root.findtext('/structure/files/min_number'))
+        files_max_number = int(config_root.findtext('/structure/files/max_number'))
+        files_evaluation = FileEvaluationConfig[config_root.findtext(
             '/structure/files/evaluation').upper()]
-        processes_min_number = int(config_doc.findtext('/structure/files/processes/min_number'))
-        processes_max_number = int(config_doc.findtext('/structure/files/processes/max_number'))
-        processes_evaluation = ProcessEvaluationConfig[config_doc.findtext(
+        processes_min_number = int(config_root.findtext('/structure/files/processes/min_number'))
+        processes_max_number = int(config_root.findtext('/structure/files/processes/max_number'))
+        processes_evaluation = ProcessEvaluationConfig[config_root.findtext(
             '/structure/files/processes/evaluation').upper()]
-        documents_min_number = int(config_doc.findtext(
+        documents_min_number = int(config_root.findtext(
             '/structure/files/processes/documents/min_number'))
-        documents_max_number = int(config_doc.findtext(
+        documents_max_number = int(config_root.findtext(
             '/structure/files/processes/documents/max_number'))
         document_structure_config = DocumentStructureConfig(
             min_number=documents_min_number,
@@ -99,21 +101,32 @@ class XdomeaMessageGenerator:
             process_structure_config=process_structure_config,
         )
 
-    def __read_message_pattern_config(self, config_doc) -> MessagePatternConfig:
-        xdomea_0501_path = config_doc.findtext('/message_pattern/xdomea_0501_path')
-        xdomea_0503_path = config_doc.findtext('/message_pattern/xdomea_0503_path')
-        schema_path = config_doc.findtext('/message_pattern/schema_path')
+    def __read_message_pattern_config(self, config_root: etree.Element) -> MessagePatternConfig:
+        xdomea_0501_path = config_root.findtext('/message_pattern/xdomea_0501_path')
+        xdomea_0503_path = config_root.findtext('/message_pattern/xdomea_0503_path')
+        schema_path = config_root.findtext('/message_pattern/schema_path')
         return MessagePatternConfig(
             xdomea_0501_path=xdomea_0501_path,
             xdomea_0503_path=xdomea_0503_path,
             schema_path=schema_path,
         )
 
-    def __read_test_data_config(self, config_doc) -> TestDataConfig:
-        test_data_root_dir = config_doc.findtext('/test_data/root_dir')
+    def __read_test_data_config(self, config_root: etree.Element) -> TestDataConfig:
+        test_data_root_dir = config_root.findtext('/test_data/root_dir')
         return TestDataConfig(
             root_dir=test_data_root_dir,
         )
+
+    def __validate_config(self):
+        assert self.config.structure_config.min_number <= self.config.structure_config.max_number,\
+            'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
+        assert self.config.structure_config.process_structure_config.min_number <=\
+            self.config.structure_config.process_structure_config.max_number,\
+            'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
+        assert self.config.structure_config.process_structure_config.\
+            document_structure_config.min_number <= self.config.structure_config.\
+            process_structure_config.document_structure_config.max_number,\
+            'Strukturkonfiguration: maximale Dokumentenzahl ist kleiner als minimale Dokumentenzahl'
 
 
 def main():
