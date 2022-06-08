@@ -163,7 +163,7 @@
       <xdomea:Version>20200729</xdomea:Version>
     </xdomea:SendendesSystem>
     <xdomea:Hinweis>xdomea Hinweis</xdomea:Hinweis>
-    <xdomea:Importbestaetigung>true</xdomea:Importbestaetigung>
+    <xdomea:Importbestaetigung>1</xdomea:Importbestaetigung>
     <xdomea:RueckmeldungArchivkennung>true</xdomea:RueckmeldungArchivkennung>
   </xdomea:Kopf>
   <xdomea:Schriftgutobjekt>

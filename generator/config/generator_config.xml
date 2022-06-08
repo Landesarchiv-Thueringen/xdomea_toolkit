@@ -27,7 +27,7 @@
   <message_pattern>
     <xdomea_0501_path>pattern/xx_Aussonderung.Anbieteverzeichnis.0501.xml</xdomea_0501_path>
     <xdomea_0503_path>pattern/xx_Aussonderung.Aussonderung.0503.xml</xdomea_0503_path>
-    <schema_path>schema/xdomea_2.3.0/xdomea-Baukasten.xsd</schema_path>
+    <schema_path>schema/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema_path>
   </message_pattern>
 
   <test_data>
