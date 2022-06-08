@@ -1,6 +1,7 @@
-from lxml import etree
 from dataclasses import dataclass
 from enum import Enum
+from lxml import etree
+import random
 
 
 @dataclass
@@ -165,6 +166,7 @@ class XdomeaMessageGenerator:
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
         self.__extract_structure_patterns(xdomea_0501_pattern_root)
+        self.__generate_0501_message_structure(xdomea_0501_pattern_root)
 
     def __extract_structure_patterns(self, xdomea_0501_pattern_root: etree.Element):
         """
@@ -190,6 +192,25 @@ class XdomeaMessageGenerator:
         # remove all files from xdomea 0501 pattern
         for file_pattern in self.file_pattern_list:
             file_pattern.getparent().remove(file_pattern)
+
+    def __generate_0501_message_structure(self, xdomea_0501_pattern_root: etree.Element):
+        """
+        Generates xdomea 0501 message structure with the configured constraints.
+        """
+        # randomly choose file number
+        file_number = self.__get_random_number(
+            self.config.structure.min_number, self.config.structure.max_number)
+        for file_index in range(file_number):
+            # randomly choose file pattern
+            file_pattern = random.choice(self.file_pattern_list)
+            xdomea_0501_pattern_root.append(file_pattern)
+
+    def __get_random_number(self, min: int, max: int):
+        """
+        Necessary because range function fails if min equals max.
+        :return random number in range
+        """
+        return min if min == max else random.choice(range(min, max))
 
 
 def main():
