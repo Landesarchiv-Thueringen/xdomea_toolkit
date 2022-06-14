@@ -70,9 +70,6 @@ class XdomeaMessageGenerator:
     config: GeneratorConfig
     regex_config: XdomeaRegexConfig
     record_object_pattern_list: list[etree.Element] # de: record object - Schriftgutobjekt
-    file_pattern_list: list[etree.Element]
-    process_pattern_list: list[etree.Element]
-    document_pattern_list: list[etree.Element]
 
     def __init__(self):
         self.regex_config = XdomeaRegexConfig(
@@ -197,6 +194,7 @@ class XdomeaMessageGenerator:
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
         self.__extract_record_object_patterns(xdomea_0501_pattern_root)
         self.__generate_0501_message_structure(xdomea_0501_pattern_root)
+        pattern_schema.assertValid(xdomea_0501_pattern_etree)
         self.__export_xdomea_0501_message(generated_message_ID, xdomea_0501_pattern_etree)
 
     def __extract_record_object_patterns(self, xdomea_0501_pattern_root: etree.Element):
@@ -215,16 +213,19 @@ class XdomeaMessageGenerator:
         """
         Generates xdomea 0501 message structure with the configured constraints.
         """
-        
-        # # randomly choose file number
-        # file_number = self.__get_random_number(
-        #     self.config.structure.min_number, self.config.structure.max_number)
-        # for file_index in range(file_number):
-        #     # randomly choose file pattern
-        #     # deepcopy is necessary if a pattern is used multiple times
-        #     file_pattern = (deepcopy(random.choice(self.file_pattern_list)))
-        #     # add file pattern to message
-        #     xdomea_0501_pattern_root.append(file_pattern)
+        xpath = './xdomea:Akte/xdomea:Akteninhalt/xdomea:Vorgang/xdomea:Dokument'
+        file_pattern_list = [p for p in self.record_object_pattern_list 
+            if p.find(xpath, namespaces=xdomea_0501_pattern_root.nsmap) is not None]
+        assert file_pattern_list, 'kein Muster für Struktur Akte/Vorgang/Dokument definiert'
+        # randomly choose file number
+        file_number = self.__get_random_number(
+            self.config.structure.min_number, self.config.structure.max_number)
+        for file_index in range(file_number):
+            # randomly choose file pattern
+            # deepcopy is necessary if a pattern is used multiple times
+            file_pattern = deepcopy(random.choice(file_pattern_list))
+            # add file pattern to message
+            xdomea_0501_pattern_root.append(file_pattern)
 
     def __export_xdomea_0501_message(
         self, 
