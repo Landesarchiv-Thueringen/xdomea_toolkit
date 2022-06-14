@@ -1,7 +1,11 @@
+from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
+from pathlib import Path
+import os
 import random
+import uuid
 
 
 @dataclass
@@ -53,13 +57,29 @@ class GeneratorConfig:
     structure: FileStructureConfig
     message_pattern: MessagePatternConfig
     test_data: TestDataConfig
+    output_dir: str
+
+@dataclass
+class XdomeaRegexConfig:
+    uuid: str
+    xdomea_0501_message_name: str
+    xdomea_0503_message_name: str
 
 
 class XdomeaMessageGenerator:
     config: GeneratorConfig
+    regex_config: XdomeaRegexConfig
+    record_object_pattern_list: list[etree.Element] # de: record object - Schriftgutobjekt
     file_pattern_list: list[etree.Element]
     process_pattern_list: list[etree.Element]
     document_pattern_list: list[etree.Element]
+
+    def __init__(self):
+        self.regex_config = XdomeaRegexConfig(
+            uuid='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501.xml',
+            xdomea_0503_message_name='_Aussonderung.Aussonderung.0503.xml',
+        )
 
     def read_config(self, config_path: str, config_schema_path: str):
         """
@@ -71,10 +91,12 @@ class XdomeaMessageGenerator:
         config_schema_root = etree.parse(config_schema_path)
         config_schema = etree.XMLSchema(config_schema_root)
         config_schema.assertValid(config_etree)
+        output_dir = config_etree.findtext('/output_dir')
         self.config = GeneratorConfig(
             structure=self.__read_structure_config(config_etree),
             message_pattern=self.__read_message_pattern_config(config_etree),
             test_data=self.__read_test_data_config(config_etree),
+            output_dir=output_dir,
         )
         self.__validate_config()
 
@@ -158,54 +180,68 @@ class XdomeaMessageGenerator:
         """
         Parses xdomea message patterns and validates against the pattern schema.
         """
+        generated_message_ID = str(uuid.uuid4())
         pattern_schema_root = etree.parse(self.config.message_pattern.schema_path)
         pattern_schema = etree.XMLSchema(pattern_schema_root)
-        xdomea_0501_pattern_etree = etree.parse(self.config.message_pattern.xdomea_0501_path)
+        parser = etree.XMLParser(remove_blank_text=True) 
+        xdomea_0501_pattern_etree = etree.parse(
+            self.config.message_pattern.xdomea_0501_path, 
+            parser, # removes intendation from patterns, necessary for pretty print output
+        )
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
-        xdomea_0503_pattern_etree = etree.parse(self.config.message_pattern.xdomea_0503_path)
+        xdomea_0503_pattern_etree = etree.parse(
+            self.config.message_pattern.xdomea_0503_path,
+            parser, # removes intendation from patterns, necessary for pretty print output
+        )
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
-        self.__extract_structure_patterns(xdomea_0501_pattern_root)
+        self.__extract_record_object_patterns(xdomea_0501_pattern_root)
         self.__generate_0501_message_structure(xdomea_0501_pattern_root)
+        self.__export_xdomea_0501_message(generated_message_ID, xdomea_0501_pattern_etree)
 
-    def __extract_structure_patterns(self, xdomea_0501_pattern_root: etree.Element):
+    def __extract_record_object_patterns(self, xdomea_0501_pattern_root: etree.Element):
         """
-        Extracts all file, process and document elements from the xdomea 0501 message pattern.
-        The structure elements will be removed from the pattern.
-        The sequence of extraction is important because some structure elements can contain other.
+        Extracts all record objects from the xdomea 0501 message pattern.
+        The elements will be removed from the pattern.
         """
-        # find all document elements in 0501 message
-        self.document_pattern_list = xdomea_0501_pattern_root.findall(
-            './/xdomea:Dokument', namespaces=xdomea_0501_pattern_root.nsmap)
-        # remove all documents from xdomea 0501 pattern
-        for document_pattern in self.document_pattern_list:
-            document_pattern.getparent().remove(document_pattern)
-        # find all process elements in 0501 message
-        self.process_pattern_list = xdomea_0501_pattern_root.findall(
-            './/xdomea:Vorgang', namespaces=xdomea_0501_pattern_root.nsmap)
-        # remove all processes from xdomea 0501 pattern
-        for process_pattern in self.process_pattern_list:
-            process_pattern.getparent().remove(process_pattern)
-        # find file document elements in 0501 message
-        self.file_pattern_list = xdomea_0501_pattern_root.findall(
-            './/xdomea:Akte', namespaces=xdomea_0501_pattern_root.nsmap)
-        # remove all files from xdomea 0501 pattern
-        for file_pattern in self.file_pattern_list:
-            file_pattern.getparent().remove(file_pattern)
+        self.record_object_pattern_list = xdomea_0501_pattern_root.findall(
+            './/xdomea:Schriftgutobjekt', namespaces=xdomea_0501_pattern_root.nsmap)
+        # remove all record objects from xdomea 0501 pattern
+        for record_object_pattern in self.record_object_pattern_list:
+            record_object_pattern.getparent().remove(record_object_pattern)
+
 
     def __generate_0501_message_structure(self, xdomea_0501_pattern_root: etree.Element):
         """
         Generates xdomea 0501 message structure with the configured constraints.
         """
-        # randomly choose file number
-        file_number = self.__get_random_number(
-            self.config.structure.min_number, self.config.structure.max_number)
-        for file_index in range(file_number):
-            # randomly choose file pattern
-            file_pattern = random.choice(self.file_pattern_list)
-            xdomea_0501_pattern_root.append(file_pattern)
+        
+        # # randomly choose file number
+        # file_number = self.__get_random_number(
+        #     self.config.structure.min_number, self.config.structure.max_number)
+        # for file_index in range(file_number):
+        #     # randomly choose file pattern
+        #     # deepcopy is necessary if a pattern is used multiple times
+        #     file_pattern = (deepcopy(random.choice(self.file_pattern_list)))
+        #     # add file pattern to message
+        #     xdomea_0501_pattern_root.append(file_pattern)
 
-    def __get_random_number(self, min: int, max: int):
+    def __export_xdomea_0501_message(
+        self, 
+        generated_message_ID: str, 
+        xdomea_0501_pattern_etree: etree,
+    ):
+        Path(self.config.output_dir).mkdir(parents=True, exist_ok=True)
+        xml_0501_name = generated_message_ID + self.regex_config.xdomea_0501_message_name
+        xml_0501_path = os.path.join(self.config.output_dir, xml_0501_name)
+        xdomea_0501_pattern_etree.write(
+            xml_0501_path, 
+            xml_declaration=True,
+            pretty_print=True, 
+            encoding='utf-8', 
+        )
+
+    def __get_random_number(self, min: int, max: int) -> int:
         """
         Necessary because range function fails if min equals max.
         :return random number in range
