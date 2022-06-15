@@ -8,6 +8,9 @@
 # prohibit xml schema directory
 schema
 
+# prohibit message directory
+messages
+
 # allow gitignore
 !.gitignore
 

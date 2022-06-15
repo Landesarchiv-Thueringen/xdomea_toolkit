@@ -18,7 +18,7 @@
         <!-- de: Dokumente -->
         <documents>
           <min_number>1</min_number>
-          <max_number>8</max_number>
+          <max_number>6</max_number>
         </documents>
       </processes>
     </files>

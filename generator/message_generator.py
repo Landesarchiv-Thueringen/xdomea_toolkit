@@ -201,6 +201,7 @@ class XdomeaMessageGenerator:
         """
         Extracts all record objects from the xdomea 0501 message pattern.
         The elements will be removed from the pattern.
+        :param xdomea_0501_pattern_root: root element of 0501 message
         """
         self.record_object_pattern_list = xdomea_0501_pattern_root.findall(
             './/xdomea:Schriftgutobjekt', namespaces=xdomea_0501_pattern_root.nsmap)
@@ -212,20 +213,74 @@ class XdomeaMessageGenerator:
     def __generate_0501_message_structure(self, xdomea_0501_pattern_root: etree.Element):
         """
         Generates xdomea 0501 message structure with the configured constraints.
+        :param xdomea_0501_pattern_root: root element of 0501 message
         """
+        # check if necessary structure exists in 0501 pattern
         xpath = './xdomea:Akte/xdomea:Akteninhalt/xdomea:Vorgang/xdomea:Dokument'
         file_pattern_list = [p for p in self.record_object_pattern_list 
             if p.find(xpath, namespaces=xdomea_0501_pattern_root.nsmap) is not None]
         assert file_pattern_list, 'kein Muster für Struktur Akte/Vorgang/Dokument definiert'
-        # randomly choose file number
+        # randomly choose file number for xdomea 0501 message
         file_number = self.__get_random_number(
             self.config.structure.min_number, self.config.structure.max_number)
         for file_index in range(file_number):
             # randomly choose file pattern
             # deepcopy is necessary if a pattern is used multiple times
             file_pattern = deepcopy(random.choice(file_pattern_list))
+            self.__generate_0501_process_structure(file_pattern)
             # add file pattern to message
             xdomea_0501_pattern_root.append(file_pattern)
+
+    def __generate_0501_process_structure(self, file_pattern: etree.Element):
+        """
+        Generates process structure for file pattern with the configured constraints.
+        :param file_pattern: xdomea file element extracted from pattern
+        """
+        file_content_element = file_pattern.find(
+            './xdomea:Akte/xdomea:Akteninhalt',
+            namespaces=file_pattern.nsmap,
+        )
+        process_pattern_list = file_content_element.findall(
+            './xdomea:Vorgang',
+            namespaces=file_content_element.nsmap,
+        )
+        # remove all process elements from file pattern
+        for process_pattern in process_pattern_list:
+            process_pattern.getparent().remove(process_pattern)
+        # randomly choose process number for file pattern
+        process_number = self.__get_random_number(
+            self.config.structure.process_structure.min_number, 
+            self.config.structure.process_structure.max_number,
+        )
+        for process_index in range(process_number):
+            # randomly choose process pattern
+            # deepcopy is necessary if a pattern is used multiple times
+            process_pattern = deepcopy(random.choice(process_pattern_list))
+            self.__generate_0501_document_structure(process_pattern)
+            file_content_element.append(process_pattern)
+
+    def __generate_0501_document_structure(self, process_pattern: etree.Element):
+        """
+        Generates document structure for process pattern with the configured constraints.
+        :param process_pattern: xdomea process element extracted from pattern
+        """
+        document_pattern_list = process_pattern.findall(
+            './xdomea:Dokument',
+            namespaces=process_pattern.nsmap,
+        )
+        # remove all document elements from process pattern
+        for document_pattern in document_pattern_list:
+            document_pattern.getparent().remove(document_pattern)
+        # randomly choose document number for process pattern
+        document_number = self.__get_random_number(
+            self.config.structure.process_structure.document_structure.min_number, 
+            self.config.structure.process_structure.document_structure.max_number,
+        )
+        for document_index in range(document_number):
+            # randomly choose document pattern
+            # deepcopy is necessary if a pattern is used multiple times
+            document_pattern = deepcopy(random.choice(document_pattern_list))
+            process_pattern.append(document_pattern)
 
     def __export_xdomea_0501_message(
         self, 
@@ -245,6 +300,8 @@ class XdomeaMessageGenerator:
     def __get_random_number(self, min: int, max: int) -> int:
         """
         Necessary because range function fails if min equals max.
+        :param min: min number of random range
+        :param max: max number of random range
         :return random number in range
         """
         return min if min == max else random.choice(range(min, max))
