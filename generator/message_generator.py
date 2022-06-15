@@ -192,10 +192,24 @@ class XdomeaMessageGenerator:
         )
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
+        self.__set_xdomea_process_id(xdomea_0501_pattern_root, generated_message_ID)
         self.__extract_record_object_patterns(xdomea_0501_pattern_root)
         self.__generate_0501_message_structure(xdomea_0501_pattern_root)
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         self.__export_xdomea_0501_message(generated_message_ID, xdomea_0501_pattern_etree)
+
+    def __set_xdomea_process_id(self, xdomea_message_root: etree.Element, process_id: str):
+        """
+        Set process ID for xdomea process (not equal to  the structure element de:Vorgang).
+        :param xdomea_message_root: root element of xdomea message
+
+        """
+        process_id_element = xdomea_message_root.find(
+            './xdomea:Kopf/xdomea:ProzessID',
+            namespaces=xdomea_message_root.nsmap,
+        )
+        assert process_id_element is not None
+        process_id_element.text = process_id
 
     def __extract_record_object_patterns(self, xdomea_0501_pattern_root: etree.Element):
         """
@@ -208,6 +222,32 @@ class XdomeaMessageGenerator:
         # remove all record objects from xdomea 0501 pattern
         for record_object_pattern in self.record_object_pattern_list:
             record_object_pattern.getparent().remove(record_object_pattern)
+
+    def __get_random_pattern(self, pattern_list: list[etree.Element]) -> etree.Element:
+        """
+        Randomly chooses pattern from list, creates a copy of the element and changes its ID.
+        :param pattern_list: list of xdomea patterns
+        :return: choosen xdomea pattern
+        """
+        # randomly choose pattern
+        # deepcopy is necessary if a pattern is used multiple times
+        pattern = deepcopy(random.choice(pattern_list))
+        # randomize xdomea ID to prevent the same xdomea IDs in the same message
+        self.__randomize_xdomea_id(pattern)
+        return pattern
+
+    def __randomize_xdomea_id(self, xdomea_element: etree.Element):
+        """
+        Randomizes ID from xdomea element.
+        :param xdomea_element: expected xdomea elements --> (de: Akte, de: Vorgang, de: Dokument)
+        """
+        # change only the first ID tag that is found
+        id_element = xdomea_element.find(
+            './/xdomea:Identifikation/xdomea:ID',
+            namespaces=xdomea_element.nsmap,
+        )
+        assert id_element is not None
+        id_element.text = str(uuid.uuid4())
 
 
     def __generate_0501_message_structure(self, xdomea_0501_pattern_root: etree.Element):
@@ -225,8 +265,7 @@ class XdomeaMessageGenerator:
             self.config.structure.min_number, self.config.structure.max_number)
         for file_index in range(file_number):
             # randomly choose file pattern
-            # deepcopy is necessary if a pattern is used multiple times
-            file_pattern = deepcopy(random.choice(file_pattern_list))
+            file_pattern = self.__get_random_pattern(file_pattern_list)
             self.__generate_0501_process_structure(file_pattern)
             # add file pattern to message
             xdomea_0501_pattern_root.append(file_pattern)
@@ -254,8 +293,7 @@ class XdomeaMessageGenerator:
         )
         for process_index in range(process_number):
             # randomly choose process pattern
-            # deepcopy is necessary if a pattern is used multiple times
-            process_pattern = deepcopy(random.choice(process_pattern_list))
+            process_pattern = self.__get_random_pattern(process_pattern_list)
             self.__generate_0501_document_structure(process_pattern)
             file_content_element.append(process_pattern)
 
@@ -278,8 +316,7 @@ class XdomeaMessageGenerator:
         )
         for document_index in range(document_number):
             # randomly choose document pattern
-            # deepcopy is necessary if a pattern is used multiple times
-            document_pattern = deepcopy(random.choice(document_pattern_list))
+            document_pattern = self.__get_random_pattern(document_pattern_list)
             process_pattern.append(document_pattern)
 
     def __export_xdomea_0501_message(
@@ -304,7 +341,8 @@ class XdomeaMessageGenerator:
         :param max: max number of random range
         :return random number in range
         """
-        return min if min == max else random.choice(range(min, max))
+        # max + 1 is necessary so that max is included in the range
+        return min if min == max else random.choice(range(min, max+1))
 
 
 def main():

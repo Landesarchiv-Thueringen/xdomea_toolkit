@@ -5,7 +5,7 @@
   <structure>
     <!-- de: Akten -->
     <files>
-      <min_number>1</min_number>
+      <min_number>2</min_number>
       <max_number>3</max_number>
       <!-- possible values: archive, random -->
       <evaluation>random</evaluation>
