@@ -59,6 +59,7 @@ class GeneratorConfig:
     test_data: TestDataConfig
     output_dir: str
 
+
 @dataclass
 class XdomeaRegexConfig:
     uuid: str
@@ -66,9 +67,16 @@ class XdomeaRegexConfig:
     xdomea_0503_message_name: str
 
 
+class XdomeaEvaluation(str, Enum):
+    EVALUATE = 'B'
+    ARCHIVE = 'A'
+    DISCARD = 'V'
+
+
 class XdomeaMessageGenerator:
     config: GeneratorConfig
     regex_config: XdomeaRegexConfig
+    record_object_evaluation: dict[str, str]
 
     def __init__(self):
         self.regex_config = XdomeaRegexConfig(
@@ -76,6 +84,7 @@ class XdomeaMessageGenerator:
             xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501.xml',
             xdomea_0503_message_name='_Aussonderung.Aussonderung.0503.xml',
         )
+        self.record_object_evaluation = {}
 
     def read_config(self, config_path: str, config_schema_path: str):
         """
@@ -197,13 +206,14 @@ class XdomeaMessageGenerator:
         # remove all record objects from xdomea 0501 pattern
         for record_object_pattern in record_object_pattern_list:
             record_object_pattern.getparent().remove(record_object_pattern)
-        self.__generate_0501_message_structure(
+        self.__generate_0501_file_structure(
             xdomea_0501_pattern_root,
             record_object_pattern_list,
         )
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
         self.__generate_0503_message_structure(xdomea_0501_pattern_root, xdomea_0503_pattern_root)
+        pattern_schema.assertValid(xdomea_0503_pattern_etree)
         # export messages
         self.__export_xdomea_message(
             generated_message_ID, 
@@ -215,6 +225,8 @@ class XdomeaMessageGenerator:
             self.regex_config.xdomea_0503_message_name,
             xdomea_0503_pattern_etree,
         )
+        # clear record object evaluations for next message generation
+        self.record_object_evaluation.clear()
 
     def __set_xdomea_process_id(self, xdomea_message_root: etree.Element, process_id: str):
         """
@@ -254,6 +266,19 @@ class XdomeaMessageGenerator:
         self.__randomize_xdomea_id(pattern)
         return pattern
 
+    def __get_xdomea_object_id(self, xdomea_element: etree.Element):
+        """
+        :param xdomea_element: expected xdomea elements --> (de: Akte, de: Vorgang, de: Dokument)
+        :return: xdomea object ID
+        """
+        # find the first ID tag
+        id_element = xdomea_element.find(
+            './/xdomea:Identifikation/xdomea:ID',
+            namespaces=xdomea_element.nsmap,
+        )
+        assert id_element is not None
+        return id_element.text
+
     def __randomize_xdomea_id(self, xdomea_element: etree.Element):
         """
         Randomizes ID from xdomea element.
@@ -268,7 +293,7 @@ class XdomeaMessageGenerator:
         id_element.text = str(uuid.uuid4())
 
 
-    def __generate_0501_message_structure(
+    def __generate_0501_file_structure(
         self, 
         xdomea_0501_pattern_root: etree.Element,
         record_object_pattern_list: list[etree.Element],
@@ -288,14 +313,28 @@ class XdomeaMessageGenerator:
         for file_index in range(file_number):
             # randomly choose file pattern
             file_pattern = self.__get_random_pattern(file_pattern_list)
+            self.__set_file_evaluation(file_pattern)
             self.__generate_0501_process_structure(file_pattern)
             # add file pattern to message
             xdomea_0501_pattern_root.append(file_pattern)
 
+    def __set_file_evaluation(self, file_pattern: etree.Element):
+        """
+        Chooses file evaluation dependent on configuration.
+        :param file_pattern: xdomea file element extracted from message pattern
+        """
+        file_id = self.__get_xdomea_object_id(file_pattern)
+        file_evaluation = XdomeaEvaluation.EVALUATE
+        if self.config.structure.file_evaluation == 'archive':
+            file_evaluation = XdomeaEvaluation.ARCHIVE
+        else: # random evaluation
+            file_evaluation = random.choice(list(XdomeaEvaluation))
+        self.record_object_evaluation[file_id] = file_evaluation
+
     def __generate_0501_process_structure(self, file_pattern: etree.Element):
         """
-        Generates process structure for file pattern with the configured constraints.
-        :param file_pattern: xdomea file element extracted from pattern
+        Sets process structure for file pattern with the configured constraints.
+        :param file_pattern: xdomea file element extracted from message pattern
         """
         file_content_element = file_pattern.find(
             './xdomea:Akte/xdomea:Akteninhalt',
@@ -313,16 +352,40 @@ class XdomeaMessageGenerator:
             self.config.structure.process_structure.min_number, 
             self.config.structure.process_structure.max_number,
         )
+        # get parent file info
+        file_id = self.__get_xdomea_object_id(file_pattern)
+        file_evaluation = self.record_object_evaluation[file_id]
         for process_index in range(process_number):
             # randomly choose process pattern
             process_pattern = self.__get_random_pattern(process_pattern_list)
+            self.__set_process_evaluation(process_pattern, file_evaluation)
             self.__generate_0501_document_structure(process_pattern)
             file_content_element.append(process_pattern)
+
+    def __set_process_evaluation(
+        self, 
+        process_pattern: etree.Element, 
+        file_evaluation: XdomeaEvaluation,
+    ):
+        """
+        Sets process evaluation dependent on configuration and parent file evaluation.
+        :param process_pattern: xdomea process element extracted from message pattern
+        :param file_evaluation: parent file evaluation
+        """
+        process_evaluation = XdomeaEvaluation.EVALUATE
+        if file_evaluation == XdomeaEvaluation.DISCARD:
+            process_evaluation = XdomeaEvaluation.DISCARD
+        elif self.config.structure.process_structure.process_evaluation == 'inherit':
+            process_evaluation = file_evaluation
+        else: # random evaluation
+            process_evaluation = random.choice(list(XdomeaEvaluation))
+        process_id = self.__get_xdomea_object_id(process_pattern)
+        self.record_object_evaluation[process_id] = process_evaluation
 
     def __generate_0501_document_structure(self, process_pattern: etree.Element):
         """
         Generates document structure for process pattern with the configured constraints.
-        :param process_pattern: xdomea process element extracted from pattern
+        :param process_pattern: xdomea process element extracted from message pattern
         """
         document_pattern_list = process_pattern.findall(
             './xdomea:Dokument',
@@ -348,6 +411,8 @@ class XdomeaMessageGenerator:
     ):
         """
         Generates xdomea 0503 message structure with the configured constraints.
+        The record objects from the 0501 message are copied in the 0503 message.
+        The record objects from the 0503 message are discarded.
         :param xdomea_0501_pattern_root: root element of 0501 message
         :param xdomea_0503_pattern_root: root element of 0503 message
         """
@@ -361,6 +426,44 @@ class XdomeaMessageGenerator:
         # add all record objects from xdomea 0501 pattern to 0503 message
         for record_object_pattern in record_object_pattern_list_0501:
             xdomea_0503_pattern_root.append(record_object_pattern)
+        self.__apply_object_evaluation_to_0503_message(xdomea_0503_pattern_root)
+
+    def __apply_object_evaluation_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
+        for object_id, evaluation in self.record_object_evaluation.items():
+            object_xpath = \
+                './/xdomea:Identifikation/xdomea:ID[contains(text(), "' + object_id + '")]/../..'
+            # xpath search is necessary for search with namespace and text content search
+            record_object = xdomea_0503_pattern_root.xpath(
+                object_xpath,
+                namespaces=xdomea_0503_pattern_root.nsmap,
+            )
+            assert len(record_object) == 1
+            self.__set_xdomea_evaluation(record_object[0], evaluation)
+
+    def __set_xdomea_evaluation(self, record_object: etree.Element, evaluation: XdomeaEvaluation):
+        xdomea_namespace = '{' + record_object.nsmap['xdomea'] + '}'
+        expected_tag_list = [xdomea_namespace + 'Akte', xdomea_namespace + 'Vorgang']
+        assert record_object.tag in expected_tag_list
+        metadata_archive_el = record_object.find(
+            './xdomea:ArchivspezifischeMetadaten', 
+            namespaces=record_object.nsmap,
+        )
+        if metadata_archive_el is None:
+            metadata_archive_el = etree.SubElement(
+                record_object, xdomea_namespace+'ArchivspezifischeMetadaten')
+        evaluation_el = metadata_archive_el.find(
+            './xdomea:Aussonderungsart', 
+            namespaces=record_object.nsmap,
+        )
+        if evaluation_el is None:
+            evaluation_el = etree.SubElement(record_object, xdomea_namespace+'Aussonderungsart')
+        evaluation_code_el = evaluation_el.find(
+            './xdomea:Aussonderungsart', 
+            namespaces=record_object.nsmap,
+        )
+        if evaluation_code_el is None:
+            evaluation_code_el = etree.SubElement(record_object, xdomea_namespace+'Aussonderungsart')
+        evaluation_code_el.text = evaluation
 
     def __export_xdomea_message(
         self, 
