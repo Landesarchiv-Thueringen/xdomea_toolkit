@@ -440,6 +440,21 @@ class XdomeaMessageGenerator:
             xdomea_0503_pattern_root.append(deepcopy(record_object_pattern))
         self.__apply_object_evaluation_to_0503_message(xdomea_0503_pattern_root)
 
+    def __get_record_object(self, id: str) -> etree.Element:
+        """
+        :param id: ID of target record object
+        :return: record object with given ID
+        """
+        object_xpath = \
+            './/xdomea:Identifikation/xdomea:ID[contains(text(), "' + object_id + '")]/../..'
+        # xpath search is necessary for search with namespace and text content search
+        record_object_list = xdomea_0503_pattern_root.xpath(
+            object_xpath,
+            namespaces=xdomea_0503_pattern_root.nsmap,
+        )
+        assert len(record_object_list) == 1
+        return record_object_list[0]
+
     def __apply_object_evaluation_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
         for object_id, evaluation in self.record_object_evaluation.items():
             object_xpath = \
