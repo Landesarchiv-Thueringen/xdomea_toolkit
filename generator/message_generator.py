@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
 from pathlib import Path
+from typing import Optional
 import os
 import random
 import uuid
@@ -206,7 +207,7 @@ class XdomeaMessageGenerator:
         record_object_pattern_list = self.__get_record_object_patterns(xdomea_0501_pattern_root)
         # remove all record objects from xdomea 0501 pattern
         for record_object_pattern in record_object_pattern_list:
-            record_object_pattern.getparent().remove(record_object_pattern)
+            self.__remove_element(record_object_pattern)
         self.__generate_0501_file_structure(
             xdomea_0501_pattern_root,
             record_object_pattern_list,
@@ -350,7 +351,7 @@ class XdomeaMessageGenerator:
         )
         # remove all process elements from file pattern
         for process_pattern in process_pattern_list:
-            process_pattern.getparent().remove(process_pattern)
+            self.__remove_element(process_pattern)
         # randomly choose process number for file pattern
         process_number = self.__get_random_number(
             self.config.structure.process_structure.min_number, 
@@ -405,7 +406,7 @@ class XdomeaMessageGenerator:
         )
         # remove all document elements from process pattern
         for document_pattern in document_pattern_list:
-            document_pattern.getparent().remove(document_pattern)
+            self.__remove_element(document_pattern)
         # randomly choose document number for process pattern
         document_number = self.__get_random_number(
             self.config.structure.process_structure.document_structure.min_number, 
@@ -434,40 +435,78 @@ class XdomeaMessageGenerator:
             xdomea_0503_pattern_root)
         # remove all record objects from xdomea 0503 pattern
         for record_object_pattern in record_object_pattern_list_0503:
-            record_object_pattern.getparent().remove(record_object_pattern)
+            self.__remove_element(record_object_pattern)
         # add all record objects from xdomea 0501 pattern to 0503 message
         for record_object_pattern in record_object_pattern_list_0501:
             xdomea_0503_pattern_root.append(deepcopy(record_object_pattern))
         self.__apply_object_evaluation_to_0503_message(xdomea_0503_pattern_root)
 
-    def __get_record_object(self, id: str) -> etree.Element:
+    def __get_record_object(
+        self, 
+        xdomea_message_root: etree.Element, 
+        id: str,
+    ) -> Optional[etree.Element]:
         """
+        :param xdomea_message_root: root element of xdomea message
         :param id: ID of target record object
-        :return: record object with given ID
+        :return: record object with given ID or None if object with ID doesn't exist
         """
         object_xpath = \
-            './/xdomea:Identifikation/xdomea:ID[contains(text(), "' + object_id + '")]/../..'
+            './/xdomea:Identifikation/xdomea:ID[contains(text(), "' + id + '")]/../..'
         # xpath search is necessary for search with namespace and text content search
-        record_object_list = xdomea_0503_pattern_root.xpath(
+        record_object_list = xdomea_message_root.xpath(
             object_xpath,
-            namespaces=xdomea_0503_pattern_root.nsmap,
+            namespaces=xdomea_message_root.nsmap,
         )
-        assert len(record_object_list) == 1
-        return record_object_list[0]
+        # the xdomea message is invalid if more than one object is found 
+        assert len(record_object_list) < 2
+        # if exactly one object is found, return it
+        if len(record_object_list) == 1:
+            return record_object_list[0]
 
     def __apply_object_evaluation_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
+        """
+        Sets evaluation that was choosen while generating the 0501 message.
+        Record objects with a discard evaluation will be removed from 0503 message.
+        :param xdomea_0503_pattern_root: root element of 0503 message
+        """
         for object_id, evaluation in self.record_object_evaluation.items():
-            object_xpath = \
-                './/xdomea:Identifikation/xdomea:ID[contains(text(), "' + object_id + '")]/../..'
-            # xpath search is necessary for search with namespace and text content search
-            record_object = xdomea_0503_pattern_root.xpath(
-                object_xpath,
-                namespaces=xdomea_0503_pattern_root.nsmap,
-            )
-            assert len(record_object) == 1
-            self.__set_xdomea_evaluation(record_object[0], evaluation)
+            record_object = self.__get_record_object(xdomea_0503_pattern_root, object_id)
+            # record object can be null if parent record object was already removed
+            if record_object is not None:
+                if evaluation == XdomeaEvaluation.DISCARD:
+                    self.__remove_record_object(record_object)
+                else:
+                    self.__set_xdomea_evaluation(record_object, evaluation)
+
+    def __remove_element(self, element: etree.Element):
+        """
+        Removes element from xml tree.
+        :param element: element from xml tree
+        """
+        parent = element.getparent()
+        assert parent is not None
+        parent.remove(element)
+
+    def __remove_record_object(self, record_object: etree.Element):
+        """
+        Removes record object from xdomea message.
+        :param record_object: record_object from xdomea message
+        """
+        xdomea_namespace = '{' + record_object.nsmap['xdomea'] + '}'
+        parent = record_object.getparent()
+        if parent.tag == xdomea_namespace + 'Schriftgutobjekt':
+            self.__remove_element(parent)
+        else:
+            self.__remove_element(record_object)
+
 
     def __set_xdomea_evaluation(self, record_object: etree.Element, evaluation: XdomeaEvaluation):
+        """
+        Set the evaluation of the record object.
+        Creates necessary structures if the pattern doesn't provide them.
+        :param record_object: record_object from xdomea message
+        """
         xdomea_namespace = '{' + record_object.nsmap['xdomea'] + '}'
         expected_tag_list = [xdomea_namespace + 'Akte', xdomea_namespace + 'Vorgang']
         assert record_object.tag in expected_tag_list
@@ -482,9 +521,9 @@ class XdomeaMessageGenerator:
             )
             if predecessor_el is None:
                 predecessor_el = record_object.find(
-                'xdomea:Identifikation', 
-                namespaces=record_object.nsmap,
-            )
+                    'xdomea:Identifikation', 
+                    namespaces=record_object.nsmap,
+                )
             metadata_archive_el = etree.Element(xdomea_namespace+'ArchivspezifischeMetadaten')
             predecessor_el.addnext(metadata_archive_el)
         evaluation_el = metadata_archive_el.find(
