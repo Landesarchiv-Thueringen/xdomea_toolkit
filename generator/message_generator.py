@@ -330,7 +330,7 @@ class XdomeaMessageGenerator:
         file_id = self.__get_xdomea_object_id(file_pattern)
         file_evaluation = XdomeaEvaluation.EVALUATE
         # first file is always archived to guarantee a valid message structure
-        if self.config.structure.file_evaluation == 'archive' or first_file:
+        if self.config.structure.file_evaluation == FileEvaluationConfig.ARCHIVE or first_file:
             file_evaluation = XdomeaEvaluation.ARCHIVE
         else: # random evaluation
             file_evaluation = random.choice(list(XdomeaEvaluation))
