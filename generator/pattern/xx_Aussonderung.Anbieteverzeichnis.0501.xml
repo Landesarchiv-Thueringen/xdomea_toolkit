@@ -60,7 +60,7 @@
         </xdomea:Typ>
       </xdomea:Anschrift>
       <xdomea:Kommunikation>
-        <xdomea:IstDienstlich>true</xdomea:IstDienstlich>
+        <xdomea:IstDienstlich>1</xdomea:IstDienstlich>
         <xdomea:Kanal>
           <code>002</code>
           <name>AbsXdomeaKommunikationKanalName</name>
@@ -133,7 +133,7 @@
         </xdomea:Typ>
       </xdomea:Anschrift>
       <xdomea:Kommunikation>
-        <xdomea:IstDienstlich>true</xdomea:IstDienstlich>
+        <xdomea:IstDienstlich>1</xdomea:IstDienstlich>
         <xdomea:Kanal>
           <code>002</code>
           <name>EmpXdomeaKommunikationKanalName</name>
@@ -163,7 +163,7 @@
       <xdomea:Version>20200729</xdomea:Version>
     </xdomea:SendendesSystem>
     <xdomea:Hinweis>xdomea Hinweis</xdomea:Hinweis>
-    <xdomea:Empfangsbestaetigung>true</xdomea:Empfangsbestaetigung>
+    <xdomea:Empfangsbestaetigung>1</xdomea:Empfangsbestaetigung>
   </xdomea:Kopf>
   <xdomea:Schriftgutobjekt>
     <xdomea:Akte>
@@ -185,8 +185,8 @@
       </xdomea:ArchivspezifischeMetadaten>
       <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
       <xdomea:Laufzeit>
-        <xdomea:Beginn>2018-07-24+02:00</xdomea:Beginn>
-        <xdomea:Ende>2018-07-24+02:00</xdomea:Ende>
+        <xdomea:Beginn>2018-07-24</xdomea:Beginn>
+        <xdomea:Ende>2018-07-24</xdomea:Ende>
       </xdomea:Laufzeit>
       <xdomea:Akteninhalt>
         <xdomea:Vorgang>
@@ -204,10 +204,10 @@
             </xdomea:Aussonderungsart>
           </xdomea:ArchivspezifischeMetadaten>
           <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
-          <xdomea:ZdA>true</xdomea:ZdA>
+          <xdomea:ZdA>1</xdomea:ZdA>
           <xdomea:Laufzeit>
-            <xdomea:Beginn>2018-07-24+02:00</xdomea:Beginn>
-            <xdomea:Ende>2018-07-24+02:00</xdomea:Ende>
+            <xdomea:Beginn>2018-07-24</xdomea:Beginn>
+            <xdomea:Ende>2018-07-24</xdomea:Ende>
           </xdomea:Laufzeit>
           <xdomea:Dokument>
             <xdomea:Identifikation>
@@ -217,9 +217,9 @@
               <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
               <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
             </xdomea:AllgemeineMetadaten>
-            <xdomea:Posteingangsdatum>2018-07-24+02:00</xdomea:Posteingangsdatum>
-            <xdomea:Postausgangsdatum>2018-07-24+02:00</xdomea:Postausgangsdatum>
-            <xdomea:DatumDesSchreibens>2018-07-24+02:00</xdomea:DatumDesSchreibens>
+            <xdomea:Posteingangsdatum>2018-07-24</xdomea:Posteingangsdatum>
+            <xdomea:Postausgangsdatum>2018-07-24</xdomea:Postausgangsdatum>
+            <xdomea:DatumDesSchreibens>2018-07-24</xdomea:DatumDesSchreibens>
             <xdomea:Bezug>Referenz (Testdaten)</xdomea:Bezug>
             <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
           </xdomea:Dokument>
