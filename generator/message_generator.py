@@ -38,8 +38,7 @@ class XdomeaMessageGenerator:
         :param config_path: path of xml config file
         :param config_schema_path: path of xml schema for config file
         """
-        config_parser = ConfigParser()
-        self.config = config_parser.parse_config(config_path, config_schema_path)
+        self.config = ConfigParser.parse_config(config_path, config_schema_path)
 
     def generate_xdomea_messages(self):
         """

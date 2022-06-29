@@ -55,7 +55,8 @@ class GeneratorConfig:
 
 class ConfigParser:
 
-    def parse_config(self, config_path: str, config_schema_path: str) -> GeneratorConfig:
+    @staticmethod
+    def parse_config(config_path: str, config_schema_path: str) -> GeneratorConfig:
         """
         Parses xml config file into object representation. Validates xml config file against schema.
         :param config_path: path of xml config file
@@ -67,15 +68,16 @@ class ConfigParser:
         config_schema.assertValid(config_etree)
         output_dir = config_etree.findtext('/output_dir')
         config = GeneratorConfig(
-            structure=self.__read_structure_config(config_etree),
-            message_pattern=self.__read_message_pattern_config(config_etree),
-            test_data=self.__read_test_data_config(config_etree),
+            structure=ConfigParser.__read_structure_config(config_etree),
+            message_pattern=ConfigParser.__read_message_pattern_config(config_etree),
+            test_data=ConfigParser.__read_test_data_config(config_etree),
             output_dir=output_dir,
         )
-        self.__validate_config(config)
+        ConfigParser.__validate_config(config)
         return config
 
-    def __read_structure_config(self, config_etree: etree.Element) -> FileStructureConfig:
+    @staticmethod
+    def __read_structure_config(config_etree: etree.Element) -> FileStructureConfig:
         """
         Parses message structure config into object representation.
         :param config_etree: element tree of xml config
@@ -110,7 +112,8 @@ class ConfigParser:
             process_structure=process_structure_config,
         )
 
-    def __read_message_pattern_config(self, config_etree: etree.Element) -> MessagePatternConfig:
+    @staticmethod
+    def __read_message_pattern_config(config_etree: etree.Element) -> MessagePatternConfig:
         """
         Parses message pattern config into object representation.
         :param config_etree: element tree of xml config
@@ -125,7 +128,8 @@ class ConfigParser:
             schema_path=schema_path,
         )
 
-    def __read_test_data_config(self, config_etree: etree.Element) -> TestDataConfig:
+    @staticmethod
+    def __read_test_data_config(config_etree: etree.Element) -> TestDataConfig:
         """
         Parses test data config into object representation.
         :param config_etree: element tree of xml config
@@ -136,7 +140,8 @@ class ConfigParser:
             root_dir=test_data_root_dir,
         )
 
-    def __validate_config(self, config: GeneratorConfig):
+    @staticmethod
+    def __validate_config(config: GeneratorConfig):
         """
         Validates parsed config. Checks the conditions which the schema validation couldn't check.
         Checks cross field conditions.
