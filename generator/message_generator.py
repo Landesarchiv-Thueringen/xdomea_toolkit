@@ -1,3 +1,4 @@
+from config import ConfigParser, FileEvaluationConfig
 from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
@@ -10,60 +11,7 @@ import uuid
 
 
 @dataclass
-class DocumentStructureConfig:
-    min_number: int
-    max_number: int
-
-
-class ProcessEvaluationConfig(Enum):
-    INHERIT = 1
-    RANDOM = 2
-
-
-@dataclass
-class ProcessStructureConfig:
-    min_number: int
-    max_number: int
-    process_evaluation: ProcessEvaluationConfig
-    document_structure: DocumentStructureConfig
-
-
-class FileEvaluationConfig(Enum):
-    ARCHIVE = 1
-    RANDOM = 2
-
-
-@dataclass
-class FileStructureConfig:
-    min_number: int
-    max_number: int
-    file_evaluation: FileEvaluationConfig
-    process_structure: ProcessStructureConfig
-
-
-@dataclass
-class MessagePatternConfig:
-    xdomea_0501_path: str
-    xdomea_0503_path: str
-    schema_path: str
-
-
-@dataclass
-class TestDataConfig:
-    root_dir: str
-
-
-@dataclass
-class GeneratorConfig:
-    structure: FileStructureConfig
-    message_pattern: MessagePatternConfig
-    test_data: TestDataConfig
-    output_dir: str
-
-
-@dataclass
 class XdomeaRegexConfig:
-    uuid: str
     xdomea_0501_message_name: str
     xdomea_0503_message_name: str
 
@@ -78,12 +26,11 @@ class XdomeaMessageGenerator:
 
     def __init__(self):
         self.regex_config = XdomeaRegexConfig(
-            uuid='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
             xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501.xml',
             xdomea_0503_message_name='_Aussonderung.Aussonderung.0503.xml',
         )
-        self.record_object_evaluation = {}
         self.supported_xdomea_version_list = ['2.3.0', '2.4.0', '3.0.0']
+        self.record_object_evaluation = {}
 
     def read_config(self, config_path: str, config_schema_path: str):
         """
@@ -91,94 +38,8 @@ class XdomeaMessageGenerator:
         :param config_path: path of xml config file
         :param config_schema_path: path of xml schema for config file
         """
-        config_etree = etree.parse(config_path)
-        config_schema_root = etree.parse(config_schema_path)
-        config_schema = etree.XMLSchema(config_schema_root)
-        config_schema.assertValid(config_etree)
-        output_dir = config_etree.findtext('/output_dir')
-        self.config = GeneratorConfig(
-            structure=self.__read_structure_config(config_etree),
-            message_pattern=self.__read_message_pattern_config(config_etree),
-            test_data=self.__read_test_data_config(config_etree),
-            output_dir=output_dir,
-        )
-        self.__validate_config()
-
-    def __read_structure_config(self, config_etree: etree.Element) -> FileStructureConfig:
-        """
-        Parses message structure config into object representation.
-        :param config_etree: element tree of xml config
-        :return: file structure config
-        """
-        files_min_number = int(config_etree.findtext('/structure/files/min_number'))
-        files_max_number = int(config_etree.findtext('/structure/files/max_number'))
-        files_evaluation = FileEvaluationConfig[config_etree.findtext(
-            '/structure/files/evaluation').upper()]
-        processes_min_number = int(config_etree.findtext('/structure/files/processes/min_number'))
-        processes_max_number = int(config_etree.findtext('/structure/files/processes/max_number'))
-        processes_evaluation = ProcessEvaluationConfig[config_etree.findtext(
-            '/structure/files/processes/evaluation').upper()]
-        documents_min_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/min_number'))
-        documents_max_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/max_number'))
-        document_structure_config = DocumentStructureConfig(
-            min_number=documents_min_number,
-            max_number=documents_max_number,
-        )
-        process_structure_config = ProcessStructureConfig(
-            min_number=processes_min_number,
-            max_number=processes_max_number,
-            process_evaluation=processes_evaluation,
-            document_structure=document_structure_config,
-        )
-        return FileStructureConfig(
-            min_number=files_min_number,
-            max_number=files_max_number,
-            file_evaluation=files_evaluation,
-            process_structure=process_structure_config,
-        )
-
-    def __read_message_pattern_config(self, config_etree: etree.Element) -> MessagePatternConfig:
-        """
-        Parses message pattern config into object representation.
-        :param config_etree: element tree of xml config
-        :return: message pattern config
-        """
-        xdomea_0501_path = config_etree.findtext('/message_pattern/xdomea_0501_path')
-        xdomea_0503_path = config_etree.findtext('/message_pattern/xdomea_0503_path')
-        schema_path = config_etree.findtext('/message_pattern/schema_path')
-        return MessagePatternConfig(
-            xdomea_0501_path=xdomea_0501_path,
-            xdomea_0503_path=xdomea_0503_path,
-            schema_path=schema_path,
-        )
-
-    def __read_test_data_config(self, config_etree: etree.Element) -> TestDataConfig:
-        """
-        Parses test data config into object representation.
-        :param config_etree: element tree of xml config
-        :return: test data config
-        """
-        test_data_root_dir = config_etree.findtext('/test_data/root_dir')
-        return TestDataConfig(
-            root_dir=test_data_root_dir,
-        )
-
-    def __validate_config(self):
-        """
-        Validates parsed config. Checks the conditions which the schema validation couldn't check.
-        Checks cross field conditions.
-        """
-        assert self.config.structure.min_number <= self.config.structure.max_number,\
-            'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
-        assert self.config.structure.process_structure.min_number <=\
-            self.config.structure.process_structure.max_number,\
-            'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
-        assert self.config.structure.process_structure.\
-            document_structure.min_number <= self.config.structure.\
-            process_structure.document_structure.max_number,\
-            'Strukturkonfiguration: maximale Dokumentenzahl ist kleiner als minimale Dokumentenzahl'
+        config_parser = ConfigParser()
+        self.config = config_parser.parse_config(config_path, config_schema_path)
 
     def generate_xdomea_messages(self):
         """
@@ -495,6 +356,14 @@ class XdomeaMessageGenerator:
         assert parent is not None
         parent.remove(element)
 
+    def __remove_elements(self, element_list: list[etree.Element]):
+        """
+        Removes all elements in list from xml tree.
+        :param element_list: list of elements from xml tree
+        """
+        for element in element_list:
+            self.__remove_element(element)
+
     def __remove_record_object(self, record_object: etree.Element):
         """
         Removes record object from xdomea message.
@@ -550,32 +419,44 @@ class XdomeaMessageGenerator:
         evaluation_code_el.text = evaluation
 
     def __add_document_versions_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
-        xdomea_namespace = '{' + xdomea_0503_pattern_root.nsmap['xdomea'] + '}'
+        document_list = xdomea_0503_pattern_root.findall(
+            './/xdomea:Dokument',
+            namespaces=xdomea_0503_pattern_root.nsmap,
+        )
+        for document in document_list:
+            version_list = document.findall(
+                './xdomea:Version',
+                namespaces=xdomea_0503_pattern_root.nsmap,
+            )
+            self.__remove_elements(version_list)
+            self.__add_document_version(document)
+
+    def __add_document_version(self, document_el: etree.Element):
+        xdomea_namespace = '{' + document_el.nsmap['xdomea'] + '}'
         if len(self.document_version_pattern_list) > 0:
-            pattern = random.choice(self.document_version_pattern_list)
+            pattern = deepcopy(random.choice(self.document_version_pattern_list))
         else:
             pattern = etree.Element(
                 xdomea_namespace+'Version', 
-                nsmap=xdomea_0503_pattern_root.nsmap,
+                nsmap=document_el.nsmap,
             )
-        version_number_el = pattern.find('xdomea:Nummer', namespaces=xdomea_0503_pattern_root.nsmap)
+        version_number_el = pattern.find('xdomea:Nummer', namespaces=document_el.nsmap)
         if version_number_el is None:
             version_number_el = etree.SubElement(
                 pattern,
                 xdomea_namespace+'Nummer',
-                nsmap=xdomea_0503_pattern_root.nsmap,
+                nsmap=document_el.nsmap,
             )
         # ToDo: generate semi random version number
         version_number_el.text = '1.0'
-        format_el = pattern.find('xdomea:Format', namespaces=xdomea_0503_pattern_root.nsmap)
+        format_el = pattern.find('xdomea:Format', namespaces=document_el.nsmap)
         if format_el is None:
             format_el = etree.Element(
                 xdomea_namespace+'Format',
-                nsmap=xdomea_0503_pattern_root.nsmap,
+                nsmap=document_el.nsmap,
             )
             version_number_el.addnext(format_el)
-
-
+        document_el.append(pattern)
 
     def __export_xdomea_message(
         self, 
