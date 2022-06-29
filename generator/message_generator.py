@@ -215,6 +215,7 @@ class XdomeaMessageGenerator:
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
         self.__generate_0503_message_structure(xdomea_0501_pattern_root, xdomea_0503_pattern_root)
+        self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root)
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         # export messages
         self.__export_xdomea_message(
@@ -424,11 +425,17 @@ class XdomeaMessageGenerator:
     ):
         """
         Generates xdomea 0503 message structure with the configured constraints.
+        Extracts the document version patterns from 0503 message.
         The record objects from the 0501 message are copied in the 0503 message.
         The record objects from the 0503 message are discarded.
         :param xdomea_0501_pattern_root: root element of 0501 message
         :param xdomea_0503_pattern_root: root element of 0503 message
         """
+        # extract document version pattern before removing record objects from 0503 message
+        self.document_version_pattern_list = xdomea_0503_pattern_root.findall(
+            './/xdomea:Dokument/xdomea:Version',
+            namespaces=xdomea_0503_pattern_root.nsmap,
+        )
         record_object_pattern_list_0501 = self.__get_record_object_patterns(
             xdomea_0501_pattern_root)
         record_object_pattern_list_0503 = self.__get_record_object_patterns(
@@ -541,6 +548,34 @@ class XdomeaMessageGenerator:
         if evaluation_code_el is None:
             evaluation_code_el = etree.SubElement(evaluation_el, 'code')
         evaluation_code_el.text = evaluation
+
+    def __add_document_versions_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
+        xdomea_namespace = '{' + xdomea_0503_pattern_root.nsmap['xdomea'] + '}'
+        if len(self.document_version_pattern_list) > 0:
+            pattern = random.choice(self.document_version_pattern_list)
+        else:
+            pattern = etree.Element(
+                xdomea_namespace+'Version', 
+                nsmap=xdomea_0503_pattern_root.nsmap,
+            )
+        version_number_el = pattern.find('xdomea:Nummer', namespaces=xdomea_0503_pattern_root.nsmap)
+        if version_number_el is None:
+            version_number_el = etree.SubElement(
+                pattern,
+                xdomea_namespace+'Nummer',
+                nsmap=xdomea_0503_pattern_root.nsmap,
+            )
+        # ToDo: generate semi random version number
+        version_number_el.text = '1.0'
+        format_el = pattern.find('xdomea:Format', namespaces=xdomea_0503_pattern_root.nsmap)
+        if format_el is None:
+            format_el = etree.Element(
+                xdomea_namespace+'Format',
+                nsmap=xdomea_0503_pattern_root.nsmap,
+            )
+            version_number_el.addnext(format_el)
+
+
 
     def __export_xdomea_message(
         self, 

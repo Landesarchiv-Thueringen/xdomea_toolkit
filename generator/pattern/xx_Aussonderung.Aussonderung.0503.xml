@@ -167,78 +167,23 @@
     <xdomea:RueckmeldungArchivkennung>1</xdomea:RueckmeldungArchivkennung>
   </xdomea:Kopf>
   <xdomea:Schriftgutobjekt>
-    <xdomea:Akte>
+    <xdomea:Dokument>
       <xdomea:Identifikation>
-        <xdomea:ID>cbdbfccc-72e5-44b2-9e71-937e6f4f8ce9</xdomea:ID>
+        <xdomea:ID>d9fc876a-3838-4e15-9203-15c703afe730</xdomea:ID>
       </xdomea:Identifikation>
-      <xdomea:AllgemeineMetadaten>
-        <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-        <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
-        <xdomea:Aktenplaneinheit>
-          <xdomea:Kennzeichen>Aktenplan-Kennzeichen (Testdaten)</xdomea:Kennzeichen>
-        </xdomea:Aktenplaneinheit>
-      </xdomea:AllgemeineMetadaten>
-      <xdomea:ArchivspezifischeMetadaten>
-        <xdomea:Aussonderungsart
-          listURI="urn:xoev-de:xdomea:codeliste:aussonderungsart" listVersionID="1.0">
-          <code>A</code>
-        </xdomea:Aussonderungsart>
-      </xdomea:ArchivspezifischeMetadaten>
-      <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
-      <xdomea:Laufzeit>
-        <xdomea:Beginn>2018-07-24</xdomea:Beginn>
-        <xdomea:Ende>2018-07-24</xdomea:Ende>
-      </xdomea:Laufzeit>
-      <xdomea:Akteninhalt>
-        <xdomea:Vorgang>
-          <xdomea:Identifikation>
-            <xdomea:ID>bf675c60-12c2-4ab1-826f-dcdf306d1733</xdomea:ID>
-          </xdomea:Identifikation>
-          <xdomea:AllgemeineMetadaten>
-            <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-            <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
-          </xdomea:AllgemeineMetadaten>
-          <xdomea:ArchivspezifischeMetadaten>
-            <xdomea:Aussonderungsart
-              listURI="urn:xoev-de:xdomea:codeliste:aussonderungsart" listVersionID="1.0">
-              <code>A</code>
-            </xdomea:Aussonderungsart>
-          </xdomea:ArchivspezifischeMetadaten>
-          <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
-          <xdomea:ZdA>1</xdomea:ZdA>
-          <xdomea:Laufzeit>
-            <xdomea:Beginn>2018-07-24</xdomea:Beginn>
-            <xdomea:Ende>2018-07-24</xdomea:Ende>
-          </xdomea:Laufzeit>
-          <xdomea:Dokument>
-            <xdomea:Identifikation>
-              <xdomea:ID>d9fc876a-3838-4e15-9203-15c703afe730</xdomea:ID>
-            </xdomea:Identifikation>
-            <xdomea:AllgemeineMetadaten>
-              <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-              <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
-            </xdomea:AllgemeineMetadaten>
-            <xdomea:Posteingangsdatum>2018-07-24</xdomea:Posteingangsdatum>
-            <xdomea:Postausgangsdatum>2018-07-24</xdomea:Postausgangsdatum>
-            <xdomea:DatumDesSchreibens>2018-07-24</xdomea:DatumDesSchreibens>
-            <xdomea:Bezug>Referenz (Testdaten)</xdomea:Bezug>
-            <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
-            <xdomea:Version>
-              <xdomea:Nummer/>
-              <xdomea:Format>
-                <xdomea:Name>
-                  <code>044</code>
-                  <name>pdf - Portable Document Format (Archival)</name>
-                </xdomea:Name>
-                <xdomea:Version>1b</xdomea:Version>
-                <xdomea:Primaerdokument>
-                  <xdomea:Dateiname>e8b289cb-f8dd-492a-b3cf-560674eaa92b_PDF-A1b_CMYK_20150731.pdf</xdomea:Dateiname>
-                </xdomea:Primaerdokument>
-              </xdomea:Format>
-            </xdomea:Version>
-          </xdomea:Dokument>
-        </xdomea:Vorgang>
-      </xdomea:Akteninhalt>
-    </xdomea:Akte>
+      <xdomea:Version>
+        <xdomea:Nummer/>
+        <xdomea:Format>
+          <xdomea:Name>
+            <code>044</code>
+            <name>pdf - Portable Document Format (Archival)</name>
+          </xdomea:Name>
+          <xdomea:Version>1b</xdomea:Version>
+          <xdomea:Primaerdokument>
+            <xdomea:Dateiname>e8b289cb-f8dd-492a-b3cf-560674eaa92b_PDF-A1b_CMYK_20150731.pdf</xdomea:Dateiname>
+          </xdomea:Primaerdokument>
+        </xdomea:Format>
+      </xdomea:Version>
+    </xdomea:Dokument>
   </xdomea:Schriftgutobjekt>
 </xdomea:Aussonderung.Aussonderung.0503>
