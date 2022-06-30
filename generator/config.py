@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
+import os
 
 @dataclass
 class DocumentStructureConfig:
@@ -52,6 +53,7 @@ class GeneratorConfig:
     message_pattern: MessagePatternConfig
     test_data: TestDataConfig
     output_dir: str
+
 
 class ConfigParser:
 
@@ -135,7 +137,7 @@ class ConfigParser:
         :param config_etree: element tree of xml config
         :return: test data config
         """
-        test_data_root_dir = config_etree.findtext('/test_data/root_dir')
+        test_data_root_dir = os.path.normpath(config_etree.findtext('/test_data/root_dir'))
         return TestDataConfig(
             root_dir=test_data_root_dir,
         )

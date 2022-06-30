@@ -3,10 +3,11 @@ from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
-from pathlib import Path
-from typing import Optional
 import os
+from pathlib import Path
 import random
+from typing import Optional
+from util import FileUtil
 import uuid
 
 
@@ -418,6 +419,7 @@ class XdomeaMessageGenerator:
         evaluation_code_el.text = evaluation
 
     def __add_document_versions_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
+        FileUtil.init_file_pool(self.config.test_data.root_dir)
         document_list = xdomea_0503_pattern_root.findall(
             './/xdomea:Dokument',
             namespaces=xdomea_0503_pattern_root.nsmap,
@@ -455,6 +457,7 @@ class XdomeaMessageGenerator:
                 nsmap=document_el.nsmap,
             )
             version_number_el.addnext(format_el)
+        FileUtil.get_file_format(FileUtil.next_file())
         document_el.append(pattern)
 
     def __export_xdomea_message(

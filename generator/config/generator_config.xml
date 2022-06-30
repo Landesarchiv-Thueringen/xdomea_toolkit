@@ -31,7 +31,7 @@
   </message_pattern>
 
   <test_data>
-    <root_dir>Z:/Projekt Digitales Magazin/Testdaten/Funktionspruefung/v9/01_Einzeldateien/Primaer_valide</root_dir>
+    <root_dir>H:/Testdaten/PDF-A</root_dir>
   </test_data>
 
   <output_dir>./messages</output_dir>
