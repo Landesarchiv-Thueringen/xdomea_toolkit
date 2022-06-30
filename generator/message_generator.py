@@ -457,7 +457,7 @@ class XdomeaMessageGenerator:
                 nsmap=document_el.nsmap,
             )
             version_number_el.addnext(format_el)
-        FileUtil.get_file_format(FileUtil.next_file())
+        FileUtil.detect_file_format(FileUtil.next_file())
         document_el.append(pattern)
 
     def __export_xdomea_message(

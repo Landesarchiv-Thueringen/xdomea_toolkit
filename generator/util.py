@@ -30,5 +30,5 @@ class FileUtil:
 		return file_path
 
 	@staticmethod
-	def get_file_format(file_path: str):
+	def detect_file_format(file_path: str):
 		print(magic.from_file(file_path))

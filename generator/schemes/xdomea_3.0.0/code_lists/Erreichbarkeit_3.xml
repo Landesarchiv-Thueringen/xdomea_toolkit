@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gc:CodeList xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/"
+             xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0"
+             xmlns:xoev-cl-2="http://xoev.de/schemata/genericode/2"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <Annotation>
+      <Description><!--Metadaten entsprechend XÖV-Handbuch 2.0-->
+         <xoev-cl:beschreibung>Eine Liste der Kommunikationsmedien und -kanäle, über die man eine Person oder Institution erreichen kann.</xoev-cl:beschreibung>
+         <xoev-cl:datumgueltigkeitab>2018-05-03</xoev-cl:datumgueltigkeitab>
+         <!--Metadaten entsprechend XÖV-Handbuch 2.1-->
+         <xoev-cl-2:nameKurz>Erreichbarkeit</xoev-cl-2:nameKurz>
+         <xoev-cl-2:beschreibung-codeliste>Eine Liste der Kommunikationsmedien und -kanäle, über die man eine Person oder Institution erreichen kann.</xoev-cl-2:beschreibung-codeliste>
+         <xoev-cl-2:herausgebernameKurz>KoSIT</xoev-cl-2:herausgebernameKurz>
+         <xoev-cl-2:datumGueltigkeitAb>2018-05-03</xoev-cl-2:datumGueltigkeitAb>
+         <xoev-cl-2:versionXOEVHandbuch>2.1</xoev-cl-2:versionXOEVHandbuch>
+         <xoev-cl-2:aenderungZurVorversion>Der Code 09 mit der Beschreibung "Web" wurde hinzugefügt. Die Beschreibung der Codeliste wurde angepasst, da die Codeliste auch zur Bestimmung der Erreichbarkeit von Institutionen genutzt werden kann. Konformität zu XÖV 2.1 wurde hergestellt. In diesem Rahmen wurden die Metadaten der Codeliste und ihrer Spalten konsolidiert und ergänzt.</xoev-cl-2:aenderungZurVorversion>
+      </Description>
+   </Annotation>
+   <Identification>
+      <ShortName>erreichbarkeit</ShortName>
+      <LongName>Kommunikationskanal / Erreichbarkeit</LongName>
+      <Version>3</Version>
+      <CanonicalUri>urn:de:xoev:codeliste:erreichbarkeit</CanonicalUri>
+      <CanonicalVersionUri>urn:de:xoev:codeliste:erreichbarkeit_3</CanonicalVersionUri>
+      <Agency>
+         <ShortName>KoSIT</ShortName>
+         <LongName>Koordinierungsstelle für IT-Standards</LongName>
+      </Agency>
+   </Identification>
+   <ColumnSet>
+      <Column Id="code" Use="required">
+         <ShortName>code</ShortName>
+         <LongName>Code</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="Beschreibung" Use="required">
+         <ShortName>Beschreibung</ShortName>
+         <LongName>Beschreibung</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="iana-uri-scheme" Use="optional">
+         <ShortName>iana-uri-scheme</ShortName>
+         <LongName>IANA Uniform Resource Identifier (URI) Scheme</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Key Id="codeKey">
+         <Annotation>
+            <AppInfo>
+               <xoev-cl:xoev-code/>
+               <xoev-cl-2:xoev-code/>
+            </AppInfo>
+         </Annotation>
+         <ShortName>codeKey</ShortName>
+         <ColumnRef Ref="code"/>
+      </Key>
+   </ColumnSet>
+   <SimpleCodeList>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>01</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>E-Mail</SimpleValue>
+         </Value>
+         <Value ColumnRef="iana-uri-scheme">
+            <SimpleValue>mailto</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>02</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Telefon Festnetz</SimpleValue>
+         </Value>
+         <Value ColumnRef="iana-uri-scheme">
+            <SimpleValue>tel</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>03</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Telefon mobil</SimpleValue>
+         </Value>
+         <Value ColumnRef="iana-uri-scheme">
+            <SimpleValue>tel</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>04</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Fax</SimpleValue>
+         </Value>
+         <Value ColumnRef="iana-uri-scheme">
+            <SimpleValue>tel</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>05</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Instant Messenger</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>06</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Pager</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>07</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Sonstiges</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>08</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>De-Mail</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>09</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>Web</SimpleValue>
+         </Value>
+         <Value ColumnRef="iana-uri-scheme">
+            <SimpleValue>http, https</SimpleValue>
+         </Value>
+      </Row>
+   </SimpleCodeList>
+</gc:CodeList>

@@ -31,7 +31,8 @@
   </message_pattern>
 
   <test_data>
-    <root_dir>H:/Testdaten/PDF-A</root_dir>
+    <root_dir>H:/Testdaten</root_dir>
+    <file_type_code_list></file_type_code_list>
   </test_data>
 
   <output_dir>./messages</output_dir>
