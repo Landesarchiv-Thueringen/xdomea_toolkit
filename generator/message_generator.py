@@ -30,7 +30,6 @@ class XdomeaMessageGenerator:
             xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501.xml',
             xdomea_0503_message_name='_Aussonderung.Aussonderung.0503.xml',
         )
-        self.supported_xdomea_version_list = ['2.3.0', '2.4.0', '3.0.0']
         self.record_object_evaluation = {}
 
     def read_config(self, config_path: str, config_schema_path: str):
@@ -46,19 +45,19 @@ class XdomeaMessageGenerator:
         Parses xdomea message patterns and validates against the pattern schema.
         """
         generated_message_ID = str(uuid.uuid4())
-        pattern_schema_tree = etree.parse(self.config.message_pattern.schema_path)
+        pattern_schema_tree = etree.parse(self.config.xdomea.schema_path)
         self.xdomea_schema_version = pattern_schema_tree.getroot().get('version')
-        assert self.xdomea_schema_version in self.supported_xdomea_version_list,\
-            'xdomea version ' + self.xdomea_schema_version + 'wird nicht unterstützt'
+        assert self.xdomea_schema_version == self.config.xdomea.version,\
+            'konfigurierte Version und Version der xdomea Schemadatei sind ungleich'
         pattern_schema = etree.XMLSchema(pattern_schema_tree)
-        parser = etree.XMLParser(remove_blank_text=True) 
+        parser = etree.XMLParser(remove_blank_text=True)
         xdomea_0501_pattern_etree = etree.parse(
-            self.config.message_pattern.xdomea_0501_path, 
+            self.config.xdomea.pattern_config.message_0501_path, 
             parser, # removes intendation from patterns, necessary for pretty print output
         )
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_etree = etree.parse(
-            self.config.message_pattern.xdomea_0503_path,
+            self.config.xdomea.pattern_config.message_0503_path,
             parser, # removes intendation from patterns, necessary for pretty print output
         )
         pattern_schema.assertValid(xdomea_0503_pattern_etree)

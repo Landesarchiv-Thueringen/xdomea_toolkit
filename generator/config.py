@@ -37,9 +37,16 @@ class FileStructureConfig:
 
 @dataclass
 class MessagePatternConfig:
-    xdomea_0501_path: str
-    xdomea_0503_path: str
+    message_0501_path: str
+    message_0503_path: str
+
+
+@dataclass
+class XdomeaConfig:
+    version: str
     schema_path: str
+    file_type_code_list_path: str
+    pattern_config: MessagePatternConfig
 
 
 @dataclass
@@ -50,7 +57,7 @@ class TestDataConfig:
 @dataclass
 class GeneratorConfig:
     structure: FileStructureConfig
-    message_pattern: MessagePatternConfig
+    xdomea: XdomeaConfig
     test_data: TestDataConfig
     output_dir: str
 
@@ -71,7 +78,7 @@ class ConfigParser:
         output_dir = config_etree.findtext('/output_dir')
         config = GeneratorConfig(
             structure=ConfigParser.__read_structure_config(config_etree),
-            message_pattern=ConfigParser.__read_message_pattern_config(config_etree),
+            xdomea=ConfigParser.__read_xdomea_config(config_etree),
             test_data=ConfigParser.__read_test_data_config(config_etree),
             output_dir=output_dir,
         )
@@ -115,19 +122,33 @@ class ConfigParser:
         )
 
     @staticmethod
-    def __read_message_pattern_config(config_etree: etree.Element) -> MessagePatternConfig:
+    def __read_xdomea_config(config_etree: etree.Element) -> XdomeaConfig:
         """
-        Parses message pattern config into object representation.
+        Parses xdomea config into object representation.
         :param config_etree: element tree of xml config
-        :return: message pattern config
+        :return: xdomea config
         """
-        xdomea_0501_path = config_etree.findtext('/message_pattern/xdomea_0501_path')
-        xdomea_0503_path = config_etree.findtext('/message_pattern/xdomea_0503_path')
-        schema_path = config_etree.findtext('/message_pattern/schema_path')
-        return MessagePatternConfig(
-            xdomea_0501_path=xdomea_0501_path,
-            xdomea_0503_path=xdomea_0503_path,
+        xdomea_config_el = config_etree.find('/xdomea')
+        target_version = xdomea_config_el.get('target_version')
+        version_el_list = xdomea_config_el.xpath(
+            './version/id[contains(text(), "' + target_version + '")]/..')
+        assert version_el_list is not None,\
+            'xdomea Konfiguration: angebene Konfiguration für Zielversion wurde nicht gefunden'
+        assert len(version_el_list) == 1,\
+            'xdomea Konfiguration: mehrere mögliche Konfigurationen für Zielversion gefunden'
+        version_el = version_el_list[0]
+        schema_path = version_el.findtext('./schema')
+        file_type_code_list_path = version_el.findtext('./file_type_code_list')
+        message_0501_path = version_el.findtext('./pattern/message_0501')
+        message_0503_path = version_el.findtext('./pattern/message_0503')
+        return XdomeaConfig(
+            version=target_version,
             schema_path=schema_path,
+            file_type_code_list_path=file_type_code_list_path,
+            pattern_config=MessagePatternConfig(
+                message_0501_path = message_0501_path,
+                message_0503_path = message_0503_path,
+            )
         )
 
     @staticmethod
