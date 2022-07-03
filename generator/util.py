@@ -4,12 +4,21 @@ from lxml import etree
 import magic
 import os
 import random
+import uuid
 
 
 @dataclass
 class XdomeaFileFormat:
     code: str
     name: str
+    suffix: str
+
+
+@dataclass
+class FileInfo:
+    xdomea_file_format: XdomeaFileFormat
+    xdomea_uuid: str
+    path: str
 
 
 class FileUtil:
@@ -48,6 +57,11 @@ class FileUtil:
 			FileUtil.__extract_xdomea_file_format_pre_version_3_0_0(code_list_root_el)
 
 	@staticmethod
+	def extract_format_suffix_from_name(xdomea_format_name: str) -> str:
+		format_name_parts = xdomea_format_name.split('-')
+		return '' if len(format_name_parts) == 1 else format_name_parts[0].strip()
+
+	@staticmethod
 	def __extract_xdomea_file_format_pre_version_3_0_0(code_list_root_el: str):
 		code_list = code_list_root_el.findall(
 			'xs:complexType[@name="DateiformatCodeType"]//xs:enumeration',
@@ -56,9 +70,11 @@ class FileUtil:
 		for code_el in code_list:
 			code = code_el.get('value')
 			name = code_el.findtext('.//codeName')
+			suffix = FileUtil.extract_format_suffix_from_name(name)
 			FileUtil.file_format_list.append(XdomeaFileFormat(
 				code=code,
 				name=name,
+				suffix=suffix,
 			))
 
 	@staticmethod
@@ -69,11 +85,33 @@ class FileUtil:
 		for code_el in code_list:
 			code = code_el.findtext('./Value[@ColumnRef="Code"]/SimpleValue')
 			name = code_el.findtext('./Value[@ColumnRef="Beschreibung"]/SimpleValue')
+			suffix = FileUtil.extract_format_suffix_from_name(name)
 			FileUtil.file_format_list.append(XdomeaFileFormat(
 				code=code,
 				name=name,
+				suffix=suffix,
 			))
 
 	@staticmethod
-	def detect_file_format(file_path: str):
-		print(magic.from_file(file_path))
+	def detect_file_format(file_path: str) -> str:
+		return magic.from_file(file_path)
+
+	@staticmethod
+	def get_file_info(file_path: str):
+		assert FileUtil.file_format_list is not None
+		file_suffix = os.path.splitext(file_path)[1]
+		# remove "." from file suffix for mapping with extracted xdomea formats
+		if len(file_suffix) > 0 :
+			file_suffix = file_suffix[1:]
+		possible_format_list = [f for f in FileUtil.file_format_list if file_suffix == f.suffix]
+		if len(possible_format_list) > 0:
+			xdomea_format = possible_format_list[0]
+		else:
+			xdomea_format = FileUtil.file_format_list[-1]
+		xdomea_uuid = str(uuid.uuid4())
+		return FileInfo(
+			xdomea_file_format = xdomea_format,
+			xdomea_uuid = xdomea_uuid,
+			path = file_path
+		)
+		
