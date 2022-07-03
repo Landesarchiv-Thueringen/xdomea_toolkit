@@ -375,7 +375,6 @@ class XdomeaMessageGenerator:
         else:
             self.__remove_element(record_object)
 
-
     def __set_xdomea_evaluation(self, record_object: etree.Element, evaluation: XdomeaEvaluation):
         """
         Set the evaluation of the record object.
@@ -418,6 +417,10 @@ class XdomeaMessageGenerator:
         evaluation_code_el.text = evaluation
 
     def __add_document_versions_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
+        FileUtil.extract_xdomea_file_format_list(
+            self.config.xdomea.file_type_code_list_path,
+            self.config.xdomea.version,
+        )
         FileUtil.init_file_pool(self.config.test_data.root_dir)
         document_list = xdomea_0503_pattern_root.findall(
             './/xdomea:Dokument',
