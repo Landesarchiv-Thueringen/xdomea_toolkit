@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gc:CodeList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0" xsi:schemaLocation="http://docs.oasis-open.org/codelist/ns/genericode/1.0/ http://docs.oasis-open.org/codelist/cs-genericode-1.0/xsd/genericode.xsd http://xoev.de/schemata/genericode/1_0 https://xoev.de/schemata/genericode/1_0/xoev-cl-attributes.xsd">
+	<Annotation>
+		<Description>
+			<xoev-cl:beschreibung>Der Datentyp zur Werteliste von Rückmeldungen für Fachverfahrensnachrichten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xoev-cl:beschreibung>
+			<xoev-cl:datumgueltigkeitab>2016-01-01</xoev-cl:datumgueltigkeitab>
+		</Description>
+	</Annotation>
+	<Identification>
+		<ShortName>AllgemeineRueckmeldung</ShortName>
+		<LongName>AllgemeineRueckmeldung</LongName>
+		<Version>1.0</Version>
+		<CanonicalUri>urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung</CanonicalUri>
+		<CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung_1.0</CanonicalVersionUri>
+		<Agency>
+			<ShortName>ag-xdomea</ShortName>
+			<LongName>AG xdomea des IT-Planungsrates</LongName>
+		</Agency>
+	</Identification>
+	<ColumnSet>
+		<Column Id="Code" Use="required">
+			<ShortName>Code</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Column Id="Beschreibung" Use="required">
+			<ShortName>Beschreibung</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Key Id="codeKey">
+			<Annotation>
+				<AppInfo>
+					<xoev-cl:xoev-code/>
+				</AppInfo>
+			</Annotation>
+			<ShortName>CodeKey</ShortName>
+			<ColumnRef Ref="Code"/>
+		</Key>
+	</ColumnSet>
+	<SimpleCodeList>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000000</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Ausführung wurde erfolgreich beendet.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das DMS ist nicht verfügbar oder antwortet nicht in angemessener Zeit (Time-out).</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Verbindungsabbruch.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die Kennung ist dem System nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Dem Benutzer bzw. der Rolle fehlen die erforderlichen Rechte zum Aufruf der Nachricht.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die ID des Fachverfahrens ist unbekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die ID der Verwaltung ist unbekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000007</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>DMS-Session-ID ungültig bzw. nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000008</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die übergebene XML-Struktur entspricht nicht dem angegebenen Schema und ist nicht valide.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000009</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Nachricht bereits verarbeitet.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000010</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapellänge kleiner oder gleich 0.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000011</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapellänge größer als 1 in der Dialogverarbeitung unzulässig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000012</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapellänge kleiner als 1 in der Stapelverarbeitung unzulässig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000013</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Länge des Stapels stimmt nicht mit der Anzahl der Objekte im Stapel überein.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000014</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapel syntaktisch nicht korrekt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000015</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Übertragungsfehler.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000016</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das Verzeichnis ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000017</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die URL ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000018</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Datei kann nicht gefunden werden.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000019</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Datenbanktabelle nicht zugreifbar.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000499</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Unbekannter Fehler</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000501</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das Fachverfahren ist nicht verfügbar oder antwortet nicht in an-gemessener Zeit (Time-out).</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000502</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Verbindungsabbruch.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000503</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die Kennung ist dem System nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000504</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Dem Benutzer fehlen die erforderlichen Rechte zum Aufruf der Nachricht.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000505</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die ID des Fachverfahrens ist nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000506</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die ID der Verwaltung ist nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000507</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>FV-Session-ID ungültig bzw. nicht bekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000508</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die übergebene XML-Struktur entspricht nicht dem angegebenen Schema und ist nicht valide.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000509</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Nachricht bereits verarbeitet.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000510</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapellänge kleiner oder gleich 0.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000511</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Länge des Stapels stimmt nicht mit der Anzahl der Objekte im Stapel überein.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000512</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Stapel syntaktisch nicht korrekt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000513</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Übertragungsfehler.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000514</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das Verzeichnis ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000515</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die URL ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000516</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Datei kann nicht gefunden werden.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0000999</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Unbekannter Fehler</SimpleValue>
+			</Value>
+		</Row>
+	</SimpleCodeList>
+</gc:CodeList>

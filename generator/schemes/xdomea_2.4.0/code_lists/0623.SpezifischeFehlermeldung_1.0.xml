@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gc:CodeList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0" xsi:schemaLocation="http://docs.oasis-open.org/codelist/ns/genericode/1.0/ http://docs.oasis-open.org/codelist/cs-genericode-1.0/xsd/genericode.xsd http://xoev.de/schemata/genericode/1_0 https://xoev.de/schemata/genericode/1_0/xoev-cl-attributes.xsd">
+	<Annotation>
+		<Description>
+			<xoev-cl:beschreibung>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0623 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xoev-cl:beschreibung>
+			<xoev-cl:datumgueltigkeitab>2016-01-01</xoev-cl:datumgueltigkeitab>
+		</Description>
+	</Annotation>
+	<Identification>
+		<ShortName>0623.SpezifischeFehlermeldung</ShortName>
+		<LongName>0623.SpezifischeFehlermeldung</LongName>
+		<Version>1.0</Version>
+		<CanonicalUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0623</CanonicalUri>
+		<CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0623_1.0</CanonicalVersionUri>
+		<Agency>
+			<ShortName>ag-xdomea</ShortName>
+			<LongName>AG xdomea des IT-Planungsrates</LongName>
+		</Agency>
+	</Identification>
+	<ColumnSet>
+		<Column Id="Code" Use="required">
+			<ShortName>Code</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Column Id="Beschreibung" Use="required">
+			<ShortName>Beschreibung</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Key Id="codeKey">
+			<Annotation>
+				<AppInfo>
+					<xoev-cl:xoev-code/>
+				</AppInfo>
+			</Annotation>
+			<ShortName>CodeKey</ShortName>
+			<ColumnRef Ref="Code"/>
+		</Key>
+	</ColumnSet>
+	<SimpleCodeList>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die ID des Schriftgutobjektes ist unbekannt/ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das Verzeichnis ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die URL ist ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Protokoll als Dateikann nicht abgelegt werden.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Protokoll als xdomea-Geschäftsgang kann nicht abgelegt werden.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Syntaxfehler in xdomea-Geschäftsgang-Daten.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0623007</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>HistorienProtokollinformationen konnten nicht angelegt werden.</SimpleValue>
+			</Value>
+		</Row>
+	</SimpleCodeList>
+</gc:CodeList>

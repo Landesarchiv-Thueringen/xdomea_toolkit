@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gc:CodeList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0" xsi:schemaLocation="http://docs.oasis-open.org/codelist/ns/genericode/1.0/ http://docs.oasis-open.org/codelist/cs-genericode-1.0/xsd/genericode.xsd http://xoev.de/schemata/genericode/1_0 https://xoev.de/schemata/genericode/1_0/xoev-cl-attributes.xsd">
+	<Annotation>
+		<Description>
+			<xoev-cl:beschreibung>Der Datentyp zur Werteliste von Konfigurationsparametern unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xoev-cl:beschreibung>
+			<xoev-cl:datumgueltigkeitab>2016-01-01</xoev-cl:datumgueltigkeitab>
+		</Description>
+	</Annotation>
+	<Identification>
+		<ShortName>Konfigurationsparameter</ShortName>
+		<LongName>Konfigurationsparameter</LongName>
+		<Version>1.0</Version>
+		<CanonicalUri>urn:xoev-de:xdomea:codeliste:konfigurationsparameter</CanonicalUri>
+		<CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:konfigurationsparameter_1.0</CanonicalVersionUri>
+		<Agency>
+			<ShortName>ag-xdomea</ShortName>
+			<LongName>AG xdomea des IT-Planungsrates</LongName>
+		</Agency>
+	</Identification>
+	<ColumnSet>
+		<Column Id="Code" Use="required">
+			<ShortName>Code</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Column Id="Beschreibung" Use="required">
+			<ShortName>Beschreibung</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Key Id="codeKey">
+			<Annotation>
+				<AppInfo>
+					<xoev-cl:xoev-code/>
+				</AppInfo>
+			</Annotation>
+			<ShortName>CodeKey</ShortName>
+			<ColumnRef Ref="Code"/>
+		</Key>
+	</ColumnSet>
+	<SimpleCodeList>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>001001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Transportweg</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>002001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Datenaustauschart</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>003001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Ablageort</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Name</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Hostname</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Port</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Bind_DN</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Password</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Base_DN</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004007</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_Searchfilter</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>004008</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>LDAP_MaxResult</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Name</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Hostname</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Datenbank</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Tabelle</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Benutzername</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Passwort</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>005007</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>SQL_Query</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_Name</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR1</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR2</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR3</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR4</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR5</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006007</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR6</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006008</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR7</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006009</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR8</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006010</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR9</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>006011</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ADDR_ATTR10</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>007001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Standardablage</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>008001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>komprimierter Datenaustausch</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>008002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Kompressionsverfahren</SimpleValue>
+			</Value>
+		</Row>
+	</SimpleCodeList>
+</gc:CodeList>

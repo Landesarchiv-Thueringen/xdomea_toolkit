@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gc:CodeList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0" xsi:schemaLocation="http://docs.oasis-open.org/codelist/ns/genericode/1.0/ http://docs.oasis-open.org/codelist/cs-genericode-1.0/xsd/genericode.xsd http://xoev.de/schemata/genericode/1_0 https://xoev.de/schemata/genericode/1_0/xoev-cl-attributes.xsd">
+	<Annotation>
+		<Description>
+			<xoev-cl:beschreibung>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0611 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xoev-cl:beschreibung>
+			<xoev-cl:datumgueltigkeitab>2016-01-01</xoev-cl:datumgueltigkeitab>
+		</Description>
+	</Annotation>
+	<Identification>
+		<ShortName>0611.SpezifischeFehlermeldung</ShortName>
+		<LongName>0611.SpezifischeFehlermeldung</LongName>
+		<Version>1.0</Version>
+		<CanonicalUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0611</CanonicalUri>
+		<CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0611_1.0</CanonicalVersionUri>
+		<Agency>
+			<ShortName>ag-xdomea</ShortName>
+			<LongName>AG xdomea des IT-Planungsrates</LongName>
+		</Agency>
+	</Identification>
+	<ColumnSet>
+		<Column Id="Code" Use="required">
+			<ShortName>Code</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Column Id="Beschreibung" Use="required">
+			<ShortName>Beschreibung</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Key Id="codeKey">
+			<Annotation>
+				<AppInfo>
+					<xoev-cl:xoev-code/>
+				</AppInfo>
+			</Annotation>
+			<ShortName>CodeKey</ShortName>
+			<ColumnRef Ref="Code"/>
+		</Key>
+	</ColumnSet>
+	<SimpleCodeList>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die UUID des Objektes ist ungültig/unbekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Der Name des Metadatums ist ungültig/unbekannt.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611003</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Das Metadatum kann nicht ausgelesen werden.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611004</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die Beschreibung des Metadatums weicht von der vorhandenen Beschreibung ab.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611005</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Der Datentyp des Metadatums weicht von dem vorhandenen Daten-typ ab.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0611006</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Der Wert des Metadatums weicht von dem vorhandenen Wert ab.</SimpleValue>
+			</Value>
+		</Row>
+	</SimpleCodeList>
+</gc:CodeList>

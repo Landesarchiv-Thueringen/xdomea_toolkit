@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gc:CodeList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" xmlns:xoev-cl="http://xoev.de/schemata/genericode/1_0" xsi:schemaLocation="http://docs.oasis-open.org/codelist/ns/genericode/1.0/ http://docs.oasis-open.org/codelist/cs-genericode-1.0/xsd/genericode.xsd http://xoev.de/schemata/genericode/1_0 https://xoev.de/schemata/genericode/1_0/xoev-cl-attributes.xsd">
+	<Annotation>
+		<Description>
+			<xoev-cl:beschreibung>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0632 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xoev-cl:beschreibung>
+			<xoev-cl:datumgueltigkeitab>2016-01-01</xoev-cl:datumgueltigkeitab>
+		</Description>
+	</Annotation>
+	<Identification>
+		<ShortName>0632.SpezifischeFehlermeldung</ShortName>
+		<LongName>0632.SpezifischeFehlermeldung</LongName>
+		<Version>1.0</Version>
+		<CanonicalUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0632</CanonicalUri>
+		<CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0632_1.0</CanonicalVersionUri>
+		<Agency>
+			<ShortName>ag-xdomea</ShortName>
+			<LongName>AG xdomea des IT-Planungsrates</LongName>
+		</Agency>
+	</Identification>
+	<ColumnSet>
+		<Column Id="Code" Use="required">
+			<ShortName>Code</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Column Id="Beschreibung" Use="required">
+			<ShortName>Beschreibung</ShortName>
+			<Data Type="string"/>
+		</Column>
+		<Key Id="codeKey">
+			<Annotation>
+				<AppInfo>
+					<xoev-cl:xoev-code/>
+				</AppInfo>
+			</Annotation>
+			<ShortName>CodeKey</ShortName>
+			<ColumnRef Ref="Code"/>
+		</Key>
+	</ColumnSet>
+	<SimpleCodeList>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0632001</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>ID des Schriftgutobjektes nicht bekannt/ungültig.</SimpleValue>
+			</Value>
+		</Row>
+		<Row>
+			<Value ColumnRef="Code">
+				<SimpleValue>0632002</SimpleValue>
+			</Value>
+			<Value ColumnRef="Beschreibung">
+				<SimpleValue>Die zdA-Verfügung kann nicht aufgehoben werden.</SimpleValue>
+			</Value>
+		</Row>
+	</SimpleCodeList>
+</gc:CodeList>

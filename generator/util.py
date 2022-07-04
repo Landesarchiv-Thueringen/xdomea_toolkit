@@ -56,10 +56,10 @@ class FileUtil:
 	def extract_xdomea_file_format_list(code_list_path: str, xdomea_version: str):
 		code_list_etree = etree.parse(code_list_path)
 		code_list_root_el = code_list_etree.getroot()
-		if xdomea_version == '3.0.0':
-			FileUtil.__extract_xdomea_file_format_version_3_0_0(code_list_root_el)
+		if xdomea_version == '2.3.0':
+			FileUtil.__extract_xdomea_file_format_version_2_3_0(code_list_root_el)
 		else:
-			FileUtil.__extract_xdomea_file_format_pre_version_3_0_0(code_list_root_el)
+			FileUtil.__extract_xdomea_file_format_post_version_2_3_0(code_list_root_el)
 
 	@staticmethod
 	def extract_format_suffix_from_name(xdomea_format_name: str) -> str:
@@ -67,7 +67,7 @@ class FileUtil:
 		return '' if len(format_name_parts) == 1 else format_name_parts[0].strip()
 
 	@staticmethod
-	def __extract_xdomea_file_format_pre_version_3_0_0(code_list_root_el: str):
+	def __extract_xdomea_file_format_version_2_3_0(code_list_root_el: str):
 		code_list = code_list_root_el.findall(
 			'xs:complexType[@name="DateiformatCodeType"]//xs:enumeration',
 			namespaces=code_list_root_el.nsmap)
@@ -83,7 +83,7 @@ class FileUtil:
 			))
 
 	@staticmethod
-	def __extract_xdomea_file_format_version_3_0_0(code_list_root_el: str):
+	def __extract_xdomea_file_format_post_version_2_3_0(code_list_root_el: str):
 		code_list = code_list_root_el.findall(
 			'.//SimpleCodeList/Row')
 		FileUtil.file_format_list = []

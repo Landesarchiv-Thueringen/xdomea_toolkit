@@ -24,23 +24,23 @@
     </files>
   </structure>
 
-  <xdomea target_version="2.3.0">
+  <xdomea target_version="2.4.0">
     <version>
       <id>2.3.0</id>
       <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
       <file_type_code_list>schemes/xdomea_2.3.0/xdomea-Datentypen.xsd</file_type_code_list>
       <pattern>
-        <message_0501>pattern/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-        <message_0503>pattern/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
       </pattern>
     </version>
     <version>
       <id>2.4.0</id>
       <schema>schemes/xdomea_2.4.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
-      <file_type_code_list>schemes/xdomea_2.4.0/xdomea-Datentypen.xsd</file_type_code_list>
+      <file_type_code_list>schemes/xdomea_2.4.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
       <pattern>
-        <message_0501>pattern/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-        <message_0503>pattern/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
       </pattern>
     </version>
     <version>
@@ -48,8 +48,8 @@
       <schema>schemes/xdomea_3.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
       <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
       <pattern>
-        <message_0501>pattern/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-        <message_0503>pattern/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
       </pattern>
     </version>
   </xdomea>
