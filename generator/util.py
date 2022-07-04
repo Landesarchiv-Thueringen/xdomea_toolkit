@@ -18,6 +18,8 @@ class XdomeaFileFormat:
 class FileInfo:
     xdomea_file_format: XdomeaFileFormat
     detected_file_info: str
+    detected_format_name: str
+    detected_format_version: str
     xdomea_uuid: str
     path: str
 
@@ -98,6 +100,20 @@ class FileUtil:
 		return magic.from_file(file_path)
 
 	@staticmethod
+	def extract_format_name(detected_file_info: str) -> str:
+		info_list = detected_file_info.split(',')
+		return info_list[0]
+
+	@staticmethod
+	def extract_format_version(detected_file_info: str) -> str:
+		info_list = detected_file_info.split(',')
+		version_info_list = [info for info in info_list if 'version' in info]
+		if len(version_info_list) == 0:
+			return ''
+		version_info = version_info_list[0].replace('version', '')
+		return version_info
+
+	@staticmethod
 	def get_file_info(file_path: str):
 		assert FileUtil.file_format_list is not None
 		file_suffix = os.path.splitext(file_path)[1]
@@ -111,9 +127,13 @@ class FileUtil:
 			xdomea_format = FileUtil.file_format_list[-1]
 		xdomea_uuid = str(uuid.uuid4())
 		detected_file_info = FileUtil.detect_file_format(file_path)
+		detected_format_name = FileUtil.extract_format_name(detected_file_info)
+		detected_format_version = FileUtil.extract_format_version(detected_file_info)
 		return FileInfo(
 			xdomea_file_format=xdomea_format,
 			detected_file_info=detected_file_info,
+			detected_format_name=detected_format_name,
+			detected_format_version=detected_format_version,
 			xdomea_uuid=xdomea_uuid,
 			path=file_path,
 		)
