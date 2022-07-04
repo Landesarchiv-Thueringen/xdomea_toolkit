@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xdomea:Aussonderung.Aussonderung.0503
-  xmlns:xdomea="urn:xoev-de:xdomea:schema:2.3.0"
+  xmlns:xdomea="urn:xoev-de:xdomea:schema:3.0.0"
   xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
   xmlns:xoev-lc="http://xoev.de/latinchars/1_1/datatypes"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="urn:xoev-de:xdomea:schema:2.3.0 http://xdomea.de/schemata/230/xdomea-Nachrichten-AussonderungDurchfuehren.xsd">
+  xsi:schemaLocation="urn:xoev-de:xdomea:schema:3.0.0 http://xdomea.de/schemata/300/xdomea-Nachrichten-AussonderungDurchfuehren.xsd">
   <xdomea:Kopf>
     <xdomea:ProzessID>242f44e8-bebf-4503-a086-db252c6a4277</xdomea:ProzessID>
     <xdomea:Nachrichtentyp>
@@ -13,10 +13,10 @@
     <xdomea:Erstellungszeitpunkt>2018-07-24T17:25:39</xdomea:Erstellungszeitpunkt>
     <xdomea:Absender>
       <xdomea:Behoerdenkennung>
-        <xdomea:Kennung listURI="" listVersionID="">
+        <xdomea:Behoerdenschluessel listURI="" listVersionID="">
           <code>LATh</code>
           <name>AbsBehoerdenkennungKennungName</name>
-        </xdomea:Kennung>
+        </xdomea:Behoerdenschluessel>
         <xdomea:Praefix listURI="" listVersionID="">
           <code>AbsBehoerdenkennungPraefixCode</code>
           <name>AbsBehoerdenkennungPraefixName</name>
@@ -61,9 +61,8 @@
       </xdomea:Anschrift>
       <xdomea:Kommunikation>
         <xdomea:IstDienstlich>1</xdomea:IstDienstlich>
-        <xdomea:Kanal>
+        <xdomea:Kanal listURI="urn:de:xoev:codeliste:erreichbarkeit" listVersionID="3.0">
           <code>002</code>
-          <name>AbsXdomeaKommunikationKanalName</name>
         </xdomea:Kanal>
         <xdomea:Kennung>AbsXdomeaKommunikationKennung+49123456789</xdomea:Kennung>
         <xdomea:Zusatz>AbsXdomeaKommunikationZusatz</xdomea:Zusatz>
@@ -86,10 +85,10 @@
     </xdomea:Absender>
     <xdomea:Empfaenger>
       <xdomea:Behoerdenkennung>
-        <xdomea:Kennung listURI="" listVersionID="">
+        <xdomea:Behoerdenschluessel listURI="" listVersionID="">
           <code>LATh</code>
           <name>Landesarchiv Thüringen</name>
-        </xdomea:Kennung>
+        </xdomea:Behoerdenschluessel>
         <xdomea:Praefix listURI="" listVersionID="">
           <code>EmpBehoerdenkennungPraefixCode</code>
           <name>EmpBehoerdenkennungPraefixName</name>
@@ -134,9 +133,8 @@
       </xdomea:Anschrift>
       <xdomea:Kommunikation>
         <xdomea:IstDienstlich>1</xdomea:IstDienstlich>
-        <xdomea:Kanal>
+        <xdomea:Kanal listURI="urn:de:xoev:codeliste:erreichbarkeit" listVersionID="3.0">
           <code>002</code>
-          <name>EmpXdomeaKommunikationKanalName</name>
         </xdomea:Kanal>
         <xdomea:Kennung>EmpAbsXdomeaKommunikationKennung+499876543210</xdomea:Kennung>
         <xdomea:Zusatz>EmpXdomeaKommunikationZusatz</xdomea:Zusatz>
@@ -165,6 +163,7 @@
     <xdomea:Hinweis>xdomea Hinweis</xdomea:Hinweis>
     <xdomea:Importbestaetigung>1</xdomea:Importbestaetigung>
     <xdomea:RueckmeldungArchivkennung>1</xdomea:RueckmeldungArchivkennung>
+    <xdomea:Empfangsbestaetigung>1</xdomea:Empfangsbestaetigung>
   </xdomea:Kopf>
   <xdomea:Schriftgutobjekt>
     <xdomea:Dokument>
@@ -174,9 +173,8 @@
       <xdomea:Version>
         <xdomea:Nummer/>
         <xdomea:Format>
-          <xdomea:Name>
+          <xdomea:Name listURI="urn:xoev-de:xdomea:codeliste:dateiformat" listVersionID="1.0">
             <code>044</code>
-            <name>pdf - Portable Document Format (Archival)</name>
           </xdomea:Name>
           <xdomea:Version>1b</xdomea:Version>
           <xdomea:Primaerdokument>

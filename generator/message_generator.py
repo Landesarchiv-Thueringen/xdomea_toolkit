@@ -408,8 +408,13 @@ class XdomeaMessageGenerator:
                 metadata_archive_el, 
                 xdomea_namespace+'Aussonderungsart',
             )
-        # ToDo: fix for version 3.0.0
-        assert self.xdomea_schema_version != '3.0.0'
+        if self.xdomea_schema_version == '3.0.0':
+            evaluation_predefined_el = evaluation_el.find(
+                './xdomea:Aussonderungsart', 
+                namespaces=evaluation_el.nsmap,
+            )
+            if evaluation_predefined_el is None:
+                
         evaluation_code_el = evaluation_el.find('code')
         if evaluation_code_el is None:
             evaluation_code_el = etree.SubElement(evaluation_el, 'code')
@@ -480,11 +485,14 @@ class XdomeaMessageGenerator:
             code_el = etree.Element('code')
             format_name_el.insert(0, code_el)
         code_el.text = file_info.xdomea_file_format.code
-        name_el = format_name_el.find('name')
-        if name_el is None:
-            name_el = etree.Element('name')
-            code_el.addnext(name_el)
-        name_el.text = file_info.xdomea_file_format.name
+        # ToDo: research reason why name element in code element for format name is prohibited
+        #       concerns only xdomea 3.0.0
+        if self.xdomea_schema_version != '3.0.0':
+            name_el = format_name_el.find('name')
+            if name_el is None:
+                name_el = etree.Element('name')
+                code_el.addnext(name_el)
+            name_el.text = file_info.xdomea_file_format.name
         if file_info.xdomea_file_format.name == 'Sonstiges':
             other_name_el = format_el.find('xdomea:SonstigerName', namespaces=format_el.nsmap)
             if other_name_el is None:

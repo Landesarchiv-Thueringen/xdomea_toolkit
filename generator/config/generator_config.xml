@@ -24,7 +24,7 @@
     </files>
   </structure>
 
-  <xdomea target_version="2.4.0">
+  <xdomea target_version="3.0.0">
     <version>
       <id>2.3.0</id>
       <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
