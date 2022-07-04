@@ -17,6 +17,7 @@ class XdomeaFileFormat:
 @dataclass
 class FileInfo:
     xdomea_file_format: XdomeaFileFormat
+    detected_file_info: str
     xdomea_uuid: str
     path: str
 
@@ -109,9 +110,11 @@ class FileUtil:
 		else:
 			xdomea_format = FileUtil.file_format_list[-1]
 		xdomea_uuid = str(uuid.uuid4())
+		detected_file_info = FileUtil.detect_file_format(file_path)
 		return FileInfo(
-			xdomea_file_format = xdomea_format,
-			xdomea_uuid = xdomea_uuid,
-			path = file_path
+			xdomea_file_format=xdomea_format,
+			detected_file_info=detected_file_info,
+			xdomea_uuid=xdomea_uuid,
+			path=file_path,
 		)
 		
