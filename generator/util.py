@@ -21,6 +21,8 @@ class FileInfo:
     detected_format_name: str
     detected_format_version: str
     xdomea_uuid: str
+    original_file_name: str
+    xdomea_file_name: str
     path: str
 
 
@@ -126,6 +128,8 @@ class FileUtil:
 		else:
 			xdomea_format = FileUtil.file_format_list[-1]
 		xdomea_uuid = str(uuid.uuid4())
+		original_file_name = os.path.basename(file_path)
+		xdomea_file_name = xdomea_uuid + '_' + original_file_name
 		detected_file_info = FileUtil.detect_file_format(file_path)
 		detected_format_name = FileUtil.extract_format_name(detected_file_info)
 		detected_format_version = FileUtil.extract_format_version(detected_file_info)
@@ -135,6 +139,8 @@ class FileUtil:
 			detected_format_name=detected_format_name,
 			detected_format_version=detected_format_version,
 			xdomea_uuid=xdomea_uuid,
+			original_file_name=original_file_name,
+			xdomea_file_name=xdomea_file_name,
 			path=file_path,
 		)
 		

@@ -458,9 +458,11 @@ class XdomeaMessageGenerator:
                 xdomea_namespace+'Format',
                 nsmap=document_el.nsmap,
             )
+            # ToDo: secure format is inserted add the correct position
             version_number_el.addnext(format_el)
         file_info = FileUtil.get_file_info(FileUtil.next_file())
         self.__add_format_info(format_el, file_info)
+        self.__add_primary_file(format_el, file_info)
         document_el.append(pattern)
 
     def __add_format_info(self, format_el: etree.Element, file_info: FileInfo):
@@ -493,7 +495,7 @@ class XdomeaMessageGenerator:
             other_name_el.text = file_info.detected_format_name
             self.__add_format_version(format_el, other_name_el, file_info)
         else:
-            self.__add_format_version(format_el, name_el, file_info)
+            self.__add_format_version(format_el, format_name_el, file_info)
 
     def __add_format_version(
         self,
@@ -511,6 +513,27 @@ class XdomeaMessageGenerator:
             predecessor_el.addnext(version_el)
         version_el.text = file_info.detected_format_version
 
+    def __add_primary_file(
+        self,
+        format_el: etree.Element,
+        file_info: FileInfo,
+    ):
+        xdomea_namespace = '{' + format_el.nsmap['xdomea'] + '}'
+        file_el = format_el.find('xdomea:Primaerdokument', namespaces=format_el.nsmap)
+        if file_el is None:
+            file_el = etree.Element(
+                xdomea_namespace+'Primaerdokument',
+                nsmap=format_el.nsmap,
+            )
+            format_el.append(file_el)
+        file_name_el = file_el.find('xdomea:Dateiname', namespaces=format_el.nsmap)
+        if file_name_el is None:
+            file_name_el = etree.Element(
+                xdomea_namespace+'Dateiname',
+                nsmap=format_el.nsmap,
+            )
+            file_el.insert(0, file_name_el)
+        file_name_el.text = file_info.xdomea_file_name
 
     def __export_xdomea_message(
         self, 
