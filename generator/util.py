@@ -111,7 +111,7 @@ class FileUtil:
 		if len(version_info_list) == 0:
 			return ''
 		version_info = version_info_list[0].replace('version', '')
-		return version_info
+		return version_info.strip()
 
 	@staticmethod
 	def get_file_info(file_path: str):

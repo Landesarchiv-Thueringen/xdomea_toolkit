@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 import random
 from typing import Optional
-from util import FileUtil
+from util import FileInfo, FileUtil
 import uuid
 
 
@@ -460,7 +460,57 @@ class XdomeaMessageGenerator:
             )
             version_number_el.addnext(format_el)
         file_info = FileUtil.get_file_info(FileUtil.next_file())
+        self.__add_format_info(format_el, file_info)
         document_el.append(pattern)
+
+    def __add_format_info(self, format_el: etree.Element, file_info: FileInfo):
+        xdomea_namespace = '{' + format_el.nsmap['xdomea'] + '}'
+        format_name_el = format_el.find('xdomea:Name', namespaces=format_el.nsmap)
+        if format_name_el is None:
+            format_name_el = etree.SubElement(
+                format_el,
+                xdomea_namespace+'Name',
+                nsmap=format_el.nsmap,
+            )
+        code_el = format_name_el.find('code')
+        if code_el is None:
+            code_el = etree.Element('code')
+            format_name_el.insert(0, code_el)
+        code_el.text = file_info.xdomea_file_format.code
+        name_el = format_name_el.find('name')
+        if name_el is None:
+            name_el = etree.Element('name')
+            code_el.addnext(name_el)
+        name_el.text = file_info.xdomea_file_format.name
+        if file_info.xdomea_file_format.name == 'Sonstiges':
+            other_name_el = format_el.find('xdomea:SonstigerName', namespaces=format_el.nsmap)
+            if other_name_el is None:
+                other_name_el = etree.Element(
+                    xdomea_namespace+'SonstigerName',
+                    nsmap=format_el.nsmap,
+                )
+                format_name_el.addnext(other_name_el)
+            other_name_el.text = file_info.detected_format_name
+            self.__add_format_version(format_el, other_name_el, file_info)
+        else:
+            self.__add_format_version(format_el, name_el, file_info)
+
+    def __add_format_version(
+        self,
+        format_el: etree.Element,
+        predecessor_el: etree.Element,
+        file_info: FileInfo,
+    ):
+        xdomea_namespace = '{' + format_el.nsmap['xdomea'] + '}'
+        version_el = format_el.find('xdomea:Version', namespaces=format_el.nsmap)
+        if version_el is None:
+            version_el = etree.Element(
+                xdomea_namespace+'Version',
+                nsmap=format_el.nsmap,
+            )
+            predecessor_el.addnext(version_el)
+        version_el.text = file_info.detected_format_version
+
 
     def __export_xdomea_message(
         self, 
