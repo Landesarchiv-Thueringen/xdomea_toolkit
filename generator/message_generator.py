@@ -9,6 +9,7 @@ import random
 from typing import Optional
 from util import FileInfo, FileUtil
 import uuid
+import zipfile
 
 
 @dataclass
@@ -27,8 +28,8 @@ class XdomeaMessageGenerator:
 
     def __init__(self):
         self.regex_config = XdomeaRegexConfig(
-            xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501.xml',
-            xdomea_0503_message_name='_Aussonderung.Aussonderung.0503.xml',
+            xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501',
+            xdomea_0503_message_name='_Aussonderung.Aussonderung.0503',
         )
         self.record_object_evaluation = {}
 
@@ -78,14 +79,12 @@ class XdomeaMessageGenerator:
         self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root)
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         # export messages
-        self.__export_xdomea_message(
-            generated_message_ID, 
-            self.regex_config.xdomea_0501_message_name,
+        self.__export_0501_message(
+            generated_message_ID,
             xdomea_0501_pattern_etree,
         )
-        self.__export_xdomea_message(
-            generated_message_ID, 
-            self.regex_config.xdomea_0503_message_name,
+        self.__export_0503_message(
+            generated_message_ID,
             xdomea_0503_pattern_etree,
         )
         # clear record object evaluations for next message generation
@@ -426,6 +425,7 @@ class XdomeaMessageGenerator:
             './/xdomea:Dokument',
             namespaces=xdomea_0503_pattern_root.nsmap,
         )
+        self.document_version_info_list = []
         for document in document_list:
             version_list = document.findall(
                 './xdomea:Version',
@@ -458,9 +458,10 @@ class XdomeaMessageGenerator:
                 xdomea_namespace+'Format',
                 nsmap=document_el.nsmap,
             )
-            # ToDo: secure format is inserted add the correct position
+            # ToDo: secure format is inserted add the correct position 
             version_number_el.addnext(format_el)
         file_info = FileUtil.get_file_info(FileUtil.next_file())
+        self.document_version_info_list.append(file_info)
         self.__add_format_info(format_el, file_info)
         self.__add_primary_file(format_el, file_info)
         document_el.append(pattern)
@@ -550,6 +551,38 @@ class XdomeaMessageGenerator:
             pretty_print=True, 
             encoding='utf-8', 
         )
+
+    def __export_0501_message(
+        self,
+        process_ID: str,
+        message_etree: etree, 
+    ):
+        export_dir = os.path.join(self.config.output_dir, process_ID) 
+        Path(export_dir).mkdir(parents=True, exist_ok=True)
+        message_name = process_ID + self.regex_config.xdomea_0501_message_name
+        xml_name = message_name + '.xml'
+        zip_name = message_name + '.zip'
+        message_path = os.path.join(export_dir, zip_name)
+        with zipfile.ZipFile(message_path, 'w') as z:
+            with z.open(xml_name, 'w') as f:
+                message_etree.write(f, encoding='UTF-8', xml_declaration=True, pretty_print=True)
+
+    def __export_0503_message(
+        self,
+        process_ID: str,
+        message_etree: etree, 
+    ):
+        export_dir = os.path.join(self.config.output_dir, process_ID) 
+        Path(export_dir).mkdir(parents=True, exist_ok=True)
+        message_name = process_ID + self.regex_config.xdomea_0503_message_name
+        xml_name = message_name + '.xml'
+        zip_name = message_name + '.zip'
+        message_path = os.path.join(export_dir, zip_name)
+        with zipfile.ZipFile(message_path, 'w') as z:
+            with z.open(xml_name, 'w') as f:
+                message_etree.write(f, encoding='UTF-8', xml_declaration=True, pretty_print=True)
+            for version_info in self.document_version_info_list:
+                z.write(version_info.path, version_info.xdomea_file_name)
         
     def __get_random_number(self, min: int, max: int) -> int:
         """
