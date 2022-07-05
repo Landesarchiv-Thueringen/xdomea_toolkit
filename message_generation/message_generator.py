@@ -399,15 +399,30 @@ class XdomeaMessageGenerator:
                 )
             metadata_archive_el = etree.Element(xdomea_namespace+'ArchivspezifischeMetadaten')
             predecessor_el.addnext(metadata_archive_el)
+        self.__add_evaluation_element(metadata_archive_el, evaluation)
+
+    def __add_evaluation_element(
+        self, 
+        metadata_archive_el: etree.Element, 
+        evaluation: XdomeaEvaluation,
+    ):
+        xdomea_namespace = '{' + metadata_archive_el.nsmap['xdomea'] + '}'
         evaluation_el = metadata_archive_el.find(
             './xdomea:Aussonderungsart', 
-            namespaces=record_object.nsmap,
+            namespaces=metadata_archive_el.nsmap,
         )
         if evaluation_el is None:
             evaluation_el = etree.SubElement(
                 metadata_archive_el, 
                 xdomea_namespace+'Aussonderungsart',
             )
+        evaluation_el = self.__get_version_dependent_evaluation_element(evaluation_el)
+        evaluation_code_el = evaluation_el.find('code')
+        if evaluation_code_el is None:
+            evaluation_code_el = etree.SubElement(evaluation_el, 'code')
+        evaluation_code_el.text = evaluation
+
+    def __get_version_dependent_evaluation_element(self, evaluation_el: etree.Element):
         if self.xdomea_schema_version == '3.0.0':
             evaluation_predefined_el = evaluation_el.find(
                 './xdomea:Aussonderungsart', 
@@ -417,12 +432,12 @@ class XdomeaMessageGenerator:
                 evaluation_predefined_el = etree.SubElement(
                     evaluation_el, 
                     xdomea_namespace+'Aussonderungsart',
+                    listURI='urn:xoev-de:xdomea:codeliste:aussonderungsart',
+                    listVersionID='1.0'
                 )
-            evaluation_el = evaluation_predefined_el
-        evaluation_code_el = evaluation_el.find('code')
-        if evaluation_code_el is None:
-            evaluation_code_el = etree.SubElement(evaluation_el, 'code')
-        evaluation_code_el.text = evaluation
+            return evaluation_predefined_el
+        else:
+            return evaluation_el
 
     def __add_document_versions_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
         FileUtil.extract_xdomea_file_format_list(
@@ -547,22 +562,6 @@ class XdomeaMessageGenerator:
             )
             file_el.insert(0, file_name_el)
         file_name_el.text = file_info.xdomea_file_name
-
-    def __export_xdomea_message(
-        self, 
-        generated_message_ID: str,
-        message_name_suffix: str,
-        xdomea_pattern_etree: etree,
-    ):
-        Path(self.config.output_dir).mkdir(parents=True, exist_ok=True)
-        message_name = generated_message_ID + message_name_suffix
-        message_path = os.path.join(self.config.output_dir, message_name)
-        xdomea_pattern_etree.write(
-            message_path, 
-            xml_declaration=True,
-            pretty_print=True, 
-            encoding='utf-8', 
-        )
 
     def __export_0501_message(
         self,
