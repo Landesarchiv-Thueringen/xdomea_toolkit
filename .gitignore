@@ -22,3 +22,6 @@ messages
 
 # allow all xml schema files
 !**/*.xsd
+
+# allow readme
+!readme.md

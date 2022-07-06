@@ -1,0 +1,11 @@
+# Toolkit zu Generierung und Anpassung von xdomea Aussonderungsnachrichten
+
+## Hintergründe
+
+Das Landesarchiv Thüringen entwickelt im Projekt Digitales Magazin - ThELMA - ein Archiv für die digitale Langzeitarchivierung. ThELMA unterstützt auch bei der Übernahme und Archivierung von E-Akten. Genauer werden Aussonderungsnachrichten nach der xdomea-Spezifikation unterstützt. Für die Funktionstests der E-Akten-Übernahme wurden Testdaten benötigt. Die ersten Testnachrichten wurden manuell erstellt. Komplexe Nachrichten konnten so jedoch nur mit großem Aufwand erstellt werden. Aus der Notwendigkeit heraus, wurden deswegen ein Skript entwickelt, das anhand von Musterdateien komplexe Nachrichten generieren können. Mit der Zeit wurden weitere Skripte erstellt, bspw. für den automatischen Austausch der Prozess-ID der Aussonderungsnachrichten. So das mit der Zeit eine kleine Sammlung an nützliche Werkzeugen entstanden ist.
+
+## Nachrichtengenerierung
+
+### Funktionsweise
+
+Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Inhalte der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten und Struktur der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten Testdaten gewählt. 
