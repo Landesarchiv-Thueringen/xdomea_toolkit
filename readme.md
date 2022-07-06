@@ -8,7 +8,7 @@ Das Landesarchiv Thüringen entwickelt im Projekt Digitales Magazin - ThELMA - e
 
 ### Funktionsweise
 
-Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Inhalte der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten und Struktur der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten Testdaten gewählt.
+Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Inhalte der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten und Struktur der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten Testdaten gewählt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](Bewertung-der-Schriftgutobjekte).
 
 ### Konfiguration
 
@@ -42,7 +42,7 @@ In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte
 </structure>
 ```
 
-**Anzahl der Schriftgutobjekte**
+##### Anzahl der Schriftgutobjekte
 
 Für die Gesamtnachricht kann die minimal und maximal Anzahl der enthaltenen Akten festgelegt werden. Weiterhin kann die minimal und maximal Anzahl von in den Akten enthaltenen Vorgängen konfiguriert werden. Das Gleiche gilt für die in den Vorgängen enthaltenen Dokumente. Die minimal Anzahl aller Schriftgutobjekte muss mindestens eins sein.
 
@@ -51,7 +51,7 @@ Für die Gesamtnachricht kann die minimal und maximal Anzahl der enthaltenen Akt
 <max_number>3</max_number>
 ```
 
-**Bewertung der Schriftgutobjekte**
+##### Bewertung der Schriftgutobjekte
 
 Auf Aktenebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entweder werden alle Akten als archivwürdig gekennzeichnet oder die Bewertung wird zufällig gewählt. Bei einer zufälligen Auswahl wird die erste Akte immer archivwürdig bewertet, damit immer eine gültige Abgabe generiert wird.
 
@@ -119,7 +119,7 @@ In der Konfiguration für xdomea kann die Zielversion der Nachrichten und weiter
 </xdomea>
 ```
 
-**Versionsspezifische Einstellungen**
+##### Versionsspezifische Einstellungen
 
 In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die zugehörige Schemadatei, die Codeliste für Dateiformate und die Nachrichtenmuster für die Generierung konfiguriert werden. Es empfiehlt sich bei Bedarf nur die Pfade der Nachrichtenmuster anzupassen. Die restlichen Werte sind bereits optimal und sollten nur angepasst werden, wenn man die Funktionsweise des Skripts grundlegend versteht. Die verwiesenen Schemadatein sollten ebenfalls nicht ausgetauscht werden. Die Schemadateien, die mit dem Repository ausgeliefert werden, wurden so angepasst, dass für die Validierung keine Online-Ressourcen benötigt werden. Deswegen funktioniert das Skript auch ohne eine Internetverbindung problemlos.
 
@@ -137,4 +137,16 @@ In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die 
   </version>
   ...
 </xdomea>
+```
+
+#### Weitere Einstellungen
+
+In den weiteren Einstellungen muss der Pfad zu den Testdaten gesetzt werden. Weiterhin kann der Ausgabeordner für die generierten Nachrichten festgelegt werden.
+
+```
+<test_data>
+  <root_dir>H:/Testdaten</root_dir>
+</test_data>
+
+<output_dir>./messages</output_dir>
 ```
