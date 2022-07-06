@@ -12,11 +12,11 @@ Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die
 
 ### Konfiguration
 
-Die Funktionsweise wird über eine [Konfigurationsdatei](message_generation/config/generator_config.xml) gesteuert. Weiterhin wird eine zugehörige [XML-Schemadatei](message_generation/config/generator_config) bereitgestellt, mit der überprüft wird, ob die Konfiguration den notwendigen Bedingungen entspricht. XML wurde als Format für die Konfigurationsdatei gewählt, da für die Grundfunktionalität bereits ein XML-Parser benötigt wurde und somit keine weiteren Abhängigkeiten erzeugt wurden.
+Die Funktionsweise wird über eine [Konfigurationsdatei](message_generation/config/generator_config.xml) gesteuert. Weiterhin wird eine zugehörige [XML-Schemadatei](message_generation/config/generator_config.xsd) bereitgestellt, mit der überprüft wird, ob die Konfiguration den notwendigen Bedingungen entspricht. XML wurde als Format für die Konfigurationsdatei gewählt, da für die Grundfunktionalität bereits ein XML-Parser benötigt wurde und somit keine weiteren Abhängigkeiten erzeugt wurden.
 
 #### Struktur
 
-Aktuell wird nur die Struktur Akte/Vorgang/Dokument unterstützt.
+In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte eingestellt werden. Aktuell wird nur die Struktur Akte/Vorgang/Dokument unterstützt.
 
 ```
 <structure>
@@ -81,4 +81,60 @@ Auf Vorgangsebene kann zwischen zwei Bewertungsstrategien entschieden werden. En
     </processes>
   ...
 </structure>
+```
+
+#### xdomea
+
+In der Konfiguration für xdomea kann die Zielversion der Nachrichten und weitere versionsspezifische Einstellungen angepasst werden. Aktuell werden die xdomea Versionen 2.3.0, 2.4.0 und 3.0.0 unterstützt. Um die Zielversion auszuwählen muss die ID im Attribut _target_version_ eingetragen werden.
+
+```
+<xdomea target_version="2.3.0">
+  <version>
+    <id>2.3.0</id>
+    <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+    <file_type_code_list>schemes/xdomea_2.3.0/xdomea-Datentypen.xsd</file_type_code_list>
+    <pattern>
+      <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+      <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+    </pattern>
+  </version>
+  <version>
+    <id>2.4.0</id>
+    <schema>schemes/xdomea_2.4.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+    <file_type_code_list>schemes/xdomea_2.4.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+    <pattern>
+      <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+      <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+    </pattern>
+  </version>
+  <version>
+    <id>3.0.0</id>
+    <schema>schemes/xdomea_3.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+    <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+    <pattern>
+      <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+      <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+    </pattern>
+  </version>
+</xdomea>
+```
+
+**Versionsspezifische Einstellungen**
+
+In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die zugehörige Schemadatei, die Codeliste für Dateiformate und die Nachrichtenmuster für die Generierung konfiguriert werden. Es empfiehlt sich bei Bedarf nur die Pfade der Nachrichtenmuster anzupassen. Die restlichen Werte sind bereits optimal und sollten nur angepasst werden, wenn man die Funktionsweise des Skripts grundlegend versteht. Die verwiesenen Schemadatein sollten ebenfalls nicht ausgetauscht werden. Die Schemadateien, die mit dem Repository ausgeliefert werden, wurden so angepasst, dass für die Validierung keine Online-Ressourcen benötigt werden. Deswegen funktioniert das Skript auch ohne eine Internetverbindung problemlos.
+
+```
+<xdomea target_version="3.0.0">
+  ...
+  <version>
+    <id>3.0.0</id>
+    <schema>schemes/xdomea_3.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+    <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+    <pattern>
+      <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+      <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+    </pattern>
+  </version>
+  ...
+</xdomea>
 ```
