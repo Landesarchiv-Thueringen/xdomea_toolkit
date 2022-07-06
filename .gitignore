@@ -25,3 +25,8 @@ messages
 
 # allow readme
 !readme.md
+
+# allow test data for message generation
+!message_generation/test_data/**/*.pdf
+!message_generation/test_data/**/*.docx
+!message_generation/test_data/**/*.html

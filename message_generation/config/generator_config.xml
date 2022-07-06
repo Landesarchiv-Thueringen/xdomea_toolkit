@@ -55,7 +55,7 @@
   </xdomea>
 
   <test_data>
-    <root_dir>H:/Testdaten</root_dir>
+    <root_dir>./test_data</root_dir>
   </test_data>
 
   <output_dir>./messages</output_dir>

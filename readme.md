@@ -1,4 +1,4 @@
-# Toolkit zu Generierung und Anpassung von xdomea Aussonderungsnachrichten
+# Toolkit xdomea - Aussonderung
 
 ## Hintergründe
 
