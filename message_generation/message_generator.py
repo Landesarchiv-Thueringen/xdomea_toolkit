@@ -474,8 +474,7 @@ class XdomeaMessageGenerator:
                 xdomea_namespace+'Nummer',
                 nsmap=document_el.nsmap,
             )
-        # ToDo: generate semi random version number
-        version_number_el.text = '1.0'
+        version_number_el.text = self.__get_random_version_number();
         format_el = pattern.find('xdomea:Format', namespaces=document_el.nsmap)
         if format_el is None:
             format_el = etree.Element(
@@ -604,6 +603,11 @@ class XdomeaMessageGenerator:
         """
         # max + 1 is necessary so that max is included in the range
         return min if min == max else random.choice(range(min, max+1))
+
+    def __get_random_version_number(self) -> str:
+        version_format = '{:4.2f}'
+        version_number = random.random() * 10
+        return version_format.format(version_number)
 
 
 def main():
