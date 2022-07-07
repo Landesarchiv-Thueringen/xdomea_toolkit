@@ -30,3 +30,7 @@ messages
 !message_generation/test_data/**/*.pdf
 !message_generation/test_data/**/*.docx
 !message_generation/test_data/**/*.html
+
+# allow project executables
+!message_generation/message_generator.exe
+!randomize_process_id/randomize_process_id.exe

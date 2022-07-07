@@ -1,13 +1,13 @@
-from config import ConfigParser, FileEvaluationConfig
 from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
+from lib.util.config import ConfigParser, FileEvaluationConfig
+from lib.util.file import FileInfo, FileUtil
 from lxml import etree
 import os
 from pathlib import Path
 import random
 from typing import Optional
-from util import FileInfo, FileUtil
 import uuid
 import zipfile
 
