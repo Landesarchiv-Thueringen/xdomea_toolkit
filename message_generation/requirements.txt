@@ -1,2 +1,0 @@
-lxml==4.9.1
-python-magic-bin==0.4.14

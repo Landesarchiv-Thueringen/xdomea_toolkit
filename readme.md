@@ -20,7 +20,12 @@ Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der 
 
 #### Linux/macOS
 
-Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Dann kann das [Python-Skript](message_generation/message_generator.py) auf der obersten Ebene im [Projektordner](message_generation) mit dem Python-Interpreter gestartet werden.
+Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Anschließend müssen noch die Python-Abhängigkeiten installiert werden. Dann kann das [Python-Skript](message_generation/message_generator.py) auf der obersten Ebene im [Projektordner](message_generation) mit dem Python-Interpreter gestartet werden.
+
+##### Abhängikeiten
+
+  - [lxml](https://pypi.org/project/lxml/)
+  - [magic](https://pypi.org/project/python-magic/)
 
 ### Konfiguration
 

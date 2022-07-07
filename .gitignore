@@ -34,6 +34,3 @@ messages
 # allow project executables
 !message_generation/message_generator.exe
 !randomize_process_id/randomize_process_id.exe
-
-# allow message generator dependencies
-!message_generation/requirements.txt
