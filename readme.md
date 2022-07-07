@@ -12,15 +12,15 @@ Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die
 
 ### Nachrichtenmuster
 
-Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2.4.0, 3.0.0 bereitgestellt. Es ist sinnvoll, sich die generischen Musterdateien zu kopieren und mit sinnvollen Metadaten zu ergänzen, so dass mit der Zeit eine kleine Sammlung an Musterdateien entsteht. Wenn andere als die vorgegeben, generischen Musterdateien verwendet werden sollen, muss das entsprechend in der (Konfiguration)[#versionsspezifische-einstellungen] hinterlegt werden. Die Nachrichtenmuster werden vor der Nachrichtengenerierung mit dem konfigurierten Schema validiert. Damit Nachrichten generiert werden können, müssen die Muster valide sein.
+Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2.4.0, 3.0.0 bereitgestellt. Es ist sinnvoll, sich die generischen Musterdateien zu kopieren und mit sinnvollen Metadaten zu ergänzen, so dass mit der Zeit eine kleine Sammlung an Musterdateien entsteht. Wenn andere als die vorgegeben, generischen Musterdateien verwendet werden sollen, muss das entsprechend in der [Konfiguration](#versionsspezifische-einstellungen) hinterlegt werden. Die Nachrichtenmuster werden vor der Nachrichtengenerierung mit dem konfigurierten Schema validiert. Damit Nachrichten generiert werden können, müssen die Muster valide sein.
 
 ### Testdaten
 
-Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Am besten verwenden Sie nur Zeichen aus dem [Ascii-Zeichensatz](https://de.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange) für die Dateinamen.
+Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im besten Fall werden nur Zeichen aus dem [Ascii-Zeichensatz](https://de.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange) für die Dateinamen verwendet.
 
 ### Verwendung
 
-Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadatein und -Muster, für die Testdateien kann aber konfiguratorisch angepasst werden.
+Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadateien und -Muster, für die Testdateien kann aber konfiguratorisch angepasst werden.
 
 #### Windows 
 
