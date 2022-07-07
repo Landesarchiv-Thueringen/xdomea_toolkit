@@ -8,7 +8,15 @@ Das Landesarchiv Thüringen entwickelt im Projekt Digitales Magazin - ThELMA - e
 
 ### Funktionsweise
 
-Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](weitere-einstellungen) gewählt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
+Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](weitere-einstellungen) gewählt. Hierfür werden die xdomea Dateiformat-Codes aus der entsprechenden Codeliste extrahiert und versucht anhand der Endung der Primärdatei zuzuordnen. Sollte keine Zuordnung möglich sein, wird eine Formaterkennung durchgeführt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
+
+### Nachrichtenmuster
+
+Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2.4.0, 3.0.0 bereitgestellt. Es ist sinnvoll, sich die generischen Musterdateien zu kopieren und mit sinnvollen Metadaten zu ergänzen, so dass mit der Zeit eine kleine Sammlung an Musterdateien entsteht. Wenn andere als die vorgegeben, generischen Musterdateien verwendet werden sollen, muss das entsprechend in der (Konfiguration)[#versionsspezifische-einstellungen] hinterlegt werden. Die Nachrichtenmuster werden vor der Nachrichtengenerierung mit dem konfigurierten Schema validiert. Damit Nachrichten generiert werden können, müssen die Muster valide sein.
+
+### Testdaten
+
+Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Am besten verwenden Sie nur Zeichen aus dem [Ascii-Zeichensatz](https://de.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange) für die Dateinamen.
 
 ### Verwendung
 
@@ -16,7 +24,7 @@ Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade
 
 #### Windows 
 
-Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen.
+Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
 
 #### Linux/macOS
 
@@ -172,4 +180,16 @@ In den weiteren Einstellungen muss der Pfad zu den Testdaten gesetzt werden. Wei
 
 ### Funktionsweise
 
-Das Skript such rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Dann wird für jede Nachricht die Prozess-ID im ZIP-Dateinamen, im XML-Dateinamen und im XML-Inhalt gewechselt.  
+Das Skript such rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Dann wird für jede Nachricht die Prozess-ID im ZIP-Dateinamen, im XML-Dateinamen und im XML-Inhalt gewechselt.
+
+### Verwendung
+
+Das Skript hat keine Abhängikeiten die zusätzlich installiert werden müssen. Deswegen kann es bei Bedarf einfach an die entsprechende Stelle kopiert und aufgeführt werden.
+
+#### Windows 
+
+Im [Projektordner](randomize_process_id) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
+
+#### Linux/macOS
+
+Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Dann kann das [Python-Skript](randomize_process_id/randomize_process_id.py) auf der obersten Ebene im [Projektordner](randomize_process_id) mit dem Python-Interpreter gestartet werden.
