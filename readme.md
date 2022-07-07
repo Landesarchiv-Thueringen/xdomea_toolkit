@@ -20,7 +20,7 @@ Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Pri
 
 ### Verwendung
 
-Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadateien und -Muster, für die Testdateien kann aber konfiguratorisch angepasst werden.
+Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadateien und -Muster und für die Testdateien kann aber konfiguratorisch angepasst werden.
 
 #### Windows 
 
@@ -78,7 +78,7 @@ Für die Gesamtnachricht kann die minimal und maximal Anzahl der enthaltenen Akt
 
 ##### Bewertung der Schriftgutobjekte
 
-Auf Aktenebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entweder werden alle Akten als archivwürdig gekennzeichnet oder die Bewertung wird zufällig gewählt. Bei einer zufälligen Auswahl wird die erste Akte immer archivwürdig bewertet, damit immer eine gültige Abgabe generiert wird.
+Auf Aktenebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entweder werden alle Akten als archivwürdig gekennzeichnet oder die Bewertung wird zufällig gewählt. Bei einer zufälligen Auswahl wird die erste Akte immer als archivwürdig bewertet, damit immer eine gültige Abgabe generiert wird.
 
 ```
 <structure>
@@ -92,7 +92,7 @@ Auf Aktenebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entwe
 </structure>
 ```
 
-Auf Vorgangsebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entweder die Bewertung der zugehörigen Akte vererbt sich auf alle enthaltenen Vorgänge oder die Bewertung wird zufällig gewählt. Bei einer zufälligen Auswahl wird die erste Vorgang einer Akte immer archivwürdig bewertet, damit immer eine gültige Abgabe generiert wird. Weiterhin wird nur eine zufällige Bewertung gewählt, wenn die übergeordnete Akte als archivwürdig bewertet wurde.
+Auf Vorgangsebene kann zwischen zwei Bewertungsstrategien entschieden werden. Entweder die Bewertung der zugehörigen Akte vererbt sich auf alle enthaltenen Vorgänge oder die Bewertung wird zufällig gewählt. Bei einer zufälligen Auswahl wird der erste Vorgang einer Akte immer archivwürdig bewertet, damit immer eine gültige Abgabe generiert wird. Weiterhin wird nur eine zufällige Bewertung gewählt, wenn die übergeordnete Akte als archivwürdig bewertet wurde.
 
 ```
 <structure>
