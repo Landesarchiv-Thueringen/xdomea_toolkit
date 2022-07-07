@@ -12,6 +12,8 @@ Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die
 
 ### Verwendung
 
+Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadatein und -Muster, für die Testdateien kann aber konfiguratorisch angepasst werden.
+
 #### Windows 
 
 Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen.
@@ -163,4 +165,6 @@ In den weiteren Einstellungen muss der Pfad zu den Testdaten gesetzt werden. Wei
 
 ## Austausch der Prozess-ID
 
-...
+### Funktionsweise
+
+Das Skript such rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Dann wird für jede Nachricht die Prozess-ID im ZIP-Dateinamen, im XML-Dateinamen und im XML-Inhalt gewechselt.  
