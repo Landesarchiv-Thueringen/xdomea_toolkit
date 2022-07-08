@@ -1,10 +1,11 @@
-from glob import glob
+from copy import deepcopy
 from dataclasses import dataclass
-from typing import Dict, List, NamedTuple
+from glob import glob
 import os
 import re
 import shutil
 import tempfile
+from typing import Dict, List, NamedTuple
 import uuid
 import xml.etree.ElementTree as ET
 import zipfile
@@ -74,10 +75,9 @@ class XdomeaMessageEditor:
         shutil.rmtree(message_path)
 
     def extract_message_archive(self, message_path: str):
-        zip_message = zipfile.ZipFile(message_path, 'r')
-        temp_message_path = self.get_temp_message_path(message_path)
-        zip_message.extractall(temp_message_path)
-        zip_message.close()
+        with zipfile.ZipFile(message_path, 'r') as zip_message:
+            temp_message_path = self.get_temp_message_path(message_path)
+            zip_message.extractall(temp_message_path)
         return temp_message_path
 
     def get_xml_namespace_dict(self, xml_path: str):
@@ -117,6 +117,10 @@ class XdomeaMessageEditor:
             new_xml_message_file_name
         )
         os.rename(xdomea_xml_path, new_xml_file_path)
+        self.xdomea_file_mapping = (
+            os.path.basename(xdomea_xml_path), 
+            os.path.basename(new_xml_file_path),
+        )
 
     def set_new_message_ID(self, temp_message_path: str, message_ID: str, new_message_ID: str):
         generic_xml_path = os.path.join(temp_message_path, self.config.generic_xml_path)
@@ -136,29 +140,19 @@ class XdomeaMessageEditor:
         new_message_path = os.path.join(target_dir, new_message_name)
         generic_temp_file_path = os.path.join(temp_message_path, '*')
         temp_file_list = glob(generic_temp_file_path, recursive=False)
-        new_zip_file = zipfile.ZipFile(new_message_path, 'w', zipfile.ZIP_DEFLATED)
-        for file_path in temp_file_list:
-            new_zip_file.write(file_path, os.path.relpath(file_path, temp_message_path))
-        new_zip_file.close()
+        with zipfile.ZipFile(message_path, 'r', zipfile.ZIP_DEFLATED) as message_zip:
+            with zipfile.ZipFile(new_message_path, 'w', zipfile.ZIP_DEFLATED) as new_message_zip:
+                for file_path in temp_file_list:
+                    new_file_name = os.path.relpath(file_path, temp_message_path)
+                    new_message_zip.write(file_path, new_file_name)
+                    # preserve timestamp file info
+                    new_file_info = new_message_zip.getinfo(new_file_name)
+                    old_file_name = self.xdomea_file_mapping[0] \
+                        if new_file_name == self.xdomea_file_mapping[1] else new_file_name
+                    old_file_info = message_zip.getinfo(old_file_name)
+                    new_file_info.date_time = deepcopy(old_file_info.date_time)
+                    new_file_info.extra = deepcopy(old_file_info.extra)
         return new_message_path
-
-    def sync_zip_info(
-        self,
-        message_path: str,
-        new_message_path: str,
-        message_id: str,
-        new_message_ID: str
-    ):
-        zip = zipfile.ZipFile(message_path, 'r')
-        info_list = zip.infolist()
-        zip.close()
-        new_zip = zipfile.ZipFile(new_message_path, 'r')
-        for file_info in info_list:
-            new_file_name = file_info.filename.replace(message_id, new_message_ID)
-            new_file_info = new_zip.getinfo(new_file_name)
-            new_file_info.date_time = file_info.date_time
-            new_file_info.extra = file_info.extra
-        new_zip.close()
 
     def print_ID_change_general_info(self, target_dir: str):
         print('\nBeginne Wechsel aller Prozess-IDs in Ordner: ' + target_dir)
@@ -201,10 +195,11 @@ class XdomeaMessageEditor:
                 self.set_new_message_ID(temp_message_path, message_ID, new_message_ID)
                 new_message_path = \
                     self.create_new_message(message_path, temp_message_path, new_message_ID)
-                self.sync_zip_info(message_path, new_message_path, message_ID, new_message_ID)
+                #self.sync_zip_info(message_path, new_message_path, message_ID, new_message_ID)
                 self.delete_temp_message_folder(temp_message_path)
                 os.remove(message_path)
-            except:
+            except Exception as e:
+                print(e)
                 self.print_ID_change_error_message()
                 continue
             self.statistic.count_messages_success += 1
