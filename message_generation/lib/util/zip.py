@@ -24,9 +24,9 @@ class ZipUtil:
         ntfs_mtime = os.path.getmtime(path)
         ntfs_atime = os.path.getatime(path)
         ntfs_ctime = os.path.getctime(path)
-        ntfs_mtime_windows_timestamp = convert_to_windows_timestamp(ntfs_mtime)
-        ntfs_atime_windows_timestamp = convert_to_windows_timestamp(ntfs_atime)
-        ntfs_ctime_windows_timestamp = convert_to_windows_timestamp(ntfs_ctime)
+        ntfs_mtime_windows_timestamp = ZipUtil.convert_to_windows_timestamp(ntfs_mtime)
+        ntfs_atime_windows_timestamp = ZipUtil.convert_to_windows_timestamp(ntfs_atime)
+        ntfs_ctime_windows_timestamp = ZipUtil.convert_to_windows_timestamp(ntfs_ctime)
         ntfs_block = ntfs_block_tag                 \
                    + ntfs_block_size                \
                    + ntfs_reserved                  \
@@ -38,6 +38,6 @@ class ZipUtil:
         return ntfs_block
 
     @staticmethod
-    def add_ntfs_info(zip_file, zip_file_path, system_file_path):
+    def add_ntfs_info(zip_file, system_file_path, zip_file_path):
         info = zip_file.getinfo(zip_file_path)
-        info.extra = get_ntfs_zip_info(system_file_path)
+        info.extra = ZipUtil.get_ntfs_zip_info(system_file_path)

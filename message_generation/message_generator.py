@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from lib.util.config import ConfigParser, FileEvaluationConfig
 from lib.util.file import FileInfo, FileUtil
+from lib.util.zip import ZipUtil
 from lxml import etree
 import os
 from pathlib import Path
@@ -613,6 +614,9 @@ class XdomeaMessageGenerator:
                 message_etree.write(f, encoding='UTF-8', xml_declaration=True, pretty_print=True)
             for version_info in self.document_version_info_list:
                 z.write(version_info.path, version_info.xdomea_file_name)
+                # set original ntfs timestamps on windows systems
+                if os.name == 'nt':
+                    ZipUtil.add_ntfs_info(z, version_info.path, version_info.xdomea_file_name)
         
     def __get_random_number(self, min: int, max: int) -> int:
         """
