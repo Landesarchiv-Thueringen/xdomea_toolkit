@@ -467,6 +467,7 @@ class XdomeaMessageGenerator:
                 xdomea_namespace+'Version', 
                 nsmap=document_el.nsmap,
             )
+        self.__find_version_predecessor(document_el).addnext(pattern)
         version_number_el = pattern.find('xdomea:Nummer', namespaces=document_el.nsmap)
         if version_number_el is None:
             version_number_el = etree.SubElement(
@@ -481,13 +482,32 @@ class XdomeaMessageGenerator:
                 xdomea_namespace+'Format',
                 nsmap=document_el.nsmap,
             )
-            # ToDo: secure format is inserted add the correct position 
             version_number_el.addnext(format_el)
         file_info = FileUtil.get_file_info(FileUtil.next_file())
         self.document_version_info_list.append(file_info)
         self.__add_format_info(format_el, file_info)
         self.__add_primary_file(format_el, file_info)
-        document_el.append(pattern)
+
+    def __find_version_predecessor(self, document_el: etree.Element) -> etree.Element:
+        predecessor_tag_list = [
+            'xdomea:InternerGeschaeftsgang',
+            'xdomea:HistorienProtokollInformation',
+            'xdomea:Typ',
+            'xdomea:Bearbeiter',
+            'xdomea:Hier',
+            'xdomea:Bezug',
+            'xdomea:DatumDesSchreibens',
+            'xdomea:Postausgangsdatum',
+            'xdomea:Posteingangsdatum',
+            'xdomea:FremdesGeschaeftszeichen',
+            'xdomea:AllgemeineMetadaten',
+            'xdomea:Identifikation',
+        ]
+        for predecessor_tag in predecessor_tag_list:
+            predecessor = document_el.find(predecessor_tag, namespaces=document_el.nsmap)
+            if predecessor is not None:
+                return predecessor
+        raise Exception('Vorgänger Element von Dokumentenversion nicht gefunden')
 
     def __add_format_info(self, format_el: etree.Element, file_info: FileInfo):
         xdomea_namespace = '{' + format_el.nsmap['xdomea'] + '}'
