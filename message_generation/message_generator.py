@@ -457,7 +457,15 @@ class XdomeaMessageGenerator:
                 namespaces=xdomea_0503_pattern_root.nsmap,
             )
             self.__remove_elements(version_list)
-            self.__add_document_version(document)
+             # randomly choose document version number for document pattern
+            version_number = self.__get_random_number(
+                self.config.structure.process_structure.document_structure\
+                    .version_structure.min_number, 
+                self.config.structure.process_structure.document_structure\
+                    .version_structure.max_number,
+            )
+            for version_index in range(version_number):
+                self.__add_document_version(document)
 
     def __add_document_version(self, document_el: etree.Element):
         xdomea_namespace = '{' + document_el.nsmap['xdomea'] + '}'

@@ -6,7 +6,7 @@
     <!-- de: Akten -->
     <files>
       <min_number>2</min_number>
-      <max_number>3</max_number>
+      <max_number>5</max_number>
       <!-- possible values: archive, random -->
       <evaluation>random</evaluation>
       <!-- de: Vorgänge -->
@@ -17,8 +17,13 @@
         <evaluation>random</evaluation>
         <!-- de: Dokumente -->
         <documents>
-          <min_number>1</min_number>
+          <min_number>3</min_number>
           <max_number>6</max_number>
+          <!-- de: Dokumentversionen -->
+          <versions>
+            <min_number>1</min_number>
+            <max_number>3</max_number>
+          </versions>
         </documents>
       </processes>
     </files>

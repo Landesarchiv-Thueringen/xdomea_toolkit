@@ -3,10 +3,18 @@ from enum import Enum
 from lxml import etree
 import os
 
+
+@dataclass
+class DocumentVersionStructureConfig:
+    min_number: int
+    max_number: int
+
+
 @dataclass
 class DocumentStructureConfig:
     min_number: int
     max_number: int
+    version_structure: DocumentVersionStructureConfig
 
 
 class ProcessEvaluationConfig(Enum):
@@ -104,9 +112,18 @@ class ConfigParser:
             '/structure/files/processes/documents/min_number'))
         documents_max_number = int(config_etree.findtext(
             '/structure/files/processes/documents/max_number'))
+        documents_version_min_number = int(config_etree.findtext(
+            '/structure/files/processes/documents/versions/min_number'))
+        documents_version_max_number = int(config_etree.findtext(
+            '/structure/files/processes/documents/versions/max_number'))
+        version_structure_config = DocumentVersionStructureConfig(
+            min_number=documents_version_min_number,
+            max_number=documents_version_max_number,
+        )
         document_structure_config = DocumentStructureConfig(
             min_number=documents_min_number,
             max_number=documents_max_number,
+            version_structure=version_structure_config,
         )
         process_structure_config = ProcessStructureConfig(
             min_number=processes_min_number,

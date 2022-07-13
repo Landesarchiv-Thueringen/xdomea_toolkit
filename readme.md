@@ -22,7 +22,7 @@ Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Pri
 
 Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadateien und -Muster und für die Testdateien kann aber konfiguratorisch angepasst werden.
 
-#### Windows 
+#### Windows
 
 Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
 
@@ -48,7 +48,7 @@ In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte
   <!-- de: Akten -->
   <files>
     <min_number>2</min_number>
-    <max_number>3</max_number>
+    <max_number>5</max_number>
     <!-- possible values: archive, random -->
     <evaluation>random</evaluation>
     <!-- de: Vorgänge -->
@@ -59,8 +59,13 @@ In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte
       <evaluation>random</evaluation>
       <!-- de: Dokumente -->
       <documents>
-        <min_number>1</min_number>
+        <min_number>3</min_number>
         <max_number>6</max_number>
+        <!-- de: Dokumentversionen -->
+        <versions>
+          <min_number>1</min_number>
+          <max_number>3</max_number>
+        </versions>
       </documents>
     </processes>
   </files>
@@ -186,7 +191,7 @@ Das Skript such rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Dan
 
 Das Skript hat keine Abhängikeiten die zusätzlich installiert werden müssen. Deswegen kann es bei Bedarf einfach an die entsprechende Stelle kopiert und aufgeführt werden.
 
-#### Windows 
+#### Windows
 
 Im [Projektordner](randomize_process_id) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
 
