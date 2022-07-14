@@ -4,6 +4,10 @@
 
 Das Landesarchiv Thüringen entwickelt im Projekt Digitales Magazin - ThELMA - ein Archiv für die digitale Langzeitarchivierung. ThELMA unterstützt auch bei der Übernahme und Archivierung von E-Akten. Genauer werden Aussonderungsnachrichten nach der xdomea-Spezifikation unterstützt. Für die Funktionstests der E-Akten-Übernahme wurden Testdaten benötigt. Die ersten Testnachrichten wurden manuell erstellt. Komplexe Nachrichten konnten so jedoch nur mit großem Aufwand erstellt werden. Aus der Notwendigkeit heraus, wurden deswegen ein Skript entwickelt, das anhand von Musterdateien komplexe Nachrichten generieren können. Mit der Zeit wurden weitere Skripte erstellt, bspw. für den automatischen Austausch der Prozess-ID der Aussonderungsnachrichten. So das mit der Zeit eine kleine Sammlung an nützliche Werkzeugen entstanden ist.
 
+## Lizenz
+
+Das Projekt steht unter der [MIT-Lizenz](license.md). Lizensiert werden ausschließlich die selbst erstellten Python-Skripte für den [Wechel der Prozess-ID](randomize_process_id/randomize_process_id.py), die [Nachrichtengenerierung](message_generation/message_generator.py) und [Hilfsskripte](lib/util). Die Rechte für die [xdomea XML-Schemadateien](schemes) liegen nicht beim Landesarchiv. Die Veröffentlichung mit dem Toolkit ist mit dem Rechteinhaber abgestimmt. Andere Dateien im Repository sind lizenzfrei. Es wurde bewusst eine möglichst freie Lizenz ohne großen Einschränkungen gewählt, um die Hürden für die Verwendung und Weiterentwicklung möglichst gering zu halten.
+
 ## Nachrichtengenerierung
 
 ### Funktionsweise
