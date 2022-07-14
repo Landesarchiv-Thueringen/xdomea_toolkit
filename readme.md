@@ -1,18 +1,25 @@
-# Toolkit xdomea - Aussonderung
+# xdomea-Toolkit für Aussonderungsnachrichten
 
-## Hintergründe
-
-Das Landesarchiv Thüringen entwickelt im Projekt Digitales Magazin - ThELMA - ein Archiv für die digitale Langzeitarchivierung. ThELMA unterstützt auch bei der Übernahme und Archivierung von E-Akten. Genauer werden Aussonderungsnachrichten nach der xdomea-Spezifikation unterstützt. Für die Funktionstests der E-Akten-Übernahme wurden Testdaten benötigt. Die ersten Testnachrichten wurden manuell erstellt. Komplexe Nachrichten konnten so jedoch nur mit großem Aufwand erstellt werden. Aus der Notwendigkeit heraus, wurden deswegen ein Skript entwickelt, das anhand von Musterdateien komplexe Nachrichten generieren können. Mit der Zeit wurden weitere Skripte erstellt, bspw. für den automatischen Austausch der Prozess-ID der Aussonderungsnachrichten. So das mit der Zeit eine kleine Sammlung an nützliche Werkzeugen entstanden ist.
+Das Landesarchiv Thüringen benötigte für Funktionsprüfungen seiner Softwarelösung zur elektronischen Langzeitarchivierung Test-Aussonderungsnachrichten nach dem Datenaustauschstandard xdomea, um die massenhafte Anbietung und Abgabe elektronischer Akten testen zu können. Mit Hilfe des entwickelten xdomea-Toolkits wurde es möglich, beliebig komplexe Testnachrichten zu generieren.  
+  
+Das Toolkit umfasst folgende Skripte:  
+* [Skript zur Generierung von Test-Aussonderungsnachrichten der Typen 0501 und 0503](#nachrichtengenerierung)  
+* [Skript zum Austausch der Prozess-ID in Test-Aussonderungsnachrichten](#austausch-der-prozess-id)  
+* Hilfsskript zur Extraktion und Übertragung von Metadaten mitgelieferter oder selbst gewählter Testdateien in Test-Aussonderungsnachrichten  
+* Hilfsskript zur Übertragung der NTFS-Zeitstempel von Testdateien in das xdomea-Paket
+  
+Die Nachnutzung und Weiterentwicklung des Toolkits ist ausdrücklich erwünscht.
 
 ## Lizenz
 
-Das Projekt steht unter der [MIT-Lizenz](license.md). Lizensiert werden ausschließlich die selbst erstellten Python-Skripte für den [Wechel der Prozess-ID](randomize_process_id/randomize_process_id.py), die [Nachrichtengenerierung](message_generation/message_generator.py) und [Hilfsskripte](lib/util). Die Rechte für die [xdomea XML-Schemadateien](schemes) liegen nicht beim Landesarchiv. Die Veröffentlichung mit dem Toolkit ist mit dem Rechteinhaber abgestimmt. Andere Dateien im Repository sind lizenzfrei. Es wurde bewusst eine möglichst freie Lizenz ohne großen Einschränkungen gewählt, um die Hürden für die Verwendung und Weiterentwicklung möglichst gering zu halten.
+Das Projekt steht unter der [MIT-Lizenz](license.md). Lizenziert werden ausschließlich die selbst erstellten Python-Skripte für die [Nachrichtengenerierung](message_generation/message_generator.py) und den [Wechel der Prozess-ID](randomize_process_id/randomize_process_id.py) sowie die zugehörigen [Hilfsskripte](message_generation/lib/util).  
+Mit dem Toolkit werden zur leichteren Handhabung die [xdomea Schemadateien](message_generation/schemes) mit ausgeliefert. Die xdomea Schemadateien sind von der Lizenzierung des Toolkits ausgenommen. Lt. der Koordinierungsstelle für IT-Standards der öffentlichen Verwaltung (KoSIT) sind die xdomea Schemadateien frei von Rechten Dritter und können ohne Einschränkungen verwendet werden. Die übrigen Dateien im Repository, insbes. Musterdateien und Testdateien, können ebenfalls frei verwendet werden.
 
 ## Nachrichtengenerierung
 
 ### Funktionsweise
 
-Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](#weitere-einstellungen) gewählt. Hierfür werden die xdomea Dateiformat-Codes aus der entsprechenden Codeliste extrahiert und versucht anhand der Endung der Primärdatei zuzuordnen. Sollte keine Zuordnung möglich sein, wird eine Formaterkennung durchgeführt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
+Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Intigrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](#weitere-einstellungen) gewählt. Hierfür werden die xdomea Dateiformat-Codes aus der entsprechenden Codeliste extrahiert und versucht sie anhand der Endung der Primärdatei zuzuordnen. Sollte keine Zuordnung möglich sein, wird eine Formaterkennung durchgeführt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
 
 ### Nachrichtenmuster
 
@@ -20,11 +27,11 @@ Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2
 
 ### Testdaten
 
-Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimal Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
+Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimalen Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
 
 ### Verwendung
 
-Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die xdomea-Schemadateien und -Muster und für die Testdateien kann aber konfiguratorisch angepasst werden.
+Das Skript funktioniert initial nur in der vorgegeben Projektstruktur. Die Pfade für die [xdomea-Schemadateien und -Muster](#xdomea) und für die [Testdateien](#weitere-einstellungen) kann aber konfiguratorisch angepasst werden.
 
 #### Windows
 
@@ -155,7 +162,7 @@ In der Konfiguration für xdomea kann die Zielversion der Nachrichten und weiter
 
 ##### Versionsspezifische Einstellungen
 
-In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die zugehörige Schemadatei, die Codeliste für Dateiformate und die Nachrichtenmuster für die Generierung konfiguriert werden. Es empfiehlt sich bei Bedarf nur die Pfade der Nachrichtenmuster anzupassen. Die restlichen Werte sind bereits optimal und sollten nur angepasst werden, wenn man die Funktionsweise des Skripts grundlegend versteht. Die verwiesenen Schemadatein sollten ebenfalls nicht ausgetauscht werden. Die Schemadateien, die mit dem Repository ausgeliefert werden, wurden so angepasst, dass für die Validierung keine Online-Ressourcen benötigt werden. Deswegen funktioniert das Skript auch ohne eine Internetverbindung problemlos.
+In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die zugehörige Schemadatei, die Codeliste für Dateiformate und die Nachrichtenmuster für die Generierung konfiguriert werden. Es empfiehlt sich bei Bedarf nur die Pfade der Nachrichtenmuster anzupassen. Die restlichen Werte sind bereits optimal und sollten nur angepasst werden, wenn man die Funktionsweise des Skripts grundlegend versteht. Die verwiesenen Schemadateien sollten ebenfalls nicht ausgetauscht werden. Die Schemadateien, die mit dem Repository ausgeliefert werden, wurden so angepasst, dass für die Validierung keine Online-Ressourcen benötigt werden. Somit funktioniert das Skript auch ohne eine Internetverbindung problemlos.
 
 ```
 <xdomea target_version="3.0.0">
@@ -189,15 +196,15 @@ In den weiteren Einstellungen muss der Pfad zu den Testdaten gesetzt werden. Wei
 
 ### Funktionsweise
 
-Das Skript such rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Dann wird für jede Nachricht die Prozess-ID im ZIP-Dateinamen, im XML-Dateinamen und im XML-Inhalt gewechselt.
+Das Skript sucht rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. Anschließend wird für jede Nachricht die Prozess-ID im ZIP-Dateinamen, im XML-Dateinamen und im XML-Inhalt gewechselt.
 
 ### Verwendung
 
-Das Skript hat keine Abhängikeiten die zusätzlich installiert werden müssen. Deswegen kann es bei Bedarf einfach an die entsprechende Stelle kopiert und aufgeführt werden.
+Das Skript hat keine Abhängikeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf einfach an die entsprechende Stelle kopiert und aufgeführt werden.
 
 #### Windows
 
-Im [Projektordner](randomize_process_id) der Nachrichtengenerierung liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
+Im [Projektordner](randomize_process_id) liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
 
 #### Linux/macOS
 
