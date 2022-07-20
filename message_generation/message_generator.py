@@ -102,6 +102,7 @@ class XdomeaMessageGenerator:
         self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root)
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         # export messages
+        print('\nexportiere Aussonderungsnachrichten:\n')
         self.__export_0501_message(
             generated_message_ID,
             xdomea_0501_pattern_etree,
@@ -670,6 +671,10 @@ def main():
     message_generator = XdomeaMessageGenerator()
     message_generator.read_config('config/generator_config.xml', 'config/generator_config.xsd')
     message_generator.generate_xdomea_messages()
+    # pause until user confirmation on windows
+    if os.name == 'nt':
+        print('\n')
+        os.system("pause")
 
 
 if __name__ == '__main__':

@@ -231,6 +231,10 @@ class XdomeaMessageEditor:
 def main():
     editor = XdomeaMessageEditor()
     editor.randomize_all_message_IDs(os.getcwd())
+    # pause until user confirmation on windows
+    if os.name == 'nt':
+        print('\n')
+        os.system("pause")
 
 
 if __name__ == '__main__':
