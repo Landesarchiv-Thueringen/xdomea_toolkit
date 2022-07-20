@@ -627,6 +627,7 @@ class XdomeaMessageGenerator:
         with zipfile.ZipFile(message_path, 'w') as z:
             with z.open(xml_name, 'w') as f:
                 message_etree.write(f, encoding='UTF-8', xml_declaration=True, pretty_print=True)
+        print(message_path)
 
     def __export_0503_message(
         self,
@@ -647,6 +648,7 @@ class XdomeaMessageGenerator:
                 # set original ntfs timestamps on windows systems
                 if os.name == 'nt':
                     ZipUtil.add_ntfs_info(z, version_info.path, version_info.xdomea_file_name)
+        print(message_path)
         
     def __get_random_number(self, min: int, max: int) -> int:
         """

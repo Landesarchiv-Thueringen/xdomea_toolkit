@@ -60,9 +60,9 @@
   </xdomea>
 
   <test_data>
-    <root_dir>./test_data</root_dir>
+    <root_dir>test_data</root_dir>
   </test_data>
 
-  <output_dir>./messages</output_dir>
+  <output_dir>messages</output_dir>
 
 </generator_config>

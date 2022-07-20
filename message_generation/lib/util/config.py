@@ -105,7 +105,7 @@ class ConfigParser:
         config_schema_root = etree.parse(config_schema_path)
         config_schema = etree.XMLSchema(config_schema_root)
         config_schema.assertValid(config_etree)
-        output_dir = config_etree.findtext('/output_dir')
+        output_dir = os.path.normpath(config_etree.findtext('/output_dir'))
         config = GeneratorConfig(
             structure=ConfigParser.__read_structure_config(config_etree),
             xdomea=ConfigParser.__read_xdomea_config(config_etree),

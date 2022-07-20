@@ -186,7 +186,7 @@ In den weiteren Einstellungen muss der Pfad zu den Testdaten gesetzt werden. Wei
 
 ```
 <test_data>
-  <root_dir>H:/Testdaten</root_dir>
+  <root_dir>./test_data</root_dir>
 </test_data>
 
 <output_dir>./messages</output_dir>
@@ -200,12 +200,12 @@ Das Skript sucht rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. An
 
 ### Verwendung
 
-Das Skript hat keine Abhängikeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf einfach an die entsprechende Stelle kopiert und aufgeführt werden.
+Das Skript hat keine Abhängikeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf in das Verzeichnis, dass die Aussonderungsnachrichten enthält, kopiert und aufgeführt werden.
 
 #### Windows
 
-Im [Projektordner](randomize_process_id) liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, Nachrichten erzeugen. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
+Im [Projektordner](randomize_process_id) liegt auf der obersten Ebene eine EXE-Datei. Mit dieser kann man direkt, ohne die Installation von zusätzlichen Abhängigkeiten oder weiterer Konfiguration, die Prozess-ID von Aussonderungsnachrichten wechseln. Alternativ kann auch der Python-Interpreter, wie für Linux und macOS beschrieben, zum Ausführen des Skripts genutzt werden.
 
 #### Linux/macOS
 
-Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Dann kann das [Python-Skript](randomize_process_id/randomize_process_id.py) auf der obersten Ebene im [Projektordner](randomize_process_id) mit dem Python-Interpreter gestartet werden.
+Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Dann kann das [Python-Skript](randomize_process_id/randomize_process_id.py) mit dem Python-Interpreter gestartet werden.
