@@ -85,7 +85,7 @@ In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte
 
 ##### Anzahl der Schriftgutobjekte
 
-Für die Gesamtnachricht kann die minimal und maximal Anzahl der enthaltenen Akten festgelegt werden. Weiterhin kann die minimal und maximal Anzahl von in den Akten enthaltenen Vorgängen konfiguriert werden. Das Gleiche gilt für die in den Vorgängen enthaltenen Dokumente. Die minimal Anzahl aller Schriftgutobjekte muss mindestens eins sein.
+Für die Gesamtnachricht kann die minimale und maximale Anzahl der enthaltenen Akten festgelegt werden. Weiterhin kann die minimale und maximale Anzahl von in den Akten enthaltenen Vorgängen konfiguriert werden. Das Gleiche gilt für die in den Vorgängen enthaltenen Dokumente. Die minimale Anzahl aller Schriftgutobjekte muss mindestens eins sein.
 
 ```
 <min_number>2</min_number>
