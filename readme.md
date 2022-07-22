@@ -200,7 +200,7 @@ Das Skript sucht rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. An
 
 ### Verwendung
 
-Das Skript hat keine Abhängikeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf in das Verzeichnis, dass die Aussonderungsnachrichten enthält, kopiert und aufgeführt werden.
+Das Skript hat keine Abhängigkeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf in das Verzeichnis, dass die Aussonderungsnachrichten enthält, kopiert und aufgeführt werden.
 
 #### Windows
 
