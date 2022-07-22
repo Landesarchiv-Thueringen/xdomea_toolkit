@@ -27,7 +27,7 @@ Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2
 
 ### Testdaten
 
-Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimalen Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
+Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garantiert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimalen Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
 
 ### Verwendung
 
