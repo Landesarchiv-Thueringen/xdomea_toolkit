@@ -98,6 +98,7 @@ class XdomeaMessageGenerator:
         )
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
+        self.__set_xdomea_process_id(xdomea_0503_pattern_root, generated_message_ID)
         self.__generate_0503_message_structure(xdomea_0501_pattern_root, xdomea_0503_pattern_root)
         self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root)
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
