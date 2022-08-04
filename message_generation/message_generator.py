@@ -96,6 +96,7 @@ class XdomeaMessageGenerator:
             xdomea_0501_pattern_root,
             record_object_pattern_list,
         )
+        self.__replace_record_object_placeholder(xdomea_0501_pattern_root);
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
         self.__set_xdomea_process_id(xdomea_0503_pattern_root, generated_message_ID)
@@ -301,6 +302,56 @@ class XdomeaMessageGenerator:
             # randomly choose document pattern
             document_pattern = self.__get_random_pattern(document_pattern_list)
             process_pattern.append(document_pattern)
+
+    def __replace_record_object_placeholder(self, xdomea_0501_pattern_root: etree.Element):
+        """
+        Replaces all placeholders in the 0501 message with corresponding numbers.
+        :param xdomea_0501_pattern_root: root element of 0501 message
+        """
+        file_list = xdomea_0501_pattern_root.findall(
+            './/xdomea:Schriftgutobjekt/xdomea:Akte',
+            namespaces=xdomea_0501_pattern_root.nsmap,
+        )
+        for file_id, file in enumerate(file_list):
+            file_plan = file.find(
+                './xdomea:AllgemeineMetadaten/xdomea:Aktenplaneinheit/xdomea:Kennzeichen',
+                namespaces=xdomea_0501_pattern_root.nsmap,
+            )
+            file_plan_id = '' if file_plan is None else file_plan.text
+            self.__replace_placeholder(file, '{AP}', file_plan_id)
+            self.__replace_placeholder(file, '{Ax}', str(file_id+1))
+            process_list = file.findall(
+                './xdomea:Akteninhalt/xdomea:Vorgang',
+                namespaces=xdomea_0501_pattern_root.nsmap,
+            )
+            for process_id, process in enumerate(process_list):
+                self.__replace_placeholder(process, '{Vx}', str(process_id+1))
+                document_list = process.findall(
+                    './xdomea:Dokument',
+                    namespaces=xdomea_0501_pattern_root.nsmap,
+                )
+                for document_id, document in enumerate(document_list):
+                    self.__replace_placeholder(document, '{Dx}', str(document_id+1))
+
+    def __replace_placeholder(
+        self, 
+        element: etree.Element, 
+        placeholder: str, 
+        replacement: str,
+    ):
+        """
+        Replaces all placeholders in element.
+        :param element: element that contains placeholder
+        :param placeholder: placeholder string
+        :param replacement: text with which the placeholder is replaced
+        """
+        elements_with_placeholder = element.xpath(
+            './/*[contains(text(), "' + placeholder + '")]',
+            namespaces=element.nsmap,
+        )
+        for element in elements_with_placeholder:
+            element.text = element.text.replace(placeholder, replacement)
+
 
     def __generate_0503_message_structure(
         self, 

@@ -23,7 +23,18 @@ Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die
 
 ### Nachrichtenmuster
 
-Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2.4.0, 3.0.0 bereitgestellt. Es ist sinnvoll, sich die generischen Musterdateien zu kopieren und mit sinnvollen Metadaten zu ergänzen, so dass mit der Zeit eine kleine Sammlung an Musterdateien entsteht. Wenn komplexe Muster erstellt werden sollen, ist es sinnvoll mit den generischen Mustern erst die gewünschte Struktur zu generieren und diese dann anzupassen. Wenn andere als die vorgegeben, generischen Musterdateien verwendet werden sollen, muss das entsprechend in der [Konfiguration](#versionsspezifische-einstellungen) hinterlegt werden. Die Nachrichtenmuster werden vor der Nachrichtengenerierung mit dem konfigurierten Schema validiert. Damit Nachrichten generiert werden können, müssen die Muster valide sein.
+Mit dem Projekt werden [generische Musterdateien](message_generation/pattern) für die xdomea Version 2.3.0, 2.4.0, 3.0.0 bereitgestellt. Es ist sinnvoll, sich die generischen Musterdateien zu kopieren und mit sinnvollen Metadaten zu ergänzen, so dass mit der Zeit eine kleine Sammlung an Musterdateien entsteht. Wenn komplexe Muster erstellt werden sollen, ist es sinnvoll mit den generischen Mustern erst die gewünschte Struktur zu generieren und diese dann anzupassen. Wenn andere als die vorgegeben, generischen Musterdateien verwendet werden sollen, muss das entsprechend in der [Konfiguration](#versionsspezifische-einstellungen) hinterlegt werden. Die Nachrichtenmuster werden vor der Nachrichtengenerierung mit dem konfigurierten Schema validiert. Damit Nachrichten generiert werden können, müssen die Muster valide sein.
+
+#### Platzhalter
+
+In den Musterdateien können Platzhalter verwendet werden, um dynamische Nachrichteninhalte zu generieren, die sich in den vervielfachten Schriftgutmustern unterscheiden. In den bereitgestellten Musterdateien werden die Platzhalter genutzt, um Kennzeichen für die Schriftgutobjekte zu generieren. Die Platzhalter können nur in bestimmten Elementen verwendet werden. Folgend sind alle verfügbaren Platzhalter, die Elemente in denen sie verwendet werden können und die Inhalte mit denen sie ersetzt werden aufgeführt.
+
+| Platzhalter   | Ersetzung in Unterelementen von                        | Wird ersetzt durch                                                                                        |
+| ------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| {AP}          | xdomea:Schriftgutobjekt/xdomea:Akte                    | xdomea:Schriftgutobjekt/xdomea:Akte/xdomea:AllgemeineMetadaten/xdomea:Aktenplaneinheit/xdomea:Kennzeichen |
+| {Ax}          | xdomea:Schriftgutobjekt/xdomea:Akte                    | Aktennummer in Nachricht                                                                                  |
+| {Vx}          | xdomea:Schriftgutobjekt/xdomea:Vorgang                 | Vorgangsnummer in Akte                                                                                    |
+| {Dx}          | xdomea:Schriftgutobjekt/xdomea:Vorgang/xdomea:Dokument | Dokumentnummer im Vorgang                                                                                 |
 
 ### Testdaten
 

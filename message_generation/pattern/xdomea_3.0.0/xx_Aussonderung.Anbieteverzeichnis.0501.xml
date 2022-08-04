@@ -170,9 +170,9 @@
       </xdomea:Identifikation>
       <xdomea:AllgemeineMetadaten>
         <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-        <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+        <xdomea:Kennzeichen>{AP}-{Ax}</xdomea:Kennzeichen>
         <xdomea:Aktenplaneinheit>
-          <xdomea:Kennzeichen>Aktenplan-Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+          <xdomea:Kennzeichen>1234</xdomea:Kennzeichen>
         </xdomea:Aktenplaneinheit>
       </xdomea:AllgemeineMetadaten>
       <xdomea:ArchivspezifischeMetadaten>
@@ -195,7 +195,7 @@
           </xdomea:Identifikation>
           <xdomea:AllgemeineMetadaten>
             <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-            <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+            <xdomea:Kennzeichen>{AP}-{Ax}.{Vx}</xdomea:Kennzeichen>
           </xdomea:AllgemeineMetadaten>
           <xdomea:ArchivspezifischeMetadaten>
             <xdomea:Aussonderungsart>
@@ -217,7 +217,7 @@
             </xdomea:Identifikation>
             <xdomea:AllgemeineMetadaten>
               <xdomea:Betreff>Betreff (Testdaten)</xdomea:Betreff>
-              <xdomea:Kennzeichen>Kennzeichen (Testdaten)</xdomea:Kennzeichen>
+              <xdomea:Kennzeichen>{AP}-{Ax}.{Vx}-{Dx}</xdomea:Kennzeichen>
             </xdomea:AllgemeineMetadaten>
             <xdomea:Posteingangsdatum>2018-07-24</xdomea:Posteingangsdatum>
             <xdomea:Postausgangsdatum>2018-07-24</xdomea:Postausgangsdatum>

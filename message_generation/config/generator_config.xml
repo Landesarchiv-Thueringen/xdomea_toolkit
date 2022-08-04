@@ -8,13 +8,13 @@
       <min_number>2</min_number>
       <max_number>5</max_number>
       <!-- possible values: archive, random -->
-      <evaluation>random</evaluation>
+      <evaluation>archive</evaluation>
       <!-- de: Vorgänge -->
       <processes>
         <min_number>1</min_number>
         <max_number>4</max_number>
         <!-- possible values: inherit, random -->
-        <evaluation>random</evaluation>
+        <evaluation>inherit</evaluation>
         <!-- de: Dokumente -->
         <documents>
           <min_number>3</min_number>
@@ -29,7 +29,7 @@
     </files>
   </structure>
 
-  <xdomea target_version="2.3.0">
+  <xdomea target_version="3.0.0">
     <version>
       <id>2.3.0</id>
       <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
