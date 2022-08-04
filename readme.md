@@ -12,7 +12,7 @@ Die Nachnutzung und Weiterentwicklung des Toolkits ist ausdrücklich erwünscht.
 
 ## Lizenz
 
-Das Projekt steht unter der [MIT-Lizenz](license.md). Lizenziert werden ausschließlich die selbst erstellten Python-Skripte für die [Nachrichtengenerierung](message_generation/message_generator.py) und den [Wechel der Prozess-ID](randomize_process_id/randomize_process_id.py) sowie die zugehörigen [Hilfsskripte](message_generation/lib/util).  
+Das Projekt steht unter der [MIT-Lizenz](license.md). Lizenziert werden ausschließlich die selbst erstellten Python-Skripte für die [Nachrichtengenerierung](message_generation/message_generator.py) und den [Wechsel der Prozess-ID](randomize_process_id/randomize_process_id.py) sowie die zugehörigen [Hilfsskripte](message_generation/lib/util).  
 Mit dem Toolkit werden zur leichteren Handhabung die [xdomea Schemadateien](message_generation/schemes) mit ausgeliefert. Die xdomea Schemadateien sind von der Lizenzierung des Toolkits ausgenommen. Lt. der Koordinierungsstelle für IT-Standards der öffentlichen Verwaltung (KoSIT) sind die xdomea Schemadateien frei von Rechten Dritter und können ohne Einschränkungen verwendet werden. Die übrigen Dateien im Repository, insbes. Musterdateien und Testdateien, können ebenfalls frei verwendet werden.
 
 ## Nachrichtengenerierung
@@ -27,7 +27,7 @@ Mit dem Projekt werden generische Musterdateien für die xdomea Version 2.3.0, 2
 
 ### Testdaten
 
-Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garaniert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimalen Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
+Mit dem Projekt werden generische Testdaten bereitgestellt. Diese werden als Primärdateien für die Aussonderung.0503-Nachricht verwendet. Es ist sinnvoll die vorhandenen Testdaten zu ergänzen bzw. auszutauschen. Die Dateinamen dürfen keine Leer- und Sonderzeichen enthalten, sonst kann der korrekte Ablauf des Skripts nicht garantiert werden. Leerzeichen können bspw. durch Unterstriche ersetzt werden. Im optimalen Fall werden nur Buchstaben, Zahlen und Unterstriche für die Dateinamen verwendet.
 
 ### Verwendung
 
@@ -41,7 +41,7 @@ Im [Projektordner](message_generation) der Nachrichtengenerierung liegt auf der 
 
 Für die Verwendung muss eine möglichst aktuelle Version von [Python](https://www.python.org/downloads/) installiert werden. Anschließend müssen noch die Python-Abhängigkeiten installiert werden. Dann kann das [Python-Skript](message_generation/message_generator.py) auf der obersten Ebene im [Projektordner](message_generation) mit dem Python-Interpreter gestartet werden.
 
-##### Abhängikeiten
+##### Abhängigkeiten
 
   - [lxml](https://pypi.org/project/lxml/)
   - [magic](https://pypi.org/project/python-magic/)
@@ -85,7 +85,7 @@ In der Strukturkonfiguration kann die Anzahl und Bewertung der Schriftgutobjekte
 
 ##### Anzahl der Schriftgutobjekte
 
-Für die Gesamtnachricht kann die minimal und maximal Anzahl der enthaltenen Akten festgelegt werden. Weiterhin kann die minimal und maximal Anzahl von in den Akten enthaltenen Vorgängen konfiguriert werden. Das Gleiche gilt für die in den Vorgängen enthaltenen Dokumente. Die minimal Anzahl aller Schriftgutobjekte muss mindestens eins sein.
+Für die Gesamtnachricht kann die minimale und maximale Anzahl der enthaltenen Akten festgelegt werden. Weiterhin kann die minimale und maximale Anzahl von in den Akten enthaltenen Vorgängen konfiguriert werden. Das Gleiche gilt für die in den Vorgängen enthaltenen Dokumente. Die minimale Anzahl aller Schriftgutobjekte muss mindestens eins sein.
 
 ```
 <min_number>2</min_number>
@@ -200,7 +200,7 @@ Das Skript sucht rekursiv vom Ablageort alle xdomea Aussonderungsnachrichten. An
 
 ### Verwendung
 
-Das Skript hat keine Abhängikeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf in das Verzeichnis, dass die Aussonderungsnachrichten enthält, kopiert und aufgeführt werden.
+Das Skript hat keine Abhängigkeiten, die zusätzlich installiert werden müssen. Somit kann es bei Bedarf in das Verzeichnis, dass die Aussonderungsnachrichten enthält, kopiert und aufgeführt werden.
 
 #### Windows
 
