@@ -27,7 +27,7 @@ Mit dem Projekt werden [generische Musterdateien](message_generation/pattern) f�
 
 #### Platzhalter
 
-In den Musterdateien können Platzhalter verwendet werden, um dynamische Nachrichteninhalte zu generieren, die sich in den vervielfachten Schriftgutmustern unterscheiden. In den bereitgestellten Musterdateien werden die Platzhalter genutzt, um Kennzeichen für die Schriftgutobjekte zu generieren. Folgend sind alle verfügbaren Platzhalter, die Elemente in denen sie verwendet werden können und die Inhalte mit denen sie ersetzt werden aufgeführt.
+In den Musterdateien können Platzhalter verwendet werden, um dynamische Nachrichteninhalte zu generieren, die sich in den vervielfachten Schriftgutmustern unterscheiden. In den bereitgestellten Musterdateien werden die Platzhalter genutzt, um Kennzeichen für die Schriftgutobjekte zu generieren. Folgend sind alle verfügbaren Platzhalter, die Elemente in denen sie verwendet werden können und die Inhalte mit denen sie ersetzt werden, aufgeführt.
 
 | Platzhalter   | Ersetzung in Unterelementen von                        | Wird ersetzt durch                                                                                        |
 | ------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
