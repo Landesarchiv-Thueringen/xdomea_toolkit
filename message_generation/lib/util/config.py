@@ -279,12 +279,31 @@ class ConfigParser:
         Validates parsed config. Checks the conditions which the schema validation couldn't check.
         Checks cross field conditions.
         """
-        assert config.structure.min_number <= config.structure.max_number,\
+        ConfigParser.__validate_file_structure_config(config.structure)
+
+    @staticmethod
+    def __validate_file_structure_config(config: FileStructureConfig):
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
-        assert config.structure.process_structure.min_number <=\
-            config.structure.process_structure.max_number,\
+
+        if config.subfile_structure:
+            ConfigParser.__validate_file_structure_config(config.subfile_structure)
+
+        if config.process_structure:
+            ConfigParser.__validate_process_structure_config(config.process_structure)
+
+        if config.document_structure:
+            ConfigParser.__validate_document_structure_config(config.document_structure)
+
+    @staticmethod
+    def __validate_process_structure_config(config: ProcessStructureConfig):
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
-        assert config.structure.process_structure.\
-            document_structure.min_number <= config.structure.\
-            process_structure.document_structure.max_number,\
+
+    @staticmethod
+    def __validate_document_structure_config(config: DocumentStructureConfig):
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Dokumentenzahl ist kleiner als minimale Dokumentenzahl'
+
+        assert config.version_structure.min_number <= config.version_structure.max_number, \
+            'Strukturkonfiguration: maximale Versionszahl ist kleiner als minimale Versionszahl'
