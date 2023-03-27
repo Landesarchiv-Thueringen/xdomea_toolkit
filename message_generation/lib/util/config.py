@@ -279,29 +279,38 @@ class ConfigParser:
         Validates parsed config. Checks the conditions which the schema validation couldn't check.
         Checks cross field conditions.
         """
-        ConfigParser.__validate_file_structure_config(config.structure)
+        ConfigParser.__validate_file_structure_config(config.structure, 1)
 
     @staticmethod
-    def __validate_file_structure_config(config: FileStructureConfig):
+    def __validate_file_structure_config(config: FileStructureConfig, depth: int):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
         assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
 
         if config.subfile_structure:
-            ConfigParser.__validate_file_structure_config(config.subfile_structure)
+            ConfigParser.__validate_file_structure_config(config.subfile_structure, depth + 1)
 
         if config.process_structure:
-            ConfigParser.__validate_process_structure_config(config.process_structure)
+            ConfigParser.__validate_process_structure_config(config.process_structure, depth + 1)
 
         if config.document_structure:
-            ConfigParser.__validate_document_structure_config(config.document_structure)
+            ConfigParser.__validate_document_structure_config(config.document_structure, depth + 1)
 
     @staticmethod
-    def __validate_process_structure_config(config: ProcessStructureConfig):
+    def __validate_process_structure_config(config: ProcessStructureConfig, depth: int):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
         assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
 
+        if config.subprocess_structure:
+            ConfigParser.__validate_process_structure_config(config, depth + 1)
+
     @staticmethod
-    def __validate_document_structure_config(config: DocumentStructureConfig):
+    def __validate_document_structure_config(config: DocumentStructureConfig, depth: int):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
         assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Dokumentenzahl ist kleiner als minimale Dokumentenzahl'
 
