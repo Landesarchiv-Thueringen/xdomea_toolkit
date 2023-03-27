@@ -305,7 +305,10 @@ class ConfigParser:
             'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
 
         if config.subprocess_structure:
-            ConfigParser.__validate_process_structure_config(config, depth + 1)
+            ConfigParser.__validate_process_structure_config(config.subprocess_structure, depth + 1)
+
+        if config.document_structure:
+            ConfigParser.__validate_document_structure_config(config.document_structure, depth + 1)
 
     @staticmethod
     def __validate_document_structure_config(config: DocumentStructureConfig, depth: int):
