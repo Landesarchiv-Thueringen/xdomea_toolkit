@@ -24,6 +24,7 @@ from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
 import os
+from typing import Optional, Union
 
 
 @dataclass
@@ -39,7 +40,7 @@ class DocumentStructureConfig:
     version_structure: DocumentVersionStructureConfig
 
 
-class ProcessEvaluationConfig(Enum):
+class InheritableEvaluationConfig(Enum):
     INHERIT = 1
     RANDOM = 2
 
@@ -48,8 +49,9 @@ class ProcessEvaluationConfig(Enum):
 class ProcessStructureConfig:
     min_number: int
     max_number: int
-    process_evaluation: ProcessEvaluationConfig
-    document_structure: DocumentStructureConfig
+    process_evaluation: InheritableEvaluationConfig
+    subprocess_structure: Optional["ProcessStructureConfig"] = None
+    document_structure: Optional[DocumentStructureConfig] = None
 
 
 class FileEvaluationConfig(Enum):
@@ -62,7 +64,19 @@ class FileStructureConfig:
     min_number: int
     max_number: int
     file_evaluation: FileEvaluationConfig
-    process_structure: ProcessStructureConfig
+    subfile_structure: Optional["SubfileStructureConfig"] = None
+    process_structure: Optional[ProcessStructureConfig] = None
+    document_structure: Optional[DocumentStructureConfig] = None
+
+
+@dataclass
+class SubfileStructureConfig:
+    min_number: int
+    max_number: int
+    file_evaluation: InheritableEvaluationConfig
+    subfile_structure: Optional["SubfileStructureConfig"] = None
+    process_structure: Optional[ProcessStructureConfig] = None
+    document_structure: Optional[DocumentStructureConfig] = None
 
 
 @dataclass
@@ -106,8 +120,9 @@ class ConfigParser:
         config_schema = etree.XMLSchema(config_schema_root)
         config_schema.assertValid(config_etree)
         output_dir = os.path.normpath(config_etree.findtext('/output_dir'))
+        structure_etree = config_etree.find('./structure')
         config = GeneratorConfig(
-            structure=ConfigParser.__read_structure_config(config_etree),
+            structure=ConfigParser.__read_structure_config(structure_etree),
             xdomea=ConfigParser.__read_xdomea_config(config_etree),
             test_data=ConfigParser.__read_test_data_config(config_etree),
             output_dir=output_dir,
@@ -116,48 +131,128 @@ class ConfigParser:
         return config
 
     @staticmethod
-    def __read_structure_config(config_etree: etree.Element) -> FileStructureConfig:
+    def __read_structure_config(structure_etree: etree.Element) -> FileStructureConfig:
         """
         Parses message structure config into object representation.
-        :param config_etree: element tree of xml config
+        :param structure_etree: structure element tree of xml config
         :return: file structure config
         """
-        files_min_number = int(config_etree.findtext('/structure/files/min_number'))
-        files_max_number = int(config_etree.findtext('/structure/files/max_number'))
-        files_evaluation = FileEvaluationConfig[config_etree.findtext(
-            '/structure/files/evaluation').upper()]
-        processes_min_number = int(config_etree.findtext('/structure/files/processes/min_number'))
-        processes_max_number = int(config_etree.findtext('/structure/files/processes/max_number'))
-        processes_evaluation = ProcessEvaluationConfig[config_etree.findtext(
-            '/structure/files/processes/evaluation').upper()]
-        documents_min_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/min_number'))
-        documents_max_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/max_number'))
-        documents_version_min_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/versions/min_number'))
-        documents_version_max_number = int(config_etree.findtext(
-            '/structure/files/processes/documents/versions/max_number'))
-        version_structure_config = DocumentVersionStructureConfig(
-            min_number=documents_version_min_number,
-            max_number=documents_version_max_number,
+        file_structure_etree = structure_etree.find('./files')
+        return ConfigParser.__read_file_structure_config(file_structure_etree)
+
+    @staticmethod
+    def __read_file_structure_config(file_structure_etree: etree.Element) \
+            -> Union[FileStructureConfig, SubfileStructureConfig]:
+        """
+        Parses file or subfile structure config into object representation.
+        :param file_structure_etree: files or subfiles element tree of xml config
+        :return: file structure config
+        """
+        min_number = int(file_structure_etree.findtext('./min_number'))
+        max_number = int(file_structure_etree.findtext('./max_number'))
+
+        subfile_structure_etree = file_structure_etree.find('./subfiles')
+        if subfile_structure_etree is not None:
+            subfile_structure = ConfigParser.__read_file_structure_config(subfile_structure_etree)
+        else:
+            subfile_structure = None
+
+        process_structure_etree = file_structure_etree.find('./processes')
+        if process_structure_etree is not None:
+            process_structure = ConfigParser.__read_process_structure_config(process_structure_etree)
+        else:
+            process_structure = None
+
+        document_structure_etree = file_structure_etree.find('./documents')
+        if document_structure_etree is not None:
+            document_structure = ConfigParser.__read_document_structure_config(document_structure_etree)
+        else:
+            document_structure = None
+
+        if file_structure_etree.tag == 'files':
+            evaluation = FileEvaluationConfig[file_structure_etree.findtext('./evaluation').upper()]
+
+            return FileStructureConfig(
+                min_number=min_number,
+                max_number=max_number,
+                file_evaluation=evaluation,
+                subfile_structure=subfile_structure,
+                process_structure=process_structure,
+                document_structure=document_structure,
+            )
+        else:
+            evaluation = InheritableEvaluationConfig[file_structure_etree.findtext('./evaluation').upper()]
+
+            return SubfileStructureConfig(
+                min_number=min_number,
+                max_number=max_number,
+                file_evaluation=evaluation,
+                subfile_structure=subfile_structure,
+                process_structure=process_structure,
+                document_structure=document_structure,
+            )
+
+    @staticmethod
+    def __read_process_structure_config(process_structure_etree: etree.Element) -> ProcessStructureConfig:
+        """
+        Parses process or subprocess structure config into object representation.
+        :param process_structure_etree: processes or subprocesses element tree of xml config
+        :return: process structure config
+        """
+        min_number = int(process_structure_etree.findtext('./min_number'))
+        max_number = int(process_structure_etree.findtext('./max_number'))
+        evaluation = InheritableEvaluationConfig[process_structure_etree.findtext('./evaluation').upper()]
+
+        subprocess_structure_etree = process_structure_etree.find('./subprocesses')
+        if subprocess_structure_etree is not None:
+            subprocess_structure = ConfigParser.__read_process_structure_config(subprocess_structure_etree)
+        else:
+            subprocess_structure = None
+
+        document_structure_etree = process_structure_etree.find('./documents')
+        if document_structure_etree is not None:
+            document_structure = ConfigParser.__read_document_structure_config(document_structure_etree)
+        else:
+            document_structure = None
+
+        return ProcessStructureConfig(
+            min_number=min_number,
+            max_number=max_number,
+            process_evaluation=evaluation,
+            subprocess_structure=subprocess_structure,
+            document_structure=document_structure,
         )
-        document_structure_config = DocumentStructureConfig(
-            min_number=documents_min_number,
-            max_number=documents_max_number,
-            version_structure=version_structure_config,
+
+    @staticmethod
+    def __read_document_structure_config(document_structure_etree: etree.Element) -> DocumentStructureConfig:
+        """
+        Parses document structure config into object representation.
+        :param document_structure_etree: documents element tree of xml config
+        :return: document structure config
+        """
+        min_number = int(document_structure_etree.findtext('./min_number'))
+        max_number = int(document_structure_etree.findtext('./max_number'))
+        version_structure_etree = document_structure_etree.find('./versions')
+        version_structure = ConfigParser.__read_version_structure_config(version_structure_etree)
+
+        return DocumentStructureConfig(
+            min_number=min_number,
+            max_number=max_number,
+            version_structure=version_structure
         )
-        process_structure_config = ProcessStructureConfig(
-            min_number=processes_min_number,
-            max_number=processes_max_number,
-            process_evaluation=processes_evaluation,
-            document_structure=document_structure_config,
-        )
-        return FileStructureConfig(
-            min_number=files_min_number,
-            max_number=files_max_number,
-            file_evaluation=files_evaluation,
-            process_structure=process_structure_config,
+
+    @staticmethod
+    def __read_version_structure_config(version_structure_etree: etree.Element) -> DocumentVersionStructureConfig:
+        """
+        Parses document version structure config into object representation.
+        :param version_structure_etree: versions element tree of xml config
+        :return: document version structure config
+        """
+        min_number = int(version_structure_etree.findtext('./min_number'))
+        max_number = int(version_structure_etree.findtext('./max_number'))
+        return DocumentVersionStructureConfig(
+            min_number=min_number,
+            max_number=max_number,
         )
 
     @staticmethod
@@ -171,9 +266,9 @@ class ConfigParser:
         target_version = xdomea_config_el.get('target_version')
         version_el_list = xdomea_config_el.xpath(
             './version/id[contains(text(), "' + target_version + '")]/..')
-        assert version_el_list is not None,\
+        assert version_el_list is not None, \
             'xdomea Konfiguration: angebene Konfiguration für Zielversion wurde nicht gefunden'
-        assert len(version_el_list) == 1,\
+        assert len(version_el_list) == 1, \
             'xdomea Konfiguration: mehrere mögliche Konfigurationen für Zielversion gefunden'
         version_el = version_el_list[0]
         schema_path = version_el.findtext('./schema')
@@ -185,8 +280,8 @@ class ConfigParser:
             schema_path=schema_path,
             file_type_code_list_path=file_type_code_list_path,
             pattern_config=MessagePatternConfig(
-                message_0501_path = message_0501_path,
-                message_0503_path = message_0503_path,
+                message_0501_path=message_0501_path,
+                message_0503_path=message_0503_path,
             )
         )
 
@@ -208,12 +303,50 @@ class ConfigParser:
         Validates parsed config. Checks the conditions which the schema validation couldn't check.
         Checks cross field conditions.
         """
-        assert config.structure.min_number <= config.structure.max_number,\
+        ConfigParser.__validate_file_structure_config(config.structure, 1, config.xdomea.version)
+
+    @staticmethod
+    def __validate_file_structure_config(config: Union[FileStructureConfig, SubfileStructureConfig],
+                                         depth: int,
+                                         xdomea_version: str):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
-        assert config.structure.process_structure.min_number <=\
-            config.structure.process_structure.max_number,\
+
+        assert xdomea_version not in ["2.3.0", "2.4.0"] \
+               or (config.document_structure is None or config.process_structure is None), \
+               f'Strukturkonfiguration: Akten in XDOMEA {xdomea_version} dürfen nur entweder Vorgänge oder Dokumente ' \
+               f'enthalten'
+
+        if config.subfile_structure:
+            ConfigParser.__validate_file_structure_config(config.subfile_structure, depth + 1, xdomea_version)
+
+        if config.process_structure:
+            ConfigParser.__validate_process_structure_config(config.process_structure, depth + 1)
+
+        if config.document_structure:
+            ConfigParser.__validate_document_structure_config(config.document_structure, depth + 1)
+
+    @staticmethod
+    def __validate_process_structure_config(config: ProcessStructureConfig, depth: int):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Vorgangszahl ist kleiner als minimale Vorgangszahl'
-        assert config.structure.process_structure.\
-            document_structure.min_number <= config.structure.\
-            process_structure.document_structure.max_number,\
+
+        if config.subprocess_structure:
+            ConfigParser.__validate_process_structure_config(config.subprocess_structure, depth + 1)
+
+        if config.document_structure:
+            ConfigParser.__validate_document_structure_config(config.document_structure, depth + 1)
+
+    @staticmethod
+    def __validate_document_structure_config(config: DocumentStructureConfig, depth: int):
+        assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
+
+        assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Dokumentenzahl ist kleiner als minimale Dokumentenzahl'
+
+        assert config.version_structure.min_number <= config.version_structure.max_number, \
+            'Strukturkonfiguration: maximale Versionszahl ist kleiner als minimale Versionszahl'

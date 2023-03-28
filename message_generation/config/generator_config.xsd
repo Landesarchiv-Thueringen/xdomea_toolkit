@@ -8,47 +8,14 @@
         <xs:element name="structure">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="files">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="min_number" type="xs:positiveInteger"/>
-                    <xs:element name="max_number" type="xs:positiveInteger"/>
-                    <xs:element name="evaluation" type="file_evaluation_type"/>
-                    <xs:element name="processes">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="min_number" type="xs:positiveInteger"/>
-                          <xs:element name="max_number" type="xs:positiveInteger"/>
-                          <xs:element name="evaluation" type="process_evaluation_type"/>
-                          <xs:element name="documents">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="min_number" type="xs:positiveInteger"/>
-                                <xs:element name="max_number" type="xs:positiveInteger"/>
-                                <xs:element name="versions">
-                                  <xs:complexType>
-                                    <xs:sequence>
-                                      <xs:element name="min_number" type="xs:positiveInteger"/>
-                                      <xs:element name="max_number" type="xs:positiveInteger"/>
-                                    </xs:sequence>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
+              <xs:element name="files" type="files_type"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
 
         <xs:element name="xdomea">
           <xs:complexType>
-            <xs:sequence> 
+            <xs:sequence>
               <xs:element name="version" maxOccurs="3">
                 <xs:complexType>
                   <xs:sequence>
@@ -67,7 +34,7 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="target_version" type="xs:string"/> 
+            <xs:attribute name="target_version" type="xs:string"/>
           </xs:complexType>
         </xs:element>
 
@@ -90,13 +57,60 @@
       <xs:enumeration value="archive"/>
       <xs:enumeration value="random"/>
     </xs:restriction>
-  </xs:simpleType >
+  </xs:simpleType>
 
-  <xs:simpleType name="process_evaluation_type">
+  <xs:simpleType name="inheritable_evaluation_type">
     <xs:restriction base="xs:string">
       <xs:enumeration value="inherit"/>
       <xs:enumeration value="random"/>
     </xs:restriction>
-  </xs:simpleType >
+  </xs:simpleType>
+
+  <xs:complexType name="files_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+      <xs:element name="evaluation" type="file_evaluation_type"/>
+      <xs:element name="subfiles" type="subfiles_type" minOccurs="0"/>
+      <xs:element name="processes" type="processes_type" minOccurs="0"/>
+      <xs:element name="documents" type="documents_type" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="subfiles_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+      <xs:element name="evaluation" type="inheritable_evaluation_type"/>
+      <xs:element name="subfiles" type="subfiles_type" minOccurs="0"/>
+      <xs:element name="processes" type="processes_type" minOccurs="0"/>
+      <xs:element name="documents" type="documents_type" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="processes_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+      <xs:element name="evaluation" type="inheritable_evaluation_type"/>
+      <xs:element name="subprocesses" type="processes_type" minOccurs="0"/>
+      <xs:element name="documents" type="documents_type" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="documents_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+      <xs:element name="versions" type="versions_type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="versions_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+    </xs:sequence>
+  </xs:complexType>
 
 </xs:schema>
