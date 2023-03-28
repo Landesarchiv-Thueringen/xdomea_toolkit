@@ -262,10 +262,8 @@ class XdomeaMessageGenerator:
             file_pattern = self.__get_random_pattern(self.file_pattern_list)
             file_evaluation = self.__set_file_evaluation(file_pattern, first_file)
 
-            # clean file content
+            self.__clean_file_content(file_pattern)
             file_content = file_pattern.find('./xdomea:Akteninhalt', namespaces=file_pattern.nsmap)
-            for content_object in list(file_content):
-                file_content.remove(content_object)
 
             # generate documents
             if file_structure_config.document_structure:
@@ -279,7 +277,12 @@ class XdomeaMessageGenerator:
 
             # generate subfiles
             if file_structure_config.subfile_structure:
-                self.__generate_0501_file_structure(file_content, file_structure_config.subfile_structure, True)
+                # in XDOMEA 3.0.0 subfiles are in Akteninhalt, in 2.3.0 and 2.4.0 they are under the parent files root
+                # element
+                if self.xdomea_schema_version == "3.0.0":
+                    self.__generate_0501_file_structure(file_content, file_structure_config.subfile_structure, True)
+                else:
+                    self.__generate_0501_file_structure(file_pattern, file_structure_config.subfile_structure, True)
 
             if is_subfile:
                 file_pattern.tag = etree.QName(self.xdomea_namespace, 'Teilakte')
@@ -289,6 +292,16 @@ class XdomeaMessageGenerator:
                 record_object.append(file_pattern)
 
             first_file = False
+
+    def __clean_file_content(self, file_pattern: etree.Element):
+        file_content = file_pattern.find('./xdomea:Akteninhalt', namespaces=file_pattern.nsmap)
+        for content_object in list(file_content):
+            file_content.remove(content_object)
+
+        if self.xdomea_schema_version in ["2.3.0", "2.4.0"]:
+            subfiles = file_pattern.findall('./xdomea:Teilakte', namespaces=file_pattern.nsmap)
+            for subfile in subfiles:
+                file_pattern.remove(subfile)
 
     def __set_file_evaluation(self, file_pattern: etree.Element, first_file: bool) -> XdomeaEvaluation:
         """

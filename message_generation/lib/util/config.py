@@ -242,9 +242,9 @@ class ConfigParser:
         target_version = xdomea_config_el.get('target_version')
         version_el_list = xdomea_config_el.xpath(
             './version/id[contains(text(), "' + target_version + '")]/..')
-        assert version_el_list is not None,\
+        assert version_el_list is not None, \
             'xdomea Konfiguration: angebene Konfiguration für Zielversion wurde nicht gefunden'
-        assert len(version_el_list) == 1,\
+        assert len(version_el_list) == 1, \
             'xdomea Konfiguration: mehrere mögliche Konfigurationen für Zielversion gefunden'
         version_el = version_el_list[0]
         schema_path = version_el.findtext('./schema')
@@ -256,8 +256,8 @@ class ConfigParser:
             schema_path=schema_path,
             file_type_code_list_path=file_type_code_list_path,
             pattern_config=MessagePatternConfig(
-                message_0501_path = message_0501_path,
-                message_0503_path = message_0503_path,
+                message_0501_path=message_0501_path,
+                message_0503_path=message_0503_path,
             )
         )
 
@@ -279,17 +279,22 @@ class ConfigParser:
         Validates parsed config. Checks the conditions which the schema validation couldn't check.
         Checks cross field conditions.
         """
-        ConfigParser.__validate_file_structure_config(config.structure, 1)
+        ConfigParser.__validate_file_structure_config(config.structure, 1, config.xdomea.version)
 
     @staticmethod
-    def __validate_file_structure_config(config: FileStructureConfig, depth: int):
+    def __validate_file_structure_config(config: FileStructureConfig, depth: int, xdomea_version: str):
         assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
 
         assert config.min_number <= config.max_number, \
             'Strukturkonfiguration: maximale Aktenzahl ist kleiner als minimale Aktenzahl'
 
+        assert xdomea_version not in ["2.3.0", "2.4.0"] \
+               or (config.document_structure is None or config.process_structure is None), \
+               f'Strukturkonfiguration: Akten in XDOMEA {xdomea_version} dürfen nur entweder Vorgänge oder Dokumente ' \
+               f'enthalten'
+
         if config.subfile_structure:
-            ConfigParser.__validate_file_structure_config(config.subfile_structure, depth + 1)
+            ConfigParser.__validate_file_structure_config(config.subfile_structure, depth + 1, xdomea_version)
 
         if config.process_structure:
             ConfigParser.__validate_process_structure_config(config.process_structure, depth + 1)
