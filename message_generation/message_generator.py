@@ -41,6 +41,7 @@ class XdomeaRegexConfig:
     xdomea_0501_message_name: str
     xdomea_0502_message_name: str
     xdomea_0503_message_name: str
+    xdomea_0504_message_name: str
 
 
 class XdomeaEvaluation(str, Enum):
@@ -56,6 +57,7 @@ class XdomeaMessageGenerator:
             xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501',
             xdomea_0502_message_name='_Aussonderung.Bewertungsverzeichnis.0502',
             xdomea_0503_message_name='_Aussonderung.Aussonderung.0503',
+            xdomea_0504_message_name='_Aussonderung.AnbietungEmpfangBestaetigen.0504',
         )
         self.record_object_evaluation = {}
 
@@ -87,6 +89,7 @@ class XdomeaMessageGenerator:
         xdomea_0501_message_etree = self.__generate_0501_message(generated_message_id)
         xdomea_0502_message_etree = self.__generate_0502_message(generated_message_id)
         xdomea_0503_message_etree = self.__generate_0503_message(generated_message_id, xdomea_0501_message_etree)
+        xdomea_0504_message_etree = self.__generate_0504_message(generated_message_id)
 
         # export messages
         print('\nexportiere Aussonderungsnachrichten:\n')
@@ -104,6 +107,11 @@ class XdomeaMessageGenerator:
             generated_message_id,
             xdomea_0503_message_etree,
         )
+        self.__export_message(
+            generated_message_id,
+            xdomea_0504_message_etree,
+            self.regex_config.xdomea_0504_message_name
+        )
 
         # clear record object evaluations for next message generation
         self.record_object_evaluation.clear()
@@ -114,12 +122,7 @@ class XdomeaMessageGenerator:
         :param message_id: generated uuid to use for the message
         :return: generated message element tree
         """
-        parser = etree.XMLParser(remove_blank_text=True)
-        xdomea_0501_pattern_etree = etree.parse(
-            self.config.xdomea.pattern_config.message_0501_path,
-            parser,  # removes intendation from patterns, necessary for pretty print output
-        )
-        self.pattern_schema.assertValid(xdomea_0501_pattern_etree)
+        xdomea_0501_pattern_etree = self.__get_message_pattern(self.config.xdomea.pattern_config.message_0501_path)
 
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
         self.__set_xdomea_process_id(xdomea_0501_pattern_root, message_id)
@@ -147,13 +150,7 @@ class XdomeaMessageGenerator:
         :param message_id: generated uuid to use for the message
         :return: generated message element tree
         """
-        parser = etree.XMLParser(remove_blank_text=True)
-        xdomea_0502_pattern_etree = etree.parse(
-            self.config.xdomea.pattern_config.message_0502_path,
-            parser,
-        )
-        self.pattern_schema.assertValid(xdomea_0502_pattern_etree)
-
+        xdomea_0502_pattern_etree = self.__get_message_pattern(self.config.xdomea.pattern_config.message_0502_path)
         xdomea_0502_pattern_root = xdomea_0502_pattern_etree.getroot()
 
         self.__set_xdomea_process_id(xdomea_0502_pattern_root, message_id)
@@ -170,12 +167,7 @@ class XdomeaMessageGenerator:
         :param xdomea_0501_message_etree: 0501 message to base the 0503 message on
         :return: generated message element tree
         """
-        parser = etree.XMLParser(remove_blank_text=True)
-        xdomea_0503_pattern_etree = etree.parse(
-            self.config.xdomea.pattern_config.message_0503_path,
-            parser,  # removes intendation from patterns, necessary for pretty print output
-        )
-        self.pattern_schema.assertValid(xdomea_0503_pattern_etree)
+        xdomea_0503_pattern_etree = self.__get_message_pattern(self.config.xdomea.pattern_config.message_0503_path)
 
         xdomea_0501_message_root = xdomea_0501_message_etree.getroot()
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
@@ -186,6 +178,32 @@ class XdomeaMessageGenerator:
         self.pattern_schema.assertValid(xdomea_0503_pattern_etree)
 
         return xdomea_0503_pattern_etree
+
+    def __generate_0504_message(self, message_id: str) -> etree.ElementTree:
+        """
+        Generate a 0504 xdomea message
+        :param message_id: generated uuid to use for the message
+        :return: generated message element tree
+        """
+        xdomea_0504_pattern_etree = self.__get_message_pattern(self.config.xdomea.pattern_config.message_0504_path)
+        xdomea_0504_pattern_root = xdomea_0504_pattern_etree.getroot()
+        self.__set_xdomea_process_id(xdomea_0504_pattern_root, message_id)
+        self.pattern_schema.assertValid(xdomea_0504_pattern_etree)
+        return xdomea_0504_pattern_etree
+
+    def __get_message_pattern(self, path: str) -> etree.ElementTree:
+        """
+        Get and verify a xdomea message pattern
+        :param path: path to the message pattern
+        :return: element tree of the message pattern
+        """
+        parser = etree.XMLParser(remove_blank_text=True)
+        message_pattern_etree = etree.parse(
+            path,
+            parser,  # removes intendation from patterns, necessary for pretty print output
+        )
+        self.pattern_schema.assertValid(message_pattern_etree)
+        return message_pattern_etree
 
     @staticmethod
     def __set_xdomea_process_id(xdomea_message_root: etree.Element, process_id: str):

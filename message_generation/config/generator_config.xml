@@ -86,6 +86,7 @@
         <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
         <message_0502>pattern/xdomea_2.3.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_2.3.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
     <version>
@@ -96,6 +97,7 @@
         <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
         <message_0502>pattern/xdomea_2.4.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_2.4.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
     <version>
@@ -106,6 +108,7 @@
         <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
         <message_0502>pattern/xdomea_3.0.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_3.0.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
   </xdomea>
