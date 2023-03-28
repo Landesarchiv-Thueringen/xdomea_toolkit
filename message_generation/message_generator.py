@@ -71,8 +71,8 @@ class XdomeaMessageGenerator:
 
     def generate_xdomea_messages(self):
         """
-        Parses xdomea message patterns, validates against the pattern schema and generates and exports xdomea 0501 and
-        0503 messages.
+        Parses xdomea message patterns, validates against the pattern schema and generates and exports xdomea 0501,
+        0502, 0503 and 0504 messages.
         """
         # generate message id
         generated_message_id = str(uuid.uuid4())
