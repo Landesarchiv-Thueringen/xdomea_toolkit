@@ -39,6 +39,7 @@ import zipfile
 @dataclass
 class XdomeaRegexConfig:
     xdomea_0501_message_name: str
+    xdomea_0502_message_name: str
     xdomea_0503_message_name: str
 
 
@@ -53,6 +54,7 @@ class XdomeaMessageGenerator:
     def __init__(self):
         self.regex_config = XdomeaRegexConfig(
             xdomea_0501_message_name='_Aussonderung.Anbieteverzeichnis.0501',
+            xdomea_0502_message_name='_Aussonderung.Bewertungsverzeichnis.0502',
             xdomea_0503_message_name='_Aussonderung.Aussonderung.0503',
         )
         self.record_object_evaluation = {}
@@ -83,13 +85,20 @@ class XdomeaMessageGenerator:
 
         # generate messages
         xdomea_0501_message_etree = self.__generate_0501_message(generated_message_id)
+        xdomea_0502_message_etree = self.__generate_0502_message(generated_message_id)
         xdomea_0503_message_etree = self.__generate_0503_message(generated_message_id, xdomea_0501_message_etree)
 
         # export messages
         print('\nexportiere Aussonderungsnachrichten:\n')
-        self.__export_0501_message(
+        self.__export_message(
             generated_message_id,
             xdomea_0501_message_etree,
+            self.regex_config.xdomea_0501_message_name
+        )
+        self.__export_message(
+            generated_message_id,
+            xdomea_0502_message_etree,
+            self.regex_config.xdomea_0502_message_name
         )
         self.__export_0503_message(
             generated_message_id,
@@ -131,6 +140,27 @@ class XdomeaMessageGenerator:
         self.pattern_schema.assertValid(xdomea_0501_pattern_etree)
 
         return xdomea_0501_pattern_etree
+
+    def __generate_0502_message(self, message_id: str) -> etree.ElementTree:
+        """
+        Generate a 0502 xdomea message (de: Aussonderung.Bewertungsverzeichnis)
+        :param message_id: generated uuid to use for the message
+        :return: generated message element tree
+        """
+        parser = etree.XMLParser(remove_blank_text=True)
+        xdomea_0502_pattern_etree = etree.parse(
+            self.config.xdomea.pattern_config.message_0502_path,
+            parser,
+        )
+        self.pattern_schema.assertValid(xdomea_0502_pattern_etree)
+
+        xdomea_0502_pattern_root = xdomea_0502_pattern_etree.getroot()
+
+        self.__set_xdomea_process_id(xdomea_0502_pattern_root, message_id)
+        self.__generate_0502_message_structure(xdomea_0502_pattern_root)
+        self.pattern_schema.assertValid(xdomea_0502_pattern_root)
+
+        return xdomea_0502_pattern_etree
 
     def __generate_0503_message(self, message_id: str,
                                 xdomea_0501_message_etree: etree.ElementTree) -> etree.ElementTree:
@@ -489,6 +519,31 @@ class XdomeaMessageGenerator:
         for element in elements_with_placeholder:
             element.text = element.text.replace(placeholder, replacement)
 
+    def __generate_0502_message_structure(self, xdomea_0502_pattern_root: etree.Element):
+        record_object_evaluation_pattern_list = xdomea_0502_pattern_root.findall(
+            './/xdomea:BewertetesObjekt', namespaces=xdomea_0502_pattern_root.nsmap)
+
+        # remove all record object evaluation patterns from message pattern
+        for evaluation_pattern in record_object_evaluation_pattern_list:
+            xdomea_0502_pattern_root.remove(evaluation_pattern)
+
+        # verify that there is at least one evaluation pattern
+        assert len(record_object_evaluation_pattern_list) >= 1, \
+            'Mindestens ein Bewertungspattern ist notwendig'
+
+        for record_object_id, evaluation in self.record_object_evaluation.items():
+            evaluation_pattern = deepcopy(record_object_evaluation_pattern_list[0])
+
+            # set uuid
+            id_element = evaluation_pattern.find('.//xdomea:ID', namespaces=evaluation_pattern.nsmap)
+            id_element.text = record_object_id
+
+            # set evaluation code
+            evaluation_code_element = evaluation_pattern.find('.//code')
+            evaluation_code_element.text = evaluation
+
+            xdomea_0502_pattern_root.append(evaluation_pattern)
+
     def __generate_0503_message_structure(
         self, 
         xdomea_0501_pattern_root: etree.Element,
@@ -837,14 +892,21 @@ class XdomeaMessageGenerator:
             file_el.insert(0, file_name_el)
         file_name_el.text = file_info.xdomea_file_name
 
-    def __export_0501_message(
+    def __export_message(
         self,
         process_id: str,
-        message_etree: etree, 
+        message_etree: etree,
+        message_name: str
     ):
+        """
+        Export a xdomea message as zip archive
+        :param process_id: uuid of the message
+        :param message_etree: xml element tree of the message
+        :param message_name: name pattern for the message
+        """
         export_dir = os.path.join(self.config.output_dir, process_id)
         Path(export_dir).mkdir(parents=True, exist_ok=True)
-        message_name = process_id + self.regex_config.xdomea_0501_message_name
+        message_name = process_id + message_name
         xml_name = message_name + '.xml'
         zip_name = message_name + '.zip'
         message_path = os.path.join(export_dir, zip_name)

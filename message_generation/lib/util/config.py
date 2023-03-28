@@ -72,6 +72,7 @@ class FileStructureConfig:
 @dataclass
 class MessagePatternConfig:
     message_0501_path: str
+    message_0502_path: str
     message_0503_path: str
 
 
@@ -250,6 +251,7 @@ class ConfigParser:
         schema_path = version_el.findtext('./schema')
         file_type_code_list_path = version_el.findtext('./file_type_code_list')
         message_0501_path = version_el.findtext('./pattern/message_0501')
+        message_0502_path = version_el.findtext('./pattern/message_0502')
         message_0503_path = version_el.findtext('./pattern/message_0503')
         return XdomeaConfig(
             version=target_version,
@@ -257,6 +259,7 @@ class ConfigParser:
             file_type_code_list_path=file_type_code_list_path,
             pattern_config=MessagePatternConfig(
                 message_0501_path=message_0501_path,
+                message_0502_path=message_0502_path,
                 message_0503_path=message_0503_path,
             )
         )
