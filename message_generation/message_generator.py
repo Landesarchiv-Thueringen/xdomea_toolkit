@@ -43,7 +43,6 @@ class XdomeaRegexConfig:
 
 
 class XdomeaEvaluation(str, Enum):
-    EVALUATE = 'B'
     ARCHIVE = 'A'
     DISCARD = 'V'
 
@@ -426,7 +425,6 @@ class XdomeaMessageGenerator:
         :param first_process: true if process pattern is the first processed pattern
         :param process_structure_config: configuration of the generated process structure
         """
-        process_evaluation = XdomeaEvaluation.EVALUATE
         # first process is always archived to guarantee a valid message structure
         if first_process and file_evaluation == XdomeaEvaluation.ARCHIVE:
             process_evaluation = XdomeaEvaluation.ARCHIVE
