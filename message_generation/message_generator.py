@@ -412,8 +412,8 @@ class XdomeaMessageGenerator:
             first_process = False
 
     def __set_process_evaluation(
-        self, 
-        process_pattern: etree.Element, 
+        self,
+        process_pattern: etree.Element,
         file_evaluation: XdomeaEvaluation,
         first_process: bool,
         process_structure_config: ProcessStructureConfig
@@ -490,7 +490,7 @@ class XdomeaMessageGenerator:
     @staticmethod
     def __replace_placeholder(
         element: etree.Element,
-        placeholder: str, 
+        placeholder: str,
         replacement: str,
     ):
         """
@@ -507,7 +507,7 @@ class XdomeaMessageGenerator:
             element.text = element.text.replace(placeholder, replacement)
 
     def __generate_0503_message_structure(
-        self, 
+        self,
         xdomea_0501_pattern_root: etree.Element,
         xdomea_0503_pattern_root: etree.Element,
     ):
@@ -617,17 +617,17 @@ class XdomeaMessageGenerator:
 
         assert record_object.tag in expected_tag_list
         metadata_archive_el = record_object.find(
-            './xdomea:ArchivspezifischeMetadaten', 
+            './xdomea:ArchivspezifischeMetadaten',
             namespaces=record_object.nsmap,
         )
         if metadata_archive_el is None:
             predecessor_el = record_object.find(
-                'xdomea:AllgemeineMetadaten', 
+                'xdomea:AllgemeineMetadaten',
                 namespaces=record_object.nsmap,
             )
             if predecessor_el is None:
                 predecessor_el = record_object.find(
-                    'xdomea:Identifikation', 
+                    'xdomea:Identifikation',
                     namespaces=record_object.nsmap,
                 )
             metadata_archive_el = etree.Element(etree.QName(self.xdomea_namespace, 'ArchivspezifischeMetadaten'))
@@ -635,18 +635,18 @@ class XdomeaMessageGenerator:
         self.__add_evaluation_element(metadata_archive_el, evaluation)
 
     def __add_evaluation_element(
-        self, 
-        metadata_archive_el: etree.Element, 
+        self,
+        metadata_archive_el: etree.Element,
         evaluation: XdomeaEvaluation,
     ):
         xdomea_namespace = '{' + metadata_archive_el.nsmap['xdomea'] + '}'
         evaluation_el = metadata_archive_el.find(
-            './xdomea:Aussonderungsart', 
+            './xdomea:Aussonderungsart',
             namespaces=metadata_archive_el.nsmap,
         )
         if evaluation_el is None:
             evaluation_el = etree.SubElement(
-                metadata_archive_el, 
+                metadata_archive_el,
                 etree.QName(self.xdomea_namespace, 'Aussonderungsart'),
             )
         evaluation_el = self.__get_version_dependent_evaluation_element(evaluation_el)
@@ -658,12 +658,12 @@ class XdomeaMessageGenerator:
     def __get_version_dependent_evaluation_element(self, evaluation_el: etree.Element):
         if self.xdomea_schema_version == '3.0.0':
             evaluation_predefined_el = evaluation_el.find(
-                './xdomea:Aussonderungsart', 
+                './xdomea:Aussonderungsart',
                 namespaces=evaluation_el.nsmap,
             )
             if evaluation_predefined_el is None:
                 evaluation_predefined_el = etree.SubElement(
-                    evaluation_el, 
+                    evaluation_el,
                     etree.QName(self.xdomea_namespace, 'Aussonderungsart'),
                     listURI='urn:xoev-de:xdomea:codeliste:aussonderungsart',
                     listVersionID='1.0'
@@ -675,22 +675,31 @@ class XdomeaMessageGenerator:
     def __add_document_versions_to_0503_message(
             self,
             xdomea_0503_pattern_root: etree.Element,
-            structure_config: Union[FileStructureConfig, ProcessStructureConfig, DocumentStructureConfig] = None,
-            xpath_prefix: str = './xdomea:Schriftgutobjekt/xdomea:Akte/xdomea:Akteninhalt',
+            structure_config: Union[FileStructureConfig, ProcessStructureConfig, DocumentStructureConfig,
+                SubfileStructureConfig] = None,
+            xpath_prefix: Optional[str] = './xdomea:Schriftgutobjekt/xdomea:Akte',
     ):
         if structure_config is None:
             structure_config = self.config.structure
 
-        if type(structure_config) is FileStructureConfig:
+        if type(structure_config) in [FileStructureConfig, SubfileStructureConfig]:
             if structure_config.subfile_structure:
-                self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root,
-                                                             structure_config.subfile_structure,
-                                                             xpath_prefix + '/xdomea:Teilakte/xdomea:Akteninhalt')
+                if self.xdomea_schema_version == '3.0.0':
+                    new_xpath_prefix = xpath_prefix + '/xdomea:Akteninhalt/xdomea:Teilakte'
+                    self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root,
+                                                                 structure_config.subfile_structure,
+                                                                 new_xpath_prefix)
+                else:
+                    new_xpath_prefix = xpath_prefix + '/xdomea:Teilakte'
+                    self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root,
+                                                                 structure_config.subfile_structure,
+                                                                 new_xpath_prefix)
 
             if structure_config.process_structure:
+                new_xpath_prefix = xpath_prefix + '/xdomea:Akteninhalt/xdomea:Vorgang'
                 self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root,
                                                              structure_config.process_structure,
-                                                             xpath_prefix + '/xdomea:Vorgang')
+                                                             new_xpath_prefix)
 
             if structure_config.document_structure:
                 self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root,
@@ -715,7 +724,7 @@ class XdomeaMessageGenerator:
             )
             FileUtil.init_file_pool(self.config.test_data.root_dir)
             document_list = xdomea_0503_pattern_root.findall(
-                xpath_prefix + '/xdomea:Dokument',
+                xpath_prefix + '//xdomea:Dokument',
                 namespaces=xdomea_0503_pattern_root.nsmap,
             )
             self.document_version_info_list = []
@@ -857,7 +866,7 @@ class XdomeaMessageGenerator:
     def __export_0501_message(
         self,
         process_id: str,
-        message_etree: etree, 
+        message_etree: etree,
     ):
         export_dir = os.path.join(self.config.output_dir, process_id)
         Path(export_dir).mkdir(parents=True, exist_ok=True)
@@ -873,7 +882,7 @@ class XdomeaMessageGenerator:
     def __export_0503_message(
         self,
         process_id: str,
-        message_etree: etree, 
+        message_etree: etree,
     ):
         export_dir = os.path.join(self.config.output_dir, process_id)
         Path(export_dir).mkdir(parents=True, exist_ok=True)
