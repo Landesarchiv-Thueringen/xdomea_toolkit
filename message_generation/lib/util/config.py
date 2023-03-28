@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from enum import Enum
 from lxml import etree
 import os
-from typing import Optional
+from typing import Optional, Union
 
 
 @dataclass
@@ -40,7 +40,7 @@ class DocumentStructureConfig:
     version_structure: DocumentVersionStructureConfig
 
 
-class ProcessEvaluationConfig(Enum):
+class InheritableEvaluationConfig(Enum):
     INHERIT = 1
     RANDOM = 2
 
@@ -49,7 +49,7 @@ class ProcessEvaluationConfig(Enum):
 class ProcessStructureConfig:
     min_number: int
     max_number: int
-    process_evaluation: ProcessEvaluationConfig
+    process_evaluation: InheritableEvaluationConfig
     subprocess_structure: Optional["ProcessStructureConfig"] = None
     document_structure: Optional[DocumentStructureConfig] = None
 
@@ -64,7 +64,17 @@ class FileStructureConfig:
     min_number: int
     max_number: int
     file_evaluation: FileEvaluationConfig
-    subfile_structure: Optional["FileStructureConfig"] = None
+    subfile_structure: Optional["SubfileStructureConfig"] = None
+    process_structure: Optional[ProcessStructureConfig] = None
+    document_structure: Optional[DocumentStructureConfig] = None
+
+
+@dataclass
+class SubfileStructureConfig:
+    min_number: int
+    max_number: int
+    file_evaluation: InheritableEvaluationConfig
+    subfile_structure: Optional["SubfileStructureConfig"] = None
     process_structure: Optional[ProcessStructureConfig] = None
     document_structure: Optional[DocumentStructureConfig] = None
 
@@ -131,7 +141,8 @@ class ConfigParser:
         return ConfigParser.__read_file_structure_config(file_structure_etree)
 
     @staticmethod
-    def __read_file_structure_config(file_structure_etree: etree.Element) -> FileStructureConfig:
+    def __read_file_structure_config(file_structure_etree: etree.Element) \
+            -> Union[FileStructureConfig, SubfileStructureConfig]:
         """
         Parses file or subfile structure config into object representation.
         :param file_structure_etree: files or subfiles element tree of xml config
@@ -139,7 +150,6 @@ class ConfigParser:
         """
         min_number = int(file_structure_etree.findtext('./min_number'))
         max_number = int(file_structure_etree.findtext('./max_number'))
-        evaluation = FileEvaluationConfig[file_structure_etree.findtext('./evaluation').upper()]
 
         subfile_structure_etree = file_structure_etree.find('./subfiles')
         if subfile_structure_etree is not None:
@@ -159,14 +169,28 @@ class ConfigParser:
         else:
             document_structure = None
 
-        return FileStructureConfig(
-            min_number=min_number,
-            max_number=max_number,
-            file_evaluation=evaluation,
-            subfile_structure=subfile_structure,
-            process_structure=process_structure,
-            document_structure=document_structure,
-        )
+        if file_structure_etree.tag == 'files':
+            evaluation = FileEvaluationConfig[file_structure_etree.findtext('./evaluation').upper()]
+
+            return FileStructureConfig(
+                min_number=min_number,
+                max_number=max_number,
+                file_evaluation=evaluation,
+                subfile_structure=subfile_structure,
+                process_structure=process_structure,
+                document_structure=document_structure,
+            )
+        else:
+            evaluation = InheritableEvaluationConfig[file_structure_etree.findtext('./evaluation').upper()]
+
+            return SubfileStructureConfig(
+                min_number=min_number,
+                max_number=max_number,
+                file_evaluation=evaluation,
+                subfile_structure=subfile_structure,
+                process_structure=process_structure,
+                document_structure=document_structure,
+            )
 
     @staticmethod
     def __read_process_structure_config(process_structure_etree: etree.Element) -> ProcessStructureConfig:
@@ -177,7 +201,7 @@ class ConfigParser:
         """
         min_number = int(process_structure_etree.findtext('./min_number'))
         max_number = int(process_structure_etree.findtext('./max_number'))
-        evaluation = ProcessEvaluationConfig[process_structure_etree.findtext('./evaluation').upper()]
+        evaluation = InheritableEvaluationConfig[process_structure_etree.findtext('./evaluation').upper()]
 
         subprocess_structure_etree = process_structure_etree.find('./subprocesses')
         if subprocess_structure_etree is not None:
@@ -282,7 +306,9 @@ class ConfigParser:
         ConfigParser.__validate_file_structure_config(config.structure, 1, config.xdomea.version)
 
     @staticmethod
-    def __validate_file_structure_config(config: FileStructureConfig, depth: int, xdomea_version: str):
+    def __validate_file_structure_config(config: Union[FileStructureConfig, SubfileStructureConfig],
+                                         depth: int,
+                                         xdomea_version: str):
         assert depth <= 5, 'Strukturkonfiguration: maximale Verschachtelungstiefe von 5 überschritten'
 
         assert config.min_number <= config.max_number, \

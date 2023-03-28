@@ -14,7 +14,7 @@
         <min_number>2</min_number>
         <max_number>5</max_number>
         <!-- possible values: archive, random -->
-        <evaluation>archive</evaluation>
+        <evaluation>inherit</evaluation>
         <!-- de: Vorgänge -->
         <processes>
           <min_number>1</min_number>

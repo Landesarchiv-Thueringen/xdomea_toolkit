@@ -24,7 +24,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
 from lib.util.config import ConfigParser, FileEvaluationConfig, FileStructureConfig, ProcessStructureConfig,\
-    DocumentStructureConfig
+    DocumentStructureConfig, SubfileStructureConfig, InheritableEvaluationConfig
 from lib.util.file import FileInfo, FileUtil
 from lib.util.zip import ZipUtil
 from lxml import etree
@@ -269,14 +269,13 @@ class XdomeaMessageGenerator:
     def __generate_0501_file_structure(
         self,
         parent: etree.Element,
-        file_structure_config: FileStructureConfig,
-        is_subfile: bool = False,
+        file_structure_config: Union[FileStructureConfig, SubfileStructureConfig],
+        parent_file_evaluation: Optional[XdomeaEvaluation] = None
     ):
         """
         Generates file or subfile structure for a 0501 xdomea message
         :param parent: parent element of the generated file structure
         :param file_structure_config: configuration for the file or subfile structure
-        :param is_subfile: flag if a file or a subfile structure should get generated
         """
         file_number = self.__get_random_number(
             file_structure_config.min_number, file_structure_config.max_number)
@@ -284,7 +283,9 @@ class XdomeaMessageGenerator:
         for file_index in range(file_number):
             # randomly choose file pattern
             file_pattern = self.__get_random_pattern(self.file_pattern_list)
-            file_evaluation = self.__set_file_evaluation(file_pattern, first_file)
+
+            file_evaluation = self.__set_file_evaluation(file_pattern, first_file, file_structure_config,
+                                                         parent_file_evaluation)
 
             self.__clean_file_content(file_pattern)
             file_content = file_pattern.find('./xdomea:Akteninhalt', namespaces=file_pattern.nsmap)
@@ -304,11 +305,13 @@ class XdomeaMessageGenerator:
                 # in XDOMEA 3.0.0 subfiles are in Akteninhalt, in 2.3.0 and 2.4.0 they are under the parent files root
                 # element
                 if self.xdomea_schema_version == "3.0.0":
-                    self.__generate_0501_file_structure(file_content, file_structure_config.subfile_structure, True)
+                    self.__generate_0501_file_structure(file_content, file_structure_config.subfile_structure,
+                                                        file_evaluation)
                 else:
-                    self.__generate_0501_file_structure(file_pattern, file_structure_config.subfile_structure, True)
+                    self.__generate_0501_file_structure(file_pattern, file_structure_config.subfile_structure,
+                                                        file_evaluation)
 
-            if is_subfile:
+            if type(file_structure_config) is SubfileStructureConfig:
                 file_pattern.tag = etree.QName(self.xdomea_namespace, 'Teilakte')
                 parent.append(file_pattern)
             else:
@@ -327,19 +330,35 @@ class XdomeaMessageGenerator:
             for subfile in subfiles:
                 file_pattern.remove(subfile)
 
-    def __set_file_evaluation(self, file_pattern: etree.Element, first_file: bool) -> XdomeaEvaluation:
+    def __set_file_evaluation(self,
+                              file_pattern: etree.Element,
+                              first_file: bool,
+                              file_structure_config: Union[FileStructureConfig, SubfileStructureConfig],
+                              parent_file_evaluation: XdomeaEvaluation = None) -> XdomeaEvaluation:
         """
         Chooses file evaluation dependent on configuration.
         :param file_pattern: xdomea file element extracted from message pattern
         :param first_file: true if file pattern is the first file pattern
         """
         file_id = self.__get_xdomea_object_id(file_pattern)
-        file_evaluation = XdomeaEvaluation.EVALUATE
+
         # first file is always archived to guarantee a valid message structure
-        if self.config.structure.file_evaluation == FileEvaluationConfig.ARCHIVE or first_file:
+        if first_file:
             file_evaluation = XdomeaEvaluation.ARCHIVE
-        else: # random evaluation
-            file_evaluation = random.choice(list(XdomeaEvaluation))
+        else:
+            # set file evaluation
+            if type(file_structure_config) is FileStructureConfig:
+                if file_structure_config.file_evaluation == FileEvaluationConfig.ARCHIVE:
+                    file_evaluation = XdomeaEvaluation.ARCHIVE
+                else:  # random evaluation
+                    file_evaluation = random.choice(list(XdomeaEvaluation))
+            # set subfile evaluation
+            else:
+                if file_structure_config.file_evaluation == InheritableEvaluationConfig.INHERIT:
+                    file_evaluation = parent_file_evaluation
+                else:
+                    file_evaluation = random.choice(list(XdomeaEvaluation))
+
         self.record_object_evaluation[file_id] = file_evaluation
         return file_evaluation
 

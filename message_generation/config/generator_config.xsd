@@ -59,7 +59,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="process_evaluation_type">
+  <xs:simpleType name="inheritable_evaluation_type">
     <xs:restriction base="xs:string">
       <xs:enumeration value="inherit"/>
       <xs:enumeration value="random"/>
@@ -71,7 +71,18 @@
       <xs:element name="min_number" type="xs:positiveInteger"/>
       <xs:element name="max_number" type="xs:positiveInteger"/>
       <xs:element name="evaluation" type="file_evaluation_type"/>
-      <xs:element name="subfiles" type="files_type" minOccurs="0"/>
+      <xs:element name="subfiles" type="subfiles_type" minOccurs="0"/>
+      <xs:element name="processes" type="processes_type" minOccurs="0"/>
+      <xs:element name="documents" type="documents_type" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="subfiles_type">
+    <xs:sequence>
+      <xs:element name="min_number" type="xs:positiveInteger"/>
+      <xs:element name="max_number" type="xs:positiveInteger"/>
+      <xs:element name="evaluation" type="inheritable_evaluation_type"/>
+      <xs:element name="subfiles" type="subfiles_type" minOccurs="0"/>
       <xs:element name="processes" type="processes_type" minOccurs="0"/>
       <xs:element name="documents" type="documents_type" minOccurs="0"/>
     </xs:sequence>
@@ -81,7 +92,7 @@
     <xs:sequence>
       <xs:element name="min_number" type="xs:positiveInteger"/>
       <xs:element name="max_number" type="xs:positiveInteger"/>
-      <xs:element name="evaluation" type="process_evaluation_type"/>
+      <xs:element name="evaluation" type="inheritable_evaluation_type"/>
       <xs:element name="subprocesses" type="processes_type" minOccurs="0"/>
       <xs:element name="documents" type="documents_type" minOccurs="0"/>
     </xs:sequence>
