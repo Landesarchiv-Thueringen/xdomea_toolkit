@@ -67,7 +67,8 @@ class XdomeaMessageGenerator:
 
     def generate_xdomea_messages(self):
         """
-        Parses xdomea message patterns and validates against the pattern schema.
+        Parses xdomea message patterns, validates against the pattern schema and generates and exports xdomea 0501 and
+        0503 messages.
         """
         # generate message id
         generated_message_id = str(uuid.uuid4())
@@ -77,25 +78,42 @@ class XdomeaMessageGenerator:
         self.xdomea_schema_version = pattern_schema_tree.getroot().get('version')
         assert self.xdomea_schema_version == self.config.xdomea.version,\
             'konfigurierte Version und Version der xdomea Schemadatei sind ungleich'
-        pattern_schema = etree.XMLSchema(pattern_schema_tree)
+        self.pattern_schema = etree.XMLSchema(pattern_schema_tree)
+        self.xdomea_namespace = pattern_schema_tree.getroot().nsmap['xdomea']
 
-        # validate message patterns
+        # generate messages
+        xdomea_0501_message_etree = self.__generate_0501_message(generated_message_id)
+        xdomea_0503_message_etree = self.__generate_0503_message(generated_message_id, xdomea_0501_message_etree)
+
+        # export messages
+        print('\nexportiere Aussonderungsnachrichten:\n')
+        self.__export_0501_message(
+            generated_message_id,
+            xdomea_0501_message_etree,
+        )
+        self.__export_0503_message(
+            generated_message_id,
+            xdomea_0503_message_etree,
+        )
+
+        # clear record object evaluations for next message generation
+        self.record_object_evaluation.clear()
+
+    def __generate_0501_message(self, message_id: str) -> etree.ElementTree:
+        """
+        Generate a 0501 xdomea message
+        :param message_id: generated uuid to use for the message
+        :return: generated message element tree
+        """
         parser = etree.XMLParser(remove_blank_text=True)
         xdomea_0501_pattern_etree = etree.parse(
-            self.config.xdomea.pattern_config.message_0501_path, 
-            parser, # removes intendation from patterns, necessary for pretty print output
+            self.config.xdomea.pattern_config.message_0501_path,
+            parser,  # removes intendation from patterns, necessary for pretty print output
         )
-        pattern_schema.assertValid(xdomea_0501_pattern_etree)
-        xdomea_0503_pattern_etree = etree.parse(
-            self.config.xdomea.pattern_config.message_0503_path,
-            parser, # removes intendation from patterns, necessary for pretty print output
-        )
-        pattern_schema.assertValid(xdomea_0503_pattern_etree)
+        self.pattern_schema.assertValid(xdomea_0501_pattern_etree)
 
-        # generate xdomea 0501 message
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
-        self.__set_xdomea_process_id(xdomea_0501_pattern_root, generated_message_id)
-        self.xdomea_namespace = xdomea_0501_pattern_root.nsmap['xdomea']
+        self.__set_xdomea_process_id(xdomea_0501_pattern_root, message_id)
 
         # get record object patterns from message pattern
         self.file_pattern_list = self.__get_file_patterns(xdomea_0501_pattern_root)
@@ -110,28 +128,34 @@ class XdomeaMessageGenerator:
         self.__replace_record_object_placeholder(xdomea_0501_pattern_root)
 
         # validate generate xdomea 0501 message against xml schema
-        pattern_schema.assertValid(xdomea_0501_pattern_etree)
+        self.pattern_schema.assertValid(xdomea_0501_pattern_etree)
 
-        # generate xdomea 0503 message
+        return xdomea_0501_pattern_etree
+
+    def __generate_0503_message(self, message_id: str,
+                                xdomea_0501_message_etree: etree.ElementTree) -> etree.ElementTree:
+        """
+        Generate a 0503 xdomea message
+        :param message_id: generated uuid to use for the message
+        :param xdomea_0501_message_etree: 0501 message to base the 0503 message on
+        :return: generated message element tree
+        """
+        parser = etree.XMLParser(remove_blank_text=True)
+        xdomea_0503_pattern_etree = etree.parse(
+            self.config.xdomea.pattern_config.message_0503_path,
+            parser,  # removes intendation from patterns, necessary for pretty print output
+        )
+        self.pattern_schema.assertValid(xdomea_0503_pattern_etree)
+
+        xdomea_0501_message_root = xdomea_0501_message_etree.getroot()
         xdomea_0503_pattern_root = xdomea_0503_pattern_etree.getroot()
-        self.__set_xdomea_process_id(xdomea_0503_pattern_root, generated_message_id)
-        self.__generate_0503_message_structure(xdomea_0501_pattern_root, xdomea_0503_pattern_root)
+
+        self.__set_xdomea_process_id(xdomea_0503_pattern_root, message_id)
+        self.__generate_0503_message_structure(xdomea_0501_message_root, xdomea_0503_pattern_root)
         self.__add_document_versions_to_0503_message(xdomea_0503_pattern_root)
-        pattern_schema.assertValid(xdomea_0503_pattern_etree)
+        self.pattern_schema.assertValid(xdomea_0503_pattern_etree)
 
-        # export messages
-        print('\nexportiere Aussonderungsnachrichten:\n')
-        self.__export_0501_message(
-            generated_message_id,
-            xdomea_0501_pattern_etree,
-        )
-        self.__export_0503_message(
-            generated_message_id,
-            xdomea_0503_pattern_etree,
-        )
-
-        # clear record object evaluations for next message generation
-        self.record_object_evaluation.clear()
+        return xdomea_0503_pattern_etree
 
     @staticmethod
     def __set_xdomea_process_id(xdomea_message_root: etree.Element, process_id: str):
