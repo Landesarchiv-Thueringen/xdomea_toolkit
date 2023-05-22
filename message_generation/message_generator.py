@@ -505,6 +505,7 @@ class XdomeaMessageGenerator:
                 namespaces=evaluation_el.nsmap,
             )
             if evaluation_predefined_el is None:
+                xdomea_namespace = '{' + evaluation_el.nsmap['xdomea'] + '}'
                 evaluation_predefined_el = etree.SubElement(
                     evaluation_el, 
                     xdomea_namespace+'Aussonderungsart',
