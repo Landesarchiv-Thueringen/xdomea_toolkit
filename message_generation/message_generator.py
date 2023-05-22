@@ -77,12 +77,12 @@ class XdomeaMessageGenerator:
         parser = etree.XMLParser(remove_blank_text=True)
         xdomea_0501_pattern_etree = etree.parse(
             self.config.xdomea.pattern_config.message_0501_path, 
-            parser, # removes intendation from patterns, necessary for pretty print output
+            parser, # removes indentation from patterns, necessary for pretty print output
         )
         pattern_schema.assertValid(xdomea_0501_pattern_etree)
         xdomea_0503_pattern_etree = etree.parse(
             self.config.xdomea.pattern_config.message_0503_path,
-            parser, # removes intendation from patterns, necessary for pretty print output
+            parser, # removes indentation from patterns, necessary for pretty print output
         )
         pattern_schema.assertValid(xdomea_0503_pattern_etree)
         xdomea_0501_pattern_root = xdomea_0501_pattern_etree.getroot()
@@ -145,7 +145,7 @@ class XdomeaMessageGenerator:
         """
         Randomly chooses pattern from list, creates a copy of the element and changes its ID.
         :param pattern_list: list of xdomea patterns
-        :return: choosen xdomea pattern
+        :return: chosen xdomea pattern
         """
         # randomly choose pattern
         # deepcopy is necessary if a pattern is used multiple times
@@ -408,7 +408,7 @@ class XdomeaMessageGenerator:
 
     def __apply_object_evaluation_to_0503_message(self, xdomea_0503_pattern_root: etree.Element):
         """
-        Sets evaluation that was choosen while generating the 0501 message.
+        Sets evaluation that was chosen while generating the 0501 message.
         Record objects with a discard evaluation will be removed from 0503 message.
         :param xdomea_0503_pattern_root: root element of 0503 message
         """
