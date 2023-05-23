@@ -387,7 +387,7 @@ class XdomeaMessageGenerator:
         if self.config.structure.file_evaluation == FileEvaluationConfig.ARCHIVE or first_file:
             file_evaluation = XdomeaEvaluation.ARCHIVE
         else: # random evaluation
-            file_evaluation = random.choice(list(XdomeaEvaluation))
+            file_evaluation = random.choice([XdomeaEvaluation.ARCHIVE, XdomeaEvaluation.DISCARD])
         self.record_object_evaluation[file_id] = file_evaluation
         return file_evaluation
 
@@ -465,7 +465,7 @@ class XdomeaMessageGenerator:
                 or process_structure_config.process_evaluation == 'inherit':
             process_evaluation = file_evaluation
         else: # random evaluation
-            process_evaluation = random.choice(list(XdomeaEvaluation))
+            process_evaluation = random.choice([XdomeaEvaluation.ARCHIVE, XdomeaEvaluation.DISCARD])
         process_id = self.__get_xdomea_object_id(process_pattern)
         self.record_object_evaluation[process_id] = process_evaluation
 
