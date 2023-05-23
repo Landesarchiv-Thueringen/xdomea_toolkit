@@ -89,7 +89,7 @@ class XdomeaMessageGenerator:
         xdomea_0501_message_etree = self.__generate_0501_message(generated_message_id)
         xdomea_0502_message_etree = self.__generate_0502_message(generated_message_id)
         xdomea_0503_message_etree = self.__generate_0503_message(generated_message_id, xdomea_0501_message_etree)
-        xdomea_0504_message_etree = self.__generate_0504_message(generated_message_id)
+        #xdomea_0504_message_etree = self.__generate_0504_message(generated_message_id)
 
         # export messages
         print('\nexportiere Aussonderungsnachrichten:\n')
@@ -107,11 +107,11 @@ class XdomeaMessageGenerator:
             generated_message_id,
             xdomea_0503_message_etree,
         )
-        self.__export_message(
-            generated_message_id,
-            xdomea_0504_message_etree,
-            self.regex_config.xdomea_0504_message_name
-        )
+        # self.__export_message(
+        #     generated_message_id,
+        #     xdomea_0504_message_etree,
+        #     self.regex_config.xdomea_0504_message_name
+        # )
 
         # clear record object evaluations for next message generation
         self.record_object_evaluation.clear()
