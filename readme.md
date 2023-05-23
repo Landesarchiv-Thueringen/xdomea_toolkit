@@ -3,7 +3,7 @@
 Das Landesarchiv Thüringen benötigte für Funktionsprüfungen seiner Softwarelösung zur elektronischen Langzeitarchivierung Test-Aussonderungsnachrichten nach dem Datenaustauschstandard xdomea, um die massenhafte Anbietung und Abgabe elektronischer Akten testen zu können. Mit Hilfe des entwickelten xdomea-Toolkits wurde es möglich, beliebig komplexe Testnachrichten zu generieren.  
   
 Das Toolkit umfasst folgende Skripte:  
-* [Skript zur Generierung von Test-Aussonderungsnachrichten der Typen 0501 und 0503](#nachrichtengenerierung)  
+* [Skript zur Generierung von Test-Aussonderungsnachrichten der Typen 0501, 0502 und 0503](#nachrichtengenerierung)  
 * [Skript zum Austausch der Prozess-ID in Test-Aussonderungsnachrichten](#austausch-der-prozess-id)  
 * Hilfsskript zur Extraktion und Übertragung von Metadaten mitgelieferter oder selbst gewählter Testdateien in Test-Aussonderungsnachrichten  
 * Hilfsskript zur Übertragung der NTFS-Zeitstempel von Testdateien in das xdomea-Paket
@@ -19,7 +19,7 @@ Mit dem Toolkit werden zur leichteren Handhabung die [xdomea Schemadateien](mess
 
 ### Funktionsweise
 
-Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501) und die zugehörige Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für beide Nachrichten muss jeweils eine Musterdatei hinterlegt werden. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Integrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](#weitere-einstellungen) gewählt. Hierfür werden die xdomea Dateiformat-Codes aus der entsprechenden Codeliste extrahiert und versucht sie anhand der Endung der Primärdatei zuzuordnen. Sollte keine Zuordnung möglich sein, wird eine Formaterkennung durchgeführt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
+Das Skript erzeugt eine Anbietung (Aussonderung.Anbieteverzeichnis.0501), die zugehörige Bewertung (Aussonderung.Bewertungsverzeichnis.0502) und Abgabe (Aussonderung.Aussonderung.0503). Die Metadaten der Nachrichten werden über die Musterdateien konfiguriert. Für alle Nachrichten muss pro xdomea Version jeweils eine Musterdatei hinterlegt werden. Generische Musterdateien werden mit dem Projekt bereitgestellt. Die Metadaten der Schriftgutobjekte (Akten, Vorgänge, Dokumente) werden aus dem Muster der Anbietung extrahiert. Die Muster der Schriftgutobjekte werden vervielfältigt um beliebig komplexe Strukturen zu generieren. Die [Nachrichtenstruktur](#Struktur) kann konfiguriert werden, auch Nachrichten mit hunderten Akten sind kein Problem. Es können auch mehrere Muster für die Schriftgutobjekte angelegt werden, dann werden die Muster zufällig gewählt. Dabei wird darauf geachtet die logische Integrität der Metadaten zu erhalten. D.h. als Muster für die Vorgänge einer Akte werden nur Vorgangsmuster, die im zugehörigen Aktenmuster definiert wurden, verwendet. Das Gleiche gilt für Vorgänge und Dokumente. Das Muster für die Dokumentenversion wird aus der Abgabe extrahiert oder, wenn nicht vorhanden, vom Skript erzeugt. Die zugehörigen Primärdateien werden zufällig aus den konfigurierten [Testdaten](#weitere-einstellungen) gewählt. Hierfür werden die xdomea Dateiformat-Codes aus der entsprechenden Codeliste extrahiert und versucht sie anhand der Endung der Primärdatei zuzuordnen. Sollte keine Zuordnung möglich sein, wird eine Formaterkennung durchgeführt. Da die Anbietung und die zugehörige Abgabe zeitgleich ohne einen manuellen Bewertungsprozess erstellt werden, muss das Skript die Bewertung der Schriftgutobjekte wählen. Diesbezüglich gibt es für Akten und Vorgänge konfigurierbare [Bewertungsstrategien](#bewertung-der-schriftgutobjekte).
 
 ### Nachrichtenmuster
 
@@ -140,35 +140,38 @@ Auf Vorgangsebene kann zwischen zwei Bewertungsstrategien entschieden werden. En
 In der Konfiguration für xdomea kann die Zielversion der Nachrichten und weitere versionsspezifische Einstellungen angepasst werden. Aktuell werden die xdomea Versionen 2.3.0, 2.4.0 und 3.0.0 unterstützt. Um die Zielversion auszuwählen muss die ID im Attribut _target_version_ eingetragen werden.
 
 ```
-<xdomea target_version="2.3.0">
-  <version>
-    <id>2.3.0</id>
-    <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
-    <file_type_code_list>schemes/xdomea_2.3.0/xdomea-Datentypen.xsd</file_type_code_list>
-    <pattern>
-      <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-      <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
-    </pattern>
-  </version>
-  <version>
-    <id>2.4.0</id>
-    <schema>schemes/xdomea_2.4.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
-    <file_type_code_list>schemes/xdomea_2.4.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
-    <pattern>
-      <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-      <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
-    </pattern>
-  </version>
-  <version>
-    <id>3.0.0</id>
-    <schema>schemes/xdomea_3.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
-    <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
-    <pattern>
-      <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
-      <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
-    </pattern>
-  </version>
-</xdomea>
+  <xdomea target_version="3.0.0">
+    <version>
+      <id>2.3.0</id>
+      <schema>schemes/xdomea_2.3.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+      <file_type_code_list>schemes/xdomea_2.3.0/xdomea-Datentypen.xsd</file_type_code_list>
+      <pattern>
+        <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_2.3.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
+        <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+      </pattern>
+    </version>
+    <version>
+      <id>2.4.0</id>
+      <schema>schemes/xdomea_2.4.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+      <file_type_code_list>schemes/xdomea_2.4.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+      <pattern>
+        <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_2.4.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
+        <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+      </pattern>
+    </version>
+    <version>
+      <id>3.0.0</id>
+      <schema>schemes/xdomea_3.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
+      <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+      <pattern>
+        <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_3.0.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
+        <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+      </pattern>
+    </version>
+  </xdomea>
 ```
 
 ##### Versionsspezifische Einstellungen
@@ -184,6 +187,7 @@ In den versionsspezifischen Einstellungen für xdomea kann die Versions-ID, die 
     <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
     <pattern>
       <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+      <message_0502>pattern/xdomea_3.0.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
       <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
     </pattern>
   </version>
