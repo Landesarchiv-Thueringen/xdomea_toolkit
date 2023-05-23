@@ -9,13 +9,52 @@
       <max_number>5</max_number>
       <!-- possible values: archive, random -->
       <evaluation>archive</evaluation>
-      <!-- de: Vorgänge -->
+      <!-- de: Teilakten -->
+      <subfiles>
+        <min_number>2</min_number>
+        <max_number>5</max_number>
+        <!-- possible values: archive, random -->
+        <evaluation>archive</evaluation>
+        <!-- de: Vorgänge -->
+        <processes>
+          <min_number>1</min_number>
+          <max_number>4</max_number>
+          <!-- possible values: inherit, random -->
+          <evaluation>inherit</evaluation>
+          <!-- de: Teilvorgänge -->
+          <subprocesses>
+            <!-- de: Dokumente -->
+            <min_number>1</min_number>
+            <max_number>4</max_number>
+            <!-- possible values: inherit, random -->
+            <evaluation>inherit</evaluation>
+            <documents>
+              <min_number>3</min_number>
+              <max_number>6</max_number>
+              <!-- de: Dokumentversionen -->
+              <versions>
+                <min_number>1</min_number>
+                <max_number>3</max_number>
+              </versions>
+            </documents>
+          </subprocesses>
+          <!-- de: Dokumente -->
+          <documents>
+            <min_number>3</min_number>
+            <max_number>6</max_number>
+            <!-- de: Dokumentversionen -->
+            <versions>
+              <min_number>1</min_number>
+              <max_number>3</max_number>
+            </versions>
+          </documents>
+        </processes>
+      </subfiles>
       <processes>
         <min_number>1</min_number>
         <max_number>4</max_number>
         <!-- possible values: inherit, random -->
         <evaluation>inherit</evaluation>
-        <!-- de: Dokumente -->
         <documents>
           <min_number>3</min_number>
           <max_number>6</max_number>
@@ -26,6 +65,15 @@
           </versions>
         </documents>
       </processes>
+      <documents>
+        <min_number>3</min_number>
+        <max_number>6</max_number>
+        <!-- de: Dokumentversionen -->
+        <versions>
+          <min_number>1</min_number>
+          <max_number>3</max_number>
+        </versions>
+      </documents>
     </files>
   </structure>
 
@@ -36,7 +84,9 @@
       <file_type_code_list>schemes/xdomea_2.3.0/xdomea-Datentypen.xsd</file_type_code_list>
       <pattern>
         <message_0501>pattern/xdomea_2.3.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_2.3.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_2.3.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_2.3.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
     <version>
@@ -45,7 +95,9 @@
       <file_type_code_list>schemes/xdomea_2.4.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
       <pattern>
         <message_0501>pattern/xdomea_2.4.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_2.4.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_2.4.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_2.4.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
     <version>
@@ -54,7 +106,9 @@
       <file_type_code_list>schemes/xdomea_3.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
       <pattern>
         <message_0501>pattern/xdomea_3.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
+        <message_0502>pattern/xdomea_3.0.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
         <message_0503>pattern/xdomea_3.0.0/xx_Aussonderung.Aussonderung.0503.xml</message_0503>
+        <message_0504>pattern/xdomea_3.0.0/xx_Aussonderung.AnbietungEmpfangBestaetigen.0504.xml</message_0504>
       </pattern>
     </version>
   </xdomea>
