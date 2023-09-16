@@ -182,6 +182,10 @@
             <code>B</code>
           </xdomea:Aussonderungsart>
         </xdomea:Aussonderungsart>
+        <xdomea:Bewertungsvorschlag
+          listURI="urn:xoev-de:xdomea:codeliste:bewertungsvorschlag" listVersionID="1.0">
+          <code>A</code>
+        </xdomea:Bewertungsvorschlag>
       </xdomea:ArchivspezifischeMetadaten>
       <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
       <xdomea:Laufzeit>
@@ -204,6 +208,10 @@
                 <code>B</code>
               </xdomea:Aussonderungsart>
             </xdomea:Aussonderungsart>
+            <xdomea:Bewertungsvorschlag
+              listURI="urn:xoev-de:xdomea:codeliste:bewertungsvorschlag" listVersionID="1.0">
+              <code>A</code>
+            </xdomea:Bewertungsvorschlag>
           </xdomea:ArchivspezifischeMetadaten>
           <xdomea:Typ>Typ (Testdaten)</xdomea:Typ>
           <xdomea:ZdA>1</xdomea:ZdA>
