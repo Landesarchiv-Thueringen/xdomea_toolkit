@@ -1,6 +1,6 @@
 ⚠ Das ist nicht das Repository für den [xdomea Aussonderungsmanager (x-man)](https://github.com/Landesarchiv-Thueringen/x-man).
 
-# xdomea-Toolkit zur Erzeugung von Testaussodnerungsnachrichten
+# xdomea-Toolkit zur Erzeugung von Testaussonderungsnachrichten
 
 Das Landesarchiv Thüringen benötigte für Funktionsprüfungen seiner Softwarelösung zur elektronischen Langzeitarchivierung Test-Aussonderungsnachrichten nach dem Datenaustauschstandard xdomea, um die massenhafte Anbietung und Abgabe elektronischer Akten testen zu können. Mit Hilfe des entwickelten xdomea-Toolkits wurde es möglich, beliebig komplexe Testnachrichten zu generieren.  
   
