@@ -1,0 +1,41 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+readme.md
+license.md
+
+# Python cache files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.pytest_cache
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile*
+.dockerignore
+
+# Temporary files
+*.tmp
+*.log
