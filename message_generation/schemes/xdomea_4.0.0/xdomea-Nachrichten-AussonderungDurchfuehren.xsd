@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
+           xmlns:bn-uq-g2g="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"
+           targetNamespace="urn:xoev-de:xdomea:schema:4.0.0"
+           version="4.0.0"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>xdomea - XÖV-Standard für den IT-gestützten Austausch und die IT-gestützte Aussonderung behördlichen Schriftgutes</nameLang>
+            <nameKurz>xdomea</nameKurz>
+            <nameTechnisch>xdomea</nameTechnisch>
+            <kennung>urn:xoev-de:xdomea:kosit:standard:xdomea</kennung>
+            <beschreibung>xdomea ist der vom IT-Planungsrat verabschiedete verbindliche Standard für den Austausch von Akten, Vorgängen und Dokumenten im Kontext der Übermittlung, der Abgabe sowie der Aussonderung von Schriftgutobjekten (www.it-planungsrat.de, Beschluss 2017/39). Weiterhin kann xdomea für den Austausch zwischen Fachverfahren und DMS / VBS sowie für die Zwischenarchivierung genutzt werden. 
+
+Um diese Anwendungsszenarien bestmöglich zu unterstützen, ist xdomea gemäß des XÖV-Rahmenwerkes nach dem Baukastenprinzip aufgebaut und bietet einzelne Nachrichten(gruppen) für die jeweiligen Prozesse an. 
+
+Der Standard xdomea wird von der gleichnamigen Arbeitsgruppe des IT-Planungsrates weiterentwickelt und gepflegt. Der Betrieb des Standards erfolgt durch die Koordinierungsstelle für IT-Standards (KoSIT).
+</beschreibung>
+         </standard>
+         <versionStandard>
+            <version>4.0.0</version>
+            <beschreibung>Die Version 4.0.0 ist durch den IT-Planungsrat beschlossen. Details zum Beschluss sowie zu den Fristen der Umsetzung sind der Veröffentlichung im Bundesanzeiger unter www.bundesanzeiger.de zu entnehmen.</beschreibung>
+            <versionXOEVProfil>3.0.0</versionXOEVProfil>
+            <versionXOEVHandbuch>3.0.0</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+         <title>Aussonderung durchführen</title>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:include schemaLocation="xdomea-Baukasten.xsd"/>
+   <xs:include schemaLocation="xdomea-Typen-AussonderungDurchfuehren.xsd"/>
+   <xs:import schemaLocation=".types/xoev-basisnachricht-unqualified-g2g_1.1.xsd"
+              namespace="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"/>
+   <xs:element name="Aussonderung.Anbieteverzeichnis.0501">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den Export von Metadaten zu Schriftgutobjekten, die dem zuständigen Archiv angeboten werden sollen.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkNichtFVDatenEinLeserMitEmpfangsbestaetigungType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0501 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0501 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Anschreiben"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, in dem allgemeine Informationen zu den anzubietenden Schriftgutobjekten an das Archiv mitgegeben werden. Hier können auch Formblätter (z. B. "Vorblatt zur Abgabe" gemäß Registraturrichtlinie) mitgegeben werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Schriftgutobjekt" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Es werden im Rahmen des Versendens eines Anbieteverzeichnisses keine Primärdokumente übergeben. Die Aussonderungsmetadaten müssen zwingend übergeben werden.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Ein Schriftgutobjekt (Akte, Vorgang) zu einem Anbieteverzeichnis.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="Akte" type="xdomea:AkteAussonderungType">
+                              <xs:annotation>
+                                 <xs:documentation>Eine Akte.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Vorgang" type="xdomea:VorgangAussonderungType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Vorgang.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Aktenplan"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplanType">
+                     <xs:annotation>
+                        <xs:documentation>Der Aktenplan bildet ein aufgabenbezogenes mehrstufiges Ordnungssystem mit hierarchischer Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten. Zur näheren Einordnung des Anbieteverzeichnisses kann der Aktenplan als Anlage mitgeliefert werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.Bewertungsverzeichnis.0502">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den Export von Metadaten zu Schriftgutobjekten, die vom zuständigen Archiv bewertet wurden.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkNichtFVDatenEinLeserMitEmpfangsbestaetigungType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0501 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0502 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0501 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0502 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="BewertetesSGO"
+                              maxOccurs="unbounded"
+                              type="xdomea:RueckgabeparameterAnbietungType">
+                     <xs:annotation>
+                        <xs:documentation>Die Information zu einem Schriftgutobjekt über die durch das Archiv erfolgte Bewertung im Anbieteverzeichnis. Kontextobjekte, die mit dem Wert "1" in dem Element Kontextobjekt der Nachricht Aussonderung.Anbieteverzeichnis.0501 als solche gekennzeichnet sind, werden nicht bewertet und sind daher auch nicht in der Nachricht Aussonderung.Bewertungsverzeichnis.0502 enthalten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.Aussonderung.0503">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den Export von Schriftgutobjekten mit dem Ziel der Übergabe an das zuständige Archiv.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkAussonderungType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0503 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0503 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Anschreiben"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, in dem allgemeine Informationen zu den auszusondernden Schriftgutobjekten an das Archiv mitgegeben werden können. Hier können auch Formblätter (z. B. "Vorblatt zur Abgabe" gemäß Registraturrichtlinie) mitgegeben werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Schriftgutobjekt" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Die Primärdokumente und die Aussonderungsmetadaten müssen zwingend im Zuge einer Aussonderung übergeben werden.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Ein Schriftgutobjekt (Akte, Vorgang) zu einer Aussonderung.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="Akte" type="xdomea:AkteAussonderungType">
+                              <xs:annotation>
+                                 <xs:documentation>Eine Akte.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Vorgang" type="xdomea:VorgangAussonderungType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Vorgang.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Aktenplan"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplanType">
+                     <xs:annotation>
+                        <xs:documentation>Der Aktenplan zu einer Aussonderung enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit hierarchischer Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.AnbietungEmpfangBestaetigen.0504">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang des Anbieteverzeichnisses.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0501 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0504 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0501 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0504 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.BewertungEmpfangBestaetigen.0505">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang des Bewertungsverzeichnisses.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0502 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0505 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0502 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0505 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.AussonderungImportBestaetigen.0506">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die erfolgreiche oder nicht erfolgreiche Übernahme der Aussonderung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0503 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0506 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0503 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0506 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ErfolgOderMisserfolg"
+                              type="xdomea:ErfolgOderMisserfolgImportType">
+                     <xs:annotation>
+                        <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einer Aussonderungsnachricht.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="AusgesondertesSGO"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:ErfolgOderMisserfolgAussonderungType">
+                     <xs:annotation>
+                        <xs:documentation>Die Information zum erfolgreichen oder nicht erfolgreichen Import zu jedem einzelnen in der Aussonderungsnachricht enthaltenen Schriftgutobjekt. Kontextobjekte, die mit dem Wert "1" in dem Element Kontextelement der Nachricht Aussonderung.Aussonderung.0503 als solche gekennzeichnet sind, sind nicht in der Nachricht Aussonderung.AussonderungImportBestaetigen.0506 enthalten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.AussonderungEmpfangBestaetigen.0507">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang der Aussonderung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0503 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0507 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0503 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0507 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.AktenplanZurBewertung.0511">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den Export von Metadaten zu einem Aktenplan, der vom zuständigen Archiv bewertet werden soll.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkNichtFVDatenWeitereLeserMitEmpfangsbestaetigungType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0511 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0511 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Aktenplan" type="xdomea:AktenplanBewertungType">
+                     <xs:annotation>
+                        <xs:documentation>Der für die Bewertung zu übergebende Aktenplan enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit hierarchischer Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.AktenplanZurBewertungEmpfangBestaetigen.0512">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang des Aktenplans zur Bewertung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0511 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0512 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0511 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0512 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.Bewertungskatalog.0513">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den Export eines archivisch bewerteten Aktenplans (Bewertungskatalog).</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkNichtFVDatenWeitereLeserMitEmpfangsbestaetigungType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0511 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0513 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0511 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0513 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="BewerteteAktenplaneinheit"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplaneinheitAktenplanBewertungskatalogType">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Voraussetzung für die Implementierung ist, dass das DMS / VBS die UUID, die es jeder Aktenplaneinheit in den Nachrichten zugeordnet hat, auch im System hinterlegt hat.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Die bewertete Einheit eines Aktenplans. Eine Aktenplaneinheit entspricht z. B. einer Hauptgruppe, Obergruppe, Gruppe, Untergruppe oder Betreffseinheit.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.BewertungskatalogImportBestaetigen.0514">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die erfolgreiche oder nicht erfolgreiche Übernahme des Bewertungskataloges.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0513 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0514 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0513 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0514 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ErfolgOderMisserfolg"
+                              type="xdomea:ErfolgOderMisserfolgImportType">
+                     <xs:annotation>
+                        <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einer Bewertungsnachricht.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="BewerteteAktenplaneinheit"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:ErfolgOderMisserfolgBewertungskatalogType">
+                     <xs:annotation>
+                        <xs:documentation>Die Information über den erfolgreichen oder nicht erfolgreichen Import des Wertes in "Aussonderungsart" oder "AussonderungsartKonfigurierbar" zu der jeweiligen Aktenplaneinheit.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Aussonderung.BewertungskatalogEmpfangBestaetigen.0515">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang des Bewertungskatalogs.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0513 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0515 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0513 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0515 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>
