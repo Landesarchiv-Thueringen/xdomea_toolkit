@@ -130,6 +130,10 @@ class XdomeaMessageGenerator:
         # get record object patterns from message pattern
         self.file_pattern_list = self.__get_file_patterns(xdomea_0501_pattern_root)
         self.process_pattern_list = self.__get_process_patterns(xdomea_0501_pattern_root)
+
+        print(f"DEBUG process_pattern_list: {self.process_pattern_list}")
+        print(f"DEBUG nsmap: {xdomea_0501_pattern_root.nsmap}")
+
         self.document_pattern_list = self.__get_document_patterns(xdomea_0501_pattern_root)
 
         # remove record object patterns from the template
@@ -212,11 +216,22 @@ class XdomeaMessageGenerator:
         :param xdomea_message_root: root element of xdomea message
         :param process_id: id to set for the xdomea process
         """
+
+        namespace = xdomea_message_root.nsmap.get('xdomea')
+
+        # xdomea 4.0.0: ProzessID ist Kind von nachrichtenkopf
         process_id_element = xdomea_message_root.find(
-            './xdomea:Kopf/xdomea:ProzessID',
-            namespaces=xdomea_message_root.nsmap,
+            f'{{{namespace}}}nachrichtenkopf/{{{namespace}}}ProzessID'
         )
-        assert process_id_element is not None
+
+        # Fallback für ältere xdomea-Versionen (2.x/3.x)
+        if process_id_element is None:
+            process_id_element = xdomea_message_root.find(
+                f'{{{namespace}}}Kopf/{{{namespace}}}ProzessID'
+            )
+
+        assert process_id_element is not None, \
+            f'ProzessID-Element nicht gefunden (namespace: {namespace})'
         process_id_element.text = process_id
 
     @classmethod
@@ -247,8 +262,8 @@ class XdomeaMessageGenerator:
         :param xdomea_message_pattern_root: xml tree of the message pattern
         :return: list of process pattern xml elements
         """
-        return xdomea_message_pattern_root.findall(
-            './/xdomea:Vorgang', namespaces=xdomea_message_pattern_root.nsmap)
+        namespace = xdomea_message_pattern_root.nsmap.get('xdomea')
+        return xdomea_message_pattern_root.findall(f'.//{{{namespace}}}Vorgang')
 
     @staticmethod
     def __get_document_patterns(xdomea_message_pattern_root: etree.Element) -> list[etree.Element]:
@@ -292,12 +307,21 @@ class XdomeaMessageGenerator:
         :param xdomea_element: expected xdomea elements --> (de: Akte, de: Vorgang, de: Dokument)
         :return: xdomea object ID
         """
-        # find the first ID tag
+        namespace = xdomea_element.nsmap.get('xdomea')
+
+        # xdomea 4.0.0
         id_element = xdomea_element.find(
-            './/xdomea:Identifikation/xdomea:ID',
-            namespaces=xdomea_element.nsmap,
+            f'.//{{{namespace}}}Identifikation/{{{namespace}}}xdomeaUUID'
         )
-        assert id_element is not None
+
+        # Fallback für ältere xdomea-Versionen (2.x/3.x)
+        if id_element is None:
+            id_element = xdomea_element.find(
+                f'.//{{{namespace}}}Identifikation/{{{namespace}}}ID'
+            )
+
+        assert id_element is not None, \
+            f'ID-Element nicht gefunden in: {xdomea_element.tag}'
         return id_element.text
 
     @staticmethod
@@ -307,11 +331,21 @@ class XdomeaMessageGenerator:
         :param xdomea_element: expected xdomea elements --> (de: Akte, de: Vorgang, de: Dokument)
         """
         # change only the first ID tag that is found
+        namespace = xdomea_element.nsmap.get('xdomea')
+
+        # xdomea 4.0.0
         id_element = xdomea_element.find(
-            './/xdomea:Identifikation/xdomea:ID',
-            namespaces=xdomea_element.nsmap,
+            f'.//{{{namespace}}}Identifikation/{{{namespace}}}xdomeaUUID'
         )
-        assert id_element is not None
+
+        # Fallback für ältere xdomea-Versionen (2.x/3.x)
+        if id_element is None:
+            id_element = xdomea_element.find(
+                f'.//{{{namespace}}}Identifikation/{{{namespace}}}ID'
+            )
+
+        assert id_element is not None, \
+            f'ID-Element nicht gefunden in: {xdomea_element.tag}'
         id_element.text = str(uuid.uuid4())
 
     def __generate_0501_file_structure(
@@ -366,14 +400,22 @@ class XdomeaMessageGenerator:
             first_file = False
 
     def __clean_file_content(self, file_pattern: etree.Element):
-        file_content = file_pattern.find('./xdomea:Akteninhalt', namespaces=file_pattern.nsmap)
-        for content_object in list(file_content):
-            file_content.remove(content_object)
+        namespace = file_pattern.nsmap.get('xdomea')
+
+        file_content = file_pattern.find(
+            f'.//{{{namespace}}}Akteninhalt'
+        )
+        if file_content is not None:
+            for content_object in list(file_content):
+                file_content.remove(content_object)
 
         if self.xdomea_schema_version in ["2.3.0", "2.4.0"]:
-            subfiles = file_pattern.findall('./xdomea:Teilakte', namespaces=file_pattern.nsmap)
+            subfiles = file_pattern.findall(
+                f'.//{{{namespace}}}Teilakte'
+            )
             for subfile in subfiles:
                 file_pattern.remove(subfile)
+
 
     def __set_file_evaluation(self, file_pattern: etree.Element, first_file: bool) -> XdomeaEvaluation:
         """
@@ -403,6 +445,11 @@ class XdomeaMessageGenerator:
         :param file_evaluation: evaluation configuration of the parent file
         :param is_subprocess: flag if a process or a subprocess structure should get generated
         """
+
+        if not self.process_pattern_list:
+            return
+
+
         # randomly choose process number
         process_number = self.__get_random_number(
             process_structure_config.min_number,
