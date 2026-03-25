@@ -130,10 +130,6 @@ class XdomeaMessageGenerator:
         # get record object patterns from message pattern
         self.file_pattern_list = self.__get_file_patterns(xdomea_0501_pattern_root)
         self.process_pattern_list = self.__get_process_patterns(xdomea_0501_pattern_root)
-
-        print(f"DEBUG process_pattern_list: {self.process_pattern_list}")
-        print(f"DEBUG nsmap: {xdomea_0501_pattern_root.nsmap}")
-
         self.document_pattern_list = self.__get_document_patterns(xdomea_0501_pattern_root)
 
         # remove record object patterns from the template
