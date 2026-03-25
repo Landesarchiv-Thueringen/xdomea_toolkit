@@ -64,7 +64,7 @@
     <version>
       <id>4.0.0</id>
       <schema>schemes/xdomea_4.0.0/xdomea-Nachrichten-AussonderungDurchfuehren.xsd</schema>
-      <file_type_code_list>schemes/xdomea_4.0.0/code_lists/Dateiformat_1.0.xml</file_type_code_list>
+      <file_type_code_list>schemes/xdomea_4.0.0/code_lists/Dateiformat_2.0.xml</file_type_code_list>
       <pattern>
         <message_0501>pattern/xdomea_4.0.0/xx_Aussonderung.Anbieteverzeichnis.0501.xml</message_0501>
         <message_0502>pattern/xdomea_4.0.0/xx_Aussonderung.Bewertungsverzeichnis.0502.xml</message_0502>
