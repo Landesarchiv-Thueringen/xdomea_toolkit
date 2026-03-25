@@ -111,7 +111,7 @@ class ConfigParser:
         config_schema_root = etree.parse(config_schema_path)
         config_schema = etree.XMLSchema(config_schema_root)
         config_schema.assertValid(config_etree)
-        output_dir = os.path.normpath(config_etree.findtext('/output_dir'))
+        output_dir = os.path.normpath(config_etree.findtext('./output_dir'))
         structure_etree = config_etree.find('./structure')
         config = GeneratorConfig(
             structure=ConfigParser.__read_structure_config(structure_etree),
@@ -240,7 +240,7 @@ class ConfigParser:
         :param config_etree: element tree of xml config
         :return: xdomea config
         """
-        xdomea_config_el = config_etree.find('/xdomea')
+        xdomea_config_el = config_etree.find('./xdomea')
         target_version = xdomea_config_el.get('target_version')
         version_el_list = xdomea_config_el.xpath(
             './version/id[contains(text(), "' + target_version + '")]/..')
@@ -274,7 +274,7 @@ class ConfigParser:
         :param config_etree: element tree of xml config
         :return: test data config
         """
-        test_data_root_dir = os.path.normpath(config_etree.findtext('/test_data/root_dir'))
+        test_data_root_dir = os.path.normpath(config_etree.findtext('./test_data/root_dir'))
         return TestDataConfig(
             root_dir=test_data_root_dir,
         )
