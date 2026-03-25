@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xdomea:Aussonderung.Anbieteverzeichnis.0501
+<?xml version="1.0" encoding="UTF-8" ?>
+<xdomea:Aussonderung.Bewertungsverzeichnis.0502
         produkt="Xdomea Toolkit"
         produkthersteller="LaTh"
         xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
@@ -7,15 +7,13 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="urn:xoev-de:xdomea:schema:4.0.0"
         standard="xdomea"
-        version="4.0.0"
->
+        version="4.0.0">
 
     <xdomea:nachrichtenkopf>
-
         <xdomea:identifikation.nachricht>
             <nachrichtenUUID>242f44e8-bebf-4503-a086-db252c6a4277</nachrichtenUUID>
             <nachrichtentyp>
-                <code>0501</code>
+                <code>0502</code>
             </nachrichtentyp>
             <erstellungszeitpunkt>2020-07-24T17:21:25</erstellungszeitpunkt>
         </xdomea:identifikation.nachricht>
@@ -45,15 +43,18 @@
         <xdomea:ProzessID>242f44e8-bebf-4503-a086-db252c6a4277</xdomea:ProzessID>
     </xdomea:nachrichtenkopf>
     <xdomea:Empfangsbestaetigung>true</xdomea:Empfangsbestaetigung>
+    <xdomea:UUIDUrsprungsnachricht>242f44e8-bebf-4503-a086-db252c6a4277</xdomea:UUIDUrsprungsnachricht>
+
     <xdomea:LfdNrNachrichtProTyp>111</xdomea:LfdNrNachrichtProTyp>
     <xdomea:GesamtanzahlNachrichtenProTyp>10</xdomea:GesamtanzahlNachrichtenProTyp>
 
-    <xdomea:Schriftgutobjekt>
-        <xdomea:Akte>
-            <xdomea:Identifikation>
-                <xdomea:xdomeaUUID>11111111-bebf-4503-a086-db252c6a4277</xdomea:xdomeaUUID>
-            </xdomea:Identifikation>
-            <xdomea:Kontextobjekt>true</xdomea:Kontextobjekt>
-        </xdomea:Akte>
-    </xdomea:Schriftgutobjekt>
-</xdomea:Aussonderung.Anbieteverzeichnis.0501>
+    <xdomea:BewertetesSGO>
+        <xdomea:xdomeaUUID>11111111-bebf-4503-a086-db252c6a4277</xdomea:xdomeaUUID>
+        <xdomea:Aussonderungsart>
+            <xdomea:Aussonderungsart>
+                <code>A</code>
+            </xdomea:Aussonderungsart>
+        </xdomea:Aussonderungsart>
+    </xdomea:BewertetesSGO>
+
+</xdomea:Aussonderung.Bewertungsverzeichnis.0502>

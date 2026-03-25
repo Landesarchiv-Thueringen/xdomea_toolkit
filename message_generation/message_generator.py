@@ -585,8 +585,14 @@ class XdomeaMessageGenerator:
             element.text = element.text.replace(placeholder, replacement)
 
     def __generate_0502_message_structure(self, xdomea_0502_pattern_root: etree.Element):
+
         record_object_evaluation_pattern_list = xdomea_0502_pattern_root.findall(
-            './/xdomea:BewertetesObjekt', namespaces=xdomea_0502_pattern_root.nsmap)
+            './/xdomea:BewertetesSGO', namespaces=xdomea_0502_pattern_root.nsmap)
+
+
+        if not record_object_evaluation_pattern_list:
+            record_object_evaluation_pattern_list = xdomea_0502_pattern_root.findall(
+                './/xdomea:BewertetesObjekt', namespaces=xdomea_0502_pattern_root.nsmap)
 
         # remove all record object evaluation patterns from message pattern
         for evaluation_pattern in record_object_evaluation_pattern_list:
@@ -600,7 +606,10 @@ class XdomeaMessageGenerator:
             evaluation_pattern = deepcopy(record_object_evaluation_pattern_list[0])
 
             # set uuid
-            id_element = evaluation_pattern.find('.//xdomea:ID', namespaces=evaluation_pattern.nsmap)
+            id_element = evaluation_pattern.find('.//xdomea:xdomeaUUID', namespaces=evaluation_pattern.nsmap)
+            if id_element is None:
+                id_element = evaluation_pattern.find('.//xdomea:ID', namespaces=evaluation_pattern.nsmap)
+            assert id_element is not None, 'ID-Element nicht gefunden'
             id_element.text = record_object_id
 
             # set evaluation code
