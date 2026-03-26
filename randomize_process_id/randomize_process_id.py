@@ -112,8 +112,13 @@ class XdomeaMessageEditor:
     def set_xml_process_id(self, xdomea_xml_path: str, process_ID: str):
         xml_tree = ET.parse(xdomea_xml_path)
         xdomea_namespace_dict = self.get_xml_namespace_dict(xdomea_xml_path)
-        xdomea_header_node = \
-            xml_tree.find('xdomea:Kopf', xdomea_namespace_dict)
+
+        xdomea_header_node = (
+                xml_tree.find('xdomea:Kopf', xdomea_namespace_dict)
+                # supporting xDomea 4.0
+                or xml_tree.find('xdomea:nachrichtenkopf', xdomea_namespace_dict)
+        )
+
         xdomea_process_id_node = \
             xdomea_header_node.find('xdomea:ProzessID', xdomea_namespace_dict)
         xdomea_process_id_node.text = process_ID
