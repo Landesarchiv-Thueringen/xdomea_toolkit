@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gc:CodeList xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xoev-cl-4="http://xoev.de/schemata/genericode/4">
+   <Annotation>
+      <Description>
+         <xoev-cl-4:shortName>Dateiformat</xoev-cl-4:shortName>
+         <xoev-cl-4:codelistDescription>Die Werteliste der gängigen Dateiformate. Für sonstige Formate existiert der Wert "Sonstiges". Die Angaben stammen größtenteils aus der internationalen Formatdatenbank PRONOM (http://www.nationalarchives.gov.uk/pronom/).</xoev-cl-4:codelistDescription>
+         <xoev-cl-4:agencyShortName>ag-xdomea</xoev-cl-4:agencyShortName>
+         <xoev-cl-4:validFrom>2021-10-01</xoev-cl-4:validFrom>
+         <xoev-cl-4:versionHandbook>1.2</xoev-cl-4:versionHandbook>
+      </Description>
+   </Annotation>
+   <Identification>
+      <ShortName>dateiformat</ShortName>
+      <LongName>Dateiformat</LongName>
+      <Version>2.0</Version>
+      <CanonicalUri>urn:xoev-de:xdomea:codeliste:dateiformat</CanonicalUri>
+      <CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:dateiformat_2.0</CanonicalVersionUri>
+      <Agency>
+         <LongName>AG xdomea des IT-Planungsrates</LongName>
+      </Agency>
+   </Identification>
+   <ColumnSet>
+      <Column Id="code" Use="required">
+         <ShortName>code</ShortName>
+         <LongName>Code</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="beschreibung" Use="required">
+         <ShortName>beschreibung</ShortName>
+         <LongName>Beschreibung</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="dateiendung" Use="optional">
+         <ShortName>dateiendung</ShortName>
+         <LongName>Dateiendung</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Key Id="codeKey">
+         <Annotation>
+            <AppInfo>
+               <xoev-cl-4:recommendedKeyColumn/>
+            </AppInfo>
+         </Annotation>
+         <ShortName>codeKey</ShortName>
+         <ColumnRef Ref="code"/>
+      </Key>
+   </ColumnSet>
+   <SimpleCodeList>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>001</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Windows Bitmap</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>bmp</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>002</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Comma Separated Values</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>csv</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>003</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Word for Windows Document</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>doc</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>004</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Word for MS-DOS Document</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>doc</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>005</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Word for Macintosh Document</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>doc</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>006</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Outlook Express Electronic Mail</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>eml</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>007</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Hypertext Markup Language</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>htm</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>008</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Hypertext Markup Language</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>html</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>009</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>JPEG File Interchange Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>jpe</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>010</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>JPEG File Interchange Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>jpeg</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>011</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>JPEG File Interchange Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>jpg</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>012</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Outlook Email Message</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>msg</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>013</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Presentation Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>odp</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>014</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Spreadsheet Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>ods</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>015</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Text Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>odt</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>016</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Presentation Format Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>otp</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>017</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Spreadsheet Format Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>ots</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>018</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Portable Document Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>pdf</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>019</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Portable Network Graphics</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>png</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>020</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft PowerPoint</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>ppt</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>021</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>PostScript</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>ps</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>022</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Rich Text Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>rtf</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>023</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Tagged Image File Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>tif</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>024</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Tagged Image File Format</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>tiff</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>025</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Works for Windows</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>wps</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>026</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Excel Chart</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xlc</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>027</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Excel Macro</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xlm</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>028</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Binary Interchange File Format (BIFF) Worksheet</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xls</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>029</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Binary Interchange File Format (BIFF) Workbook</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xlw</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>030</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>eXtensible Markup Language</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xml</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>031</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>XML Schema Definition</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xsd</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>032</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Word Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>dot</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>033</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Powerpoint Design Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>pot</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>034</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Mircosoft Excel Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xlt</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>035</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Text</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>docx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>036</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Spreadsheet</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xlsx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>037</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Presentation</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>pptx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>038</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Text Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>dotx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>039</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Spreadsheet Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>xltx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>040</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Office Open XML Presentation Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>potx</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>041</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Document Type Definition</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>dtd</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>042</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Microsoft Project</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>mpp</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>043</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>OpenDocument Text Format Template</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>ott</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>044</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Portable Document Format (Archival)</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>pdf</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>045</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Unicode Text File</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>txt</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>046</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>PKCS#7-Zertifikat</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>p7b</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>047</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>PKCS#7-Zertifikat</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>p7c</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>048</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>PKCS#7-MIME-Nachricht</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>p7m</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>049</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>PKCS#7-Signatur</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>p7s</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>050</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Associated Signature Container Simple</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>asics</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>051</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Associated Signature Container Simple</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung">
+            <SimpleValue>scs</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>100</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Sonstiges</SimpleValue>
+         </Value>
+         <Value ColumnRef="dateiendung"/>
+      </Row>
+   </SimpleCodeList>
+</gc:CodeList>

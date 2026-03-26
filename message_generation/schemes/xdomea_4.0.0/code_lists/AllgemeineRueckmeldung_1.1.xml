@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gc:CodeList xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xoev-cl-3="http://xoev.de/schemata/genericode/3">
+   <Annotation>
+      <Description>
+         <xoev-cl-3:nameKurz>AllgemeineRueckmeldung</xoev-cl-3:nameKurz>
+         <xoev-cl-3:beschreibung-codeliste>Die Werteliste der allgemeinen Rückmeldungen.</xoev-cl-3:beschreibung-codeliste>
+         <xoev-cl-3:herausgebernameKurz>ag-xdomea</xoev-cl-3:herausgebernameKurz>
+         <xoev-cl-3:datumGueltigkeitAb>2021-10-01</xoev-cl-3:datumGueltigkeitAb>
+         <xoev-cl-3:versionCodelistenHandbuch>1.1</xoev-cl-3:versionCodelistenHandbuch>
+      </Description>
+   </Annotation>
+   <Identification>
+      <ShortName>allgemeinerueckmeldung</ShortName>
+      <LongName>AllgemeineRueckmeldung</LongName>
+      <Version>1.1</Version>
+      <CanonicalUri>urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung</CanonicalUri>
+      <CanonicalVersionUri>urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung_1.1</CanonicalVersionUri>
+      <Agency>
+         <LongName>AG xdomea des IT-Planungsrates</LongName>
+      </Agency>
+   </Identification>
+   <ColumnSet>
+      <Column Id="code" Use="required">
+         <ShortName>code</ShortName>
+         <LongName>Code</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="beschreibung" Use="required">
+         <ShortName>beschreibung</ShortName>
+         <LongName>Beschreibung</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Key Id="codeKey">
+         <Annotation>
+            <AppInfo>
+               <xoev-cl-3:empfohleneCodeSpalte/>
+            </AppInfo>
+         </Annotation>
+         <ShortName>codeKey</ShortName>
+         <ColumnRef Ref="code"/>
+      </Key>
+   </ColumnSet>
+   <SimpleCodeList>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000000</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Ausführung wurde erfolgreich beendet.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000001</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Das DMS ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS nicht verfügbar oder antwortet nicht in angemessener Zeit (Time-out).</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000002</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Verbindungsabbruch im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000003</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Kennung ist dem DMS nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000004</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Dem Benutzer bzw. der Rolle fehlen die erforderlichen Rechte zum Aufruf der Nachricht im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000005</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die ID des Fachverfahrens ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS unbekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000006</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die ID der Verwaltung ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS unbekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000007</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>DMS-Session-ID ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS ungültig bzw. nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000008</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die übergebene XML-Struktur entspricht im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS nicht dem angegebenen Schema und ist nicht valide.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000009</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Nachricht ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS bereits verarbeitet.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000010</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Stapellänge ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS kleiner oder gleich 0.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000011</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Stapellänge ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS größer als 1 und somit in der Dialogverarbeitung unzulässig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000012</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Stapellänge ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS kleiner als 1 und somit in der Stapelverarbeitung unzulässig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000013</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Länge des Stapels stimmt im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS nicht mit der Anzahl der Objekte im Stapel überein.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000014</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Der Stapel ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS syntaktisch nicht korrekt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000015</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Übertragungsfehler im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000016</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Das Verzeichnis ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS ungültig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000017</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die URL ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS ungültig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000018</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Datei kann im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS nicht gefunden werden.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000019</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Datenbanktabelle ist im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS nicht zugreifbar.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000499</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Unbekannter Fehler im Rahmen der Kommunikation vom Fachverfahren in Richtung DMS.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000501</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Das Fachverfahren ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht verfügbar oder antwortet nicht in angemessener Zeit (Time-out).</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000502</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Verbindungsabbruch im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000503</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Kennung ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren dem System nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000504</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Dem Benutzer fehlen im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren die erforderlichen Rechte zum Aufruf der Nachricht.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000505</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die ID des Fachverfahrens ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000506</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die ID der Verwaltung ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000507</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die FV-Session-ID ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren ungültig bzw. nicht bekannt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000508</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die übergebene XML-Struktur entspricht im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht dem angegebenen Schema und ist nicht valide.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000509</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Nachricht wurde im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren bereits verarbeitet.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000510</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Stapellänge ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren kleiner oder gleich 0.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000511</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Länge des Stapels stimmt im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht mit der Anzahl der Objekte im Stapel überein.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000512</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Der Stapel ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren syntaktisch nicht korrekt.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000513</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Übertragungsfehler im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000514</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Das Verzeichnis ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren ungültig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000515</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die URL ist im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren ungültig.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000516</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Die Datei kann im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren nicht gefunden werden.</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="code">
+            <SimpleValue>0000999</SimpleValue>
+         </Value>
+         <Value ColumnRef="beschreibung">
+            <SimpleValue>Unbekannter Fehler im Rahmen der Kommunikation vom DMS in Richtung Fachverfahren.</SimpleValue>
+         </Value>
+      </Row>
+   </SimpleCodeList>
+</gc:CodeList>

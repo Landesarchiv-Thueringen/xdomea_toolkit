@@ -80,6 +80,8 @@ class FileUtil:
 		code_list_root_el = code_list_etree.getroot()
 		if xdomea_version == '2.3.0':
 			FileUtil.__extract_xdomea_file_format_version_2_3_0(code_list_root_el)
+		if xdomea_version == '4.0.0':
+			FileUtil.__extract_xdomea_file_format_version_4_0_0(code_list_root_el)
 		else:
 			FileUtil.__extract_xdomea_file_format_post_version_2_3_0(code_list_root_el)
 
@@ -117,6 +119,23 @@ class FileUtil:
 				code=code,
 				name=name,
 				suffix=suffix,
+			))
+
+	@staticmethod
+	def __extract_xdomea_file_format_version_4_0_0(code_list_root_el):
+		code_list = code_list_root_el.findall('.//SimpleCodeList/Row')
+		FileUtil.file_format_list = []
+		for code_el in code_list:
+			code = code_el.findtext('./Value[@ColumnRef="code"]/SimpleValue')
+			name = code_el.findtext('./Value[@ColumnRef="beschreibung"]/SimpleValue')
+			suffix = code_el.findtext('./Value[@ColumnRef="dateiendung"]/SimpleValue')
+			if not code or not name:
+				continue
+			# suffix may be None (e.g. code 100 "Sonstiges")
+			FileUtil.file_format_list.append(XdomeaFileFormat(
+				code=code,
+				name=name,
+				suffix=suffix or '',
 			))
 
 	@staticmethod

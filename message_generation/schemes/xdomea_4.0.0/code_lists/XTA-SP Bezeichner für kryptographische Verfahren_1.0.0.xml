@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gc:CodeList xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/"
+             xmlns:xoev-cl-4="http://xoev.de/schemata/genericode/4"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <Annotation>
+      <Description>
+         <xoev-cl-4:shortName>XTA-SP Bezeichner für kryptographische Verfahren</xoev-cl-4:shortName>
+         <xoev-cl-4:codelistDescription>Diese Codeliste definiert die in den Service Profilen zu verwendenden eindeutigen Bezeichner kryptographischer Verfahren. Es handelt sich um Bezeichner nach "XML Security Algorithm Cross-Reference" der W3 Gruppe, verfügbar unter http://www.w3.org/TR/xmlsec-algorithms/. In diesem Dokument der W3 Gruppe ist jedem Verfahren eine eindeutige URI zugeordnet, diese URI wird in XTA als Bezeichner für kryptographische Verfahren verwendet und ist in der Spalte „Wert“ aufgeführt. Die Spalte „Schlüssel“ enthält den Namen des Verfahrens, wie er im Dokument der W3 verwendet wird.</xoev-cl-4:codelistDescription>
+         <xoev-cl-4:agencyShortName>KoSIT</xoev-cl-4:agencyShortName>
+         <xoev-cl-4:versionDescription>Die Codeliste wurde aus XTA 2 Version 4 inhaltlich übernommen und wird nach XÖV-Handbuch unter neuen Kennung weiterentwickelt. Alte Kennung lautete urn:xoev-de:xta:serviceprofile:codeliste:kryptographische-algorithmen.</xoev-cl-4:versionDescription>
+         <xoev-cl-4:versionHandbook>1.2</xoev-cl-4:versionHandbook>
+      </Description>
+   </Annotation>
+   <Identification>
+      <ShortName>xta.serviceprofile.kryptographische-algorithmen</ShortName>
+      <LongName>XTA-SP Bezeichner für kryptographische Verfahren</LongName>
+      <Version>1.0.0</Version>
+      <CanonicalUri>urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-algorithmen</CanonicalUri>
+      <CanonicalVersionUri>urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-algorithmen_1.0.0</CanonicalVersionUri>
+      <Agency>
+         <LongName>Koordinierungsstelle für IT-Standards</LongName>
+      </Agency>
+   </Identification>
+   <ColumnSet>
+      <Column Id="Code" Use="required">
+         <ShortName>Code</ShortName>
+         <LongName>Code</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Column Id="Beschreibung" Use="required">
+         <ShortName>Beschreibung</ShortName>
+         <LongName>Beschreibung</LongName>
+         <Data Type="string"/>
+      </Column>
+      <Key Id="CodeKey">
+         <Annotation>
+            <AppInfo>
+               <xoev-cl-4:recommendedKeyColumn/>
+            </AppInfo>
+         </Annotation>
+         <ShortName>CodeKey</ShortName>
+         <ColumnRef Ref="Code"/>
+      </Key>
+   </ColumnSet>
+   <SimpleCodeList>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>DSA-SHA256</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmldsig11#dsa-sha256</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-SHA256</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#rsa-sha256</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-SHA384</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#rsa-sha384</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-SHA512</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#rsa-sha512</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>ECDSA-SHA256</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>ECDSA-SHA384</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>ECDSA-SHA512</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>SHA-256</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmlenc#sha256</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>SHA-384</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmldsig-more#sha384</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>SHA-512</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmlenc#sha512</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>AES-256-CBC</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmlenc#aes256-cbc</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>AES-256-GCM</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmlenc11#aes256-gcm</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-OAEP-MGF1P</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-OAEP</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmlenc11#rsa-oaep</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-OAEP-MGF1P-SHA256</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmlenc11#mgf1sha256</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-OAEP-MGF1P-SHA384</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmlenc11#mgf1sha384</SimpleValue>
+         </Value>
+      </Row>
+      <Row>
+         <Value ColumnRef="Code">
+            <SimpleValue>RSA-OAEP-MGF1P-SHA512</SimpleValue>
+         </Value>
+         <Value ColumnRef="Beschreibung">
+            <SimpleValue>http://www.w3.org/2009/xmlenc11#mgf1sha512</SimpleValue>
+         </Value>
+      </Row>
+   </SimpleCodeList>
+</gc:CodeList>

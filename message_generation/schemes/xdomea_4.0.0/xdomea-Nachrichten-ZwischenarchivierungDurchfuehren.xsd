@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
+           xmlns:bn-uq-g2g="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"
+           targetNamespace="urn:xoev-de:xdomea:schema:4.0.0"
+           version="4.0.0"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>xdomea - XÖV-Standard für den IT-gestützten Austausch und die IT-gestützte Aussonderung behördlichen Schriftgutes</nameLang>
+            <nameKurz>xdomea</nameKurz>
+            <nameTechnisch>xdomea</nameTechnisch>
+            <kennung>urn:xoev-de:xdomea:kosit:standard:xdomea</kennung>
+            <beschreibung>xdomea ist der vom IT-Planungsrat verabschiedete verbindliche Standard für den Austausch von Akten, Vorgängen und Dokumenten im Kontext der Übermittlung, der Abgabe sowie der Aussonderung von Schriftgutobjekten (www.it-planungsrat.de, Beschluss 2017/39). Weiterhin kann xdomea für den Austausch zwischen Fachverfahren und DMS / VBS sowie für die Zwischenarchivierung genutzt werden. 
+
+Um diese Anwendungsszenarien bestmöglich zu unterstützen, ist xdomea gemäß des XÖV-Rahmenwerkes nach dem Baukastenprinzip aufgebaut und bietet einzelne Nachrichten(gruppen) für die jeweiligen Prozesse an. 
+
+Der Standard xdomea wird von der gleichnamigen Arbeitsgruppe des IT-Planungsrates weiterentwickelt und gepflegt. Der Betrieb des Standards erfolgt durch die Koordinierungsstelle für IT-Standards (KoSIT).
+</beschreibung>
+         </standard>
+         <versionStandard>
+            <version>4.0.0</version>
+            <beschreibung>Die Version 4.0.0 ist durch den IT-Planungsrat beschlossen. Details zum Beschluss sowie zu den Fristen der Umsetzung sind der Veröffentlichung im Bundesanzeiger unter www.bundesanzeiger.de zu entnehmen.</beschreibung>
+            <versionXOEVProfil>3.0.0</versionXOEVProfil>
+            <versionXOEVHandbuch>3.0.0</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+         <title>Zwischenarchivierung durchführen</title>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:include schemaLocation="xdomea-Baukasten.xsd"/>
+   <xs:include schemaLocation="xdomea-Typen-ZwischenarchivierungDurchfuehren.xsd"/>
+   <xs:import schemaLocation="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1/xoev-basisnachricht-unqualified-g2g_1.1.xsd"
+              namespace="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"/>
+   <xs:element name="Zwischenarchivierung.Auslagerung.0701">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den vollständigen Export von Schriftgutobjekten zur Auslagerung an ein Zwischenarchiv.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkZwischenarchivierungType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0701 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0701 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Anschreiben"
+                              minOccurs="0"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, das dem Leser zur Erläuterung der Auslagerung mitgegeben wird.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Schriftgutobjekt" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Bei der Auslagerung müssen zu einem Schriftgutobjekt alle prozess- und aktenrelevanten Metadaten übergeben werden. Die Fristen und die Aussonderungsart werden bei der Auslagerung zu einem Schriftgutobjekt mit übergeben.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Ein Schriftgutobjekt (Akte, Vorgang oder Dokument) zu einer Auslagerung.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="Akte" type="xdomea:AkteType">
+                              <xs:annotation>
+                                 <xs:documentation>Eine Akte.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Vorgang" type="xdomea:VorgangType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Vorgang.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="DokumentOderDokumentMitSchriftstueck"
+                                       type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Dokument.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Aktenplan"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplanType">
+                     <xs:annotation>
+                        <xs:documentation>Der Aktenplan zu einer Auslagerung enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit einer hierarchischen Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.AuslagerungEmpfangBestaetigen.0702">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang der Auslagerung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0701 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0702 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0701 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0702 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.AuslagerungImportBestaetigen.0703">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die erfolgreiche oder nicht erfolgreiche Übernahme der Auslagerung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0701 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0703 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0701 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0703 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ErfolgOderMisserfolg"
+                              type="xdomea:ErfolgOderMisserfolgImportType">
+                     <xs:annotation>
+                        <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einem auszulagernden Schriftgutobjekt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="AusgelagertesObjekt"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:ErfolgOderMisserfolgZwischenarchivierungType">
+                     <xs:annotation>
+                        <xs:documentation>Die Information zum erfolgreichen oder nicht erfolgreichen Import eines Schriftgutobjekts zur Auslagerung.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckleiheAnforderung.0711">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die Anforderung zur Rückleihe (nur lesender Zugriff) von ausgelagerten Schriftgutobjekten durch die zuständige Verwaltung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0711 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0711 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="xdomeaUUID" maxOccurs="unbounded" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Die xdomeaUUID des Schriftgutobjekts, das zurückgeliehen werden soll.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckleiheUebergabe.0712">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die durchgeführte Rückleihe (nur lesender Zugriff) von Schriftgutobjekten als Übergabe von einem Zwischenarchiv an ein DMS / VBS.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkZwischenarchivierungType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0711 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0712 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0711 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0712 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Anschreiben"
+                              minOccurs="0"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, das dem Leser zur Erläuterung der Rückleihe mitgegeben wird.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Schriftgutobjekt" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Bei der Rückleihe müssen zu einem Schriftgutobjekt alle prozess- und aktenrelevanten Metadaten übergeben werden. Die aufnehmende Behörde übernimmt das Schriftgutobjekt als Kopie in das eigene System. Das Original verbleibt im Zwischenarchiv.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Ein Schriftgutobjekt (Akte, Vorgang oder Dokument) zu einer durchgeführten Rückleihe.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="Akte" type="xdomea:AkteType">
+                              <xs:annotation>
+                                 <xs:documentation>Eine Akte.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Vorgang" type="xdomea:VorgangType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Vorgang.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="DokumentOderDokumentMitSchriftstueck"
+                                       type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Dokument.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Aktenplan"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplanType">
+                     <xs:annotation>
+                        <xs:documentation>Der Aktenplan zu einer Rückleihe enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit einer hierarchischen Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckleiheEmpfangBestaetigen.0713">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang der Rückleihe.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0711 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0713 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0711 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0713 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckuebertragungAnforderung.0721">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die Anforderung zur Rückübertragung (lesender und schreibender Zugriff) von ausgelagerten Schriftgutobjekten durch die zuständige Verwaltung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0721 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0721 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="xdomeaUUID" maxOccurs="unbounded" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Die xdomeaUUID des Schriftgutobjekts, das zurückübertragen werden soll.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckuebertragungUebergabe.0722">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die vollständige Rückübertragung (lesender und schreibender Zugriff) von Schriftgutobjekten als Übergabe von einem Zwischenarchiv an ein DMS / VBS.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NkZwischenarchivierungType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0721 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0722 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0721 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0722 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Anschreiben"
+                              minOccurs="0"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, das dem Leser zur Erläuterung der Rückübertragung mitgegeben wird.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Schriftgutobjekt" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:appinfo>
+                           <implementationHint>Bei der Rückübertragung müssen zu einem Schriftgutobjekt alle prozess- und aktenrelevanten Metadaten übergeben werden. Die Fristen und die Aussonderungsart werden bei der Rückübertragung zu einem Schriftgutobjekt mit übergeben. Die aufnehmende Behörde übernimmt das rückübertragene Schriftgutobjekt in ihr System. Das Schriftgutobjekt wird anschließend im Zwischenarchiv gelöscht.</implementationHint>
+                        </xs:appinfo>
+                        <xs:documentation>Ein Schriftgutobjekt (Akte, Vorgang oder Dokument) zu einer durchgeführten Rückübertragung.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="Akte" type="xdomea:AkteType">
+                              <xs:annotation>
+                                 <xs:documentation>Eine Akte.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Vorgang" type="xdomea:VorgangType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Vorgang.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="DokumentOderDokumentMitSchriftstueck"
+                                       type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                              <xs:annotation>
+                                 <xs:documentation>Ein Dokument.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Aktenplan"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AktenplanType">
+                     <xs:annotation>
+                        <xs:documentation>Der Aktenplan zu einer Rückübertragung enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit einer hierarchischen Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckuebertragungImportBestaetigen.0723">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt die erfolgreiche oder nicht erfolgreiche Übernahme der Rückübertragung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0721 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0723 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0721 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die Gesamtanzahl der Nachrichten vom Typ 0723 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ErfolgOderMisserfolg"
+                              type="xdomea:ErfolgOderMisserfolgImportType">
+                     <xs:annotation>
+                        <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einem rückzuübertragenden Schriftgutobjekt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="RueckuebertragenesObjekt"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:ErfolgOderMisserfolgZwischenarchivierungType">
+                     <xs:annotation>
+                        <xs:documentation>Die Information zum erfolgreichen oder nicht erfolgreichen Import eines Schriftgutobjekts zur Rückübertragung.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Zwischenarchivierung.RueckuebertragungEmpfangBestaetigen.0724">
+      <xs:annotation>
+         <xs:documentation>Die Nachricht beschreibt den erfolgreichen Empfang der Rückübertragung.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xdomea:NachrichtType">
+               <xs:sequence>
+                  <xs:element name="UUIDUrsprungsnachricht" type="bn-uq-g2g:UUID">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die UUID der Ursprungsnachricht übermittelt, auf die geantwortet wird. Die Ursprungsnachricht darf nur vom Typ 0721 sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="LfdNrNachrichtProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die laufende Nummer der Nachrichten vom Typ 0724 in diesem Prozess übermittelt. Die Nummer entspricht derjenigen von der korrespondierenden Nachricht vom Typ 0721 in diesem Prozess.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="GesamtanzahlNachrichtenProTyp" type="xs:integer">
+                     <xs:annotation>
+                        <xs:documentation>Mit diesem Element wird die maximale Gesamtanzahl der Nachrichten vom Typ 0724 in diesem Prozess übermittelt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

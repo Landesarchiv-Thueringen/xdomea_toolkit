@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xdomea:Aussonderung.Anbieteverzeichnis.0501
+        produkt="Xdomea Toolkit"
+        produkthersteller="LaTh"
+        xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
+        xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:xoev-de:xdomea:schema:4.0.0"
+        standard="xdomea"
+        version="4.0.0"
+>
+
+    <xdomea:nachrichtenkopf>
+
+        <xdomea:identifikation.nachricht>
+            <nachrichtenUUID>242f44e8-bebf-4503-a086-db252c6a4277</nachrichtenUUID>
+            <nachrichtentyp>
+                <code>0501</code>
+            </nachrichtentyp>
+            <erstellungszeitpunkt>2020-07-24T17:21:25</erstellungszeitpunkt>
+        </xdomea:identifikation.nachricht>
+
+        <xdomea:leser>
+            <xdomea:Behoerdenkennung>
+                <xdomea:verzeichnisdienst listVersionID="">
+                    <code>LATh</code>
+                </xdomea:verzeichnisdienst>
+                <xdomea:kennung>
+                    Landesarchiv Thüringen
+                </xdomea:kennung>
+            </xdomea:Behoerdenkennung>
+        </xdomea:leser>
+        <xdomea:autor>
+            <xdomea:NameAnsprechpartner>
+                <xdomea:Anrede>Herr</xdomea:Anrede>
+                <xdomea:Titel>Dr.</xdomea:Titel>
+                <xdomea:Familienname>
+                    <xdomea:Name>Doe</xdomea:Name>
+                </xdomea:Familienname>
+                <xdomea:Vorname>
+                    <xdomea:Name>John</xdomea:Name>
+                </xdomea:Vorname>
+            </xdomea:NameAnsprechpartner>
+        </xdomea:autor>
+        <xdomea:ProzessID>242f44e8-bebf-4503-a086-db252c6a4277</xdomea:ProzessID>
+    </xdomea:nachrichtenkopf>
+    <xdomea:Empfangsbestaetigung>true</xdomea:Empfangsbestaetigung>
+    <xdomea:LfdNrNachrichtProTyp>111</xdomea:LfdNrNachrichtProTyp>
+    <xdomea:GesamtanzahlNachrichtenProTyp>10</xdomea:GesamtanzahlNachrichtenProTyp>
+
+    <xdomea:Schriftgutobjekt>
+        <xdomea:Akte>
+            <xdomea:Identifikation>
+                <xdomea:xdomeaUUID>11111111-bebf-4503-a086-db252c6a4277</xdomea:xdomeaUUID>
+            </xdomea:Identifikation>
+            <xdomea:Kontextobjekt>true</xdomea:Kontextobjekt>
+        </xdomea:Akte>
+    </xdomea:Schriftgutobjekt>
+</xdomea:Aussonderung.Anbieteverzeichnis.0501>

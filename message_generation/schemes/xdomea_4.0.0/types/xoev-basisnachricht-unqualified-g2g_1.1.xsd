@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:bn-uq-g2g="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"
+           xmlns:din91379="urn:xoev-de:kosit:xoev:datentyp:din-91379_2022-08"
+           xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+           targetNamespace="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"
+           version="1.1"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <XOEVBibliothek>
+            <nameLang>XÖV-Bibliothek: Spezifikation der XÖV-Datentypen und XÖV-Kernkomponenten</nameLang>
+            <nameKurz>XÖV-Bibliothek</nameKurz>
+            <nameTechnisch>XOEV-Bibliothek</nameTechnisch>
+            <kennung>urn:xoev-de:kosit:xoev:bibliothek:xoevbibliothek</kennung>
+            <beschreibung>Die XÖV-Bibliothek ist der zentrale Ort zur Verwaltung und Bereitstellung aller XÖV-spezifischer, zur Wiederverwendung vorgesehener XÖV-Bausteine.
+
+Ausnahme bilden die Bausteine der Art "Codeliste", die ausschließlich über das XRepository bereitgestellt werden.</beschreibung>
+            <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+            <herausgebernameKurz>KoSIT</herausgebernameKurz>
+            <externeWebsite>http://www.xoev.de/de/bibliothek</externeWebsite>
+         </XOEVBibliothek>
+         <versionXOEVBibliothek>
+            <version>2022-10-14</version>
+            <lizenz>Creative Commons Namensnennung - Keine Bearbeitung 4.0 International</lizenz>
+            <bezugsort>http://www.xoev.de/de/bibliothek</bezugsort>
+            <aenderungZurVorversion>Die XÖV-Bibliothek wurde um Inhalte zur Norm DIN 91379 ergänzt. Die Version 1.1 der Datentypen zur XÖV-Basisnachricht (qualified und unqualified) wurde erstellt, in der von dem Datentyp C der DIN SPEC 91379 auf den Datentyp C der Norm DIN 91379 umgestellt wurde.</aenderungZurVorversion>
+         </versionXOEVBibliothek>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:import schemaLocation="http://xoev.de/schemata/code/1_0/xoev-code.xsd"
+              namespace="http://xoev.de/schemata/code/1_0"/>
+   <xs:import schemaLocation="https://xoev.de/schemata/din/91379/2022-08/din-norm-91379-datatypes.xsd"
+              namespace="urn:xoev-de:kosit:xoev:datentyp:din-91379_2022-08"/>
+   <xs:complexType name="BehoerdeType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ enthält Angaben zur Identifikation einer Behörde / öffentlichen Stelle in einem Verzeichnisdienst sowie ihrer Erreichbarkeit.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="verzeichnisdienst" type="bn-uq-g2g:Code.VerzeichnisdienstType">
+            <xs:annotation>
+               <xs:documentation>Angabe des Verzeichnisdienstes (bspw. DVDV), in welchem die Behörde / öffentliche Stelle unter der nachfolgend angegebenen Kennung eingetragen ist.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="kennung" type="din91379:datatypeC">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält die eindeutige Kennzeichnung der Behörde / öffentlichen Stelle innerhalb des angegebenen Verzeichnisdienstes. Für den Verzeichnisdienst „DVDV“ enthält die Kennzeichnung das „Präfix“ und die „Kennung“ getrennt durch das Zeichen ':', also bspw. 'psw:01003110'.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="name" type="din91379:datatypeC">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält den Namen der Behörde / öffentlichen Stelle.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="erreichbarkeit"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="bn-uq-g2g:KommunikationType">
+            <xs:annotation>
+               <xs:documentation>In diesem Element werden Angaben zur Erreichbarkeit übermittelt, mit denen die Behörde / öffentliche Stelle über Telefon, E-Mail etc. erreicht werden kann. Diese Angaben können z. B. verwendet werden, um in Einzelfällen Rückfragen zu stellen oder Problemklärungen durchzuführen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Code.Kommunikation.KanalType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Kommunikationskanal / Erreichbarkeit</nameLang>
+               <nameKurz>Erreichbarkeit</nameKurz>
+               <nameTechnisch>erreichbarkeit</nameTechnisch>
+               <kennung>urn:de:xoev:codeliste:erreichbarkeit</kennung>
+               <beschreibung>Eine Liste der Kommunikationsmedien und -kanäle, über die man eine Person oder Institution erreichen kann.</beschreibung>
+               <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+               <herausgebernameKurz>KoSIT</herausgebernameKurz>
+            </codeliste>
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:de:xoev:codeliste:erreichbarkeit"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="Code.VerzeichnisdienstType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Verzeichnisdienst
+</nameLang>
+               <nameKurz>Verzeichnisdienst
+</nameKurz>
+               <nameTechnisch>verzeichnisdienst</nameTechnisch>
+               <kennung>urn:xoev-de:kosit:codeliste:verzeichnisdienst</kennung>
+               <beschreibung>Liste der Verzeichnisdienste, in die Behörden / öffentliche Stellen eingetragen sein können</beschreibung>
+               <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+               <herausgebernameKurz>KoSIT</herausgebernameKurz>
+            </codeliste>
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:kosit:codeliste:verzeichnisdienst"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="Identifikation.NachrichtType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ enthält Angaben zur eindeutigen Identifikation einer Nachricht.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="nachrichtenUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält den „Universally Unique IDentifier (UUID)“ der Nachricht, der das primäre Identifikationsmerkmal einer Nachricht darstellt. Der UUID der Nachricht wird entsprechend rfc4122 gebildet und ermöglicht Nachrichten hersteller- und anwendungsübergreifend weltweit eindeutig zu identifizieren. Für jede Nachricht muss ein neuer UUID erzeugt werden, um eine eindeutige Identifikation der Nachricht sicherzustellen. Insbesondere ist es nicht zulässig, in einer korrigierten Nachricht den UUID der ursprünglichen Nachricht wiederzuverwenden. Sofern eine einmal erzeugte Nachricht ein weiteres Mal gesendet werden soll (bspw. aufgrund von Problemen beim Nachrichtentransport), muss der UUID nicht angepasst werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="nachrichtentyp" type="xoev-code:Code">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält eine eindeutige Kennzeichnung des Nachrichtentyps. Die Identifikation erfolgt über eine Codeliste des entsprechenden XÖV-Standards.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="erstellungszeitpunkt" type="xs:dateTime">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält den Erstellungszeitpunkt der Nachricht - es enthält explizit nicht den Sende- und Empfangszeitpunkt. Der Erstellungszeitpunkt muss neben einer Angabe zum Datum eine zeitliche Information beinhalten. Diese ist mit einer Genauigkeit auf Ebene von Millisekunden und der Angabe zur Zeitzone zu übermitteln.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="KommunikationType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ enthält Angaben zur Erreichbarkeit über elektronische Kommunikationskanäle (z. B. Telefon, E-Mail).</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="kanal" type="bn-uq-g2g:Code.Kommunikation.KanalType">
+            <xs:annotation>
+               <xs:documentation>Der 'kanal' gibt an, über welchen Kommunikationskanal eine Erreichbarkeit besteht.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="kennung" type="din91379:datatypeC">
+            <xs:annotation>
+               <xs:documentation>Die Kennung beinhaltet die konkreten Angaben zur Erreichbarkeit über einen Kommunikationskanal, d. h. die Telefonnummer, E-Mail-Adresse oder dergleichen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="zusatz" minOccurs="0" type="din91379:datatypeC">
+            <xs:annotation>
+               <xs:documentation>Eine zusätzliche Bemerkung.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Nachricht.G2GType">
+      <xs:annotation>
+         <xs:documentation>Basistyp für alle Nachrichten zwischen Behörden und anderen öffentlichen Stellen (government-to-government).</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="nachrichtenkopf.g2g" type="bn-uq-g2g:Nachrichtenkopf.G2GType">
+            <xs:annotation>
+               <xs:documentation>Nachrichtenkopf für Nachrichten zwischen Behörden und anderen (öffentlichen) Stellen. Der Nachrichtenkopf umfasst Angaben zur eindeutigen Identifikation des Autors und des Lesers der Nachricht sowie der Nachricht selbst.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+      <xs:attribute name="produkt" type="din91379:datatypeC" use="required">
+         <xs:annotation>
+            <xs:documentation>In diesem Attribut ist der Name des Produktes (der Software) einzutragen, mit dem die Nachricht erstellt worden ist.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="produkthersteller" type="din91379:datatypeC" use="required">
+         <xs:annotation>
+            <xs:documentation>In diesem Attribut wird der Name der Organisation / Firma übermittelt, die für das Produkt (die Software) verantwortlich ist, mit dem die Nachricht erstellt wurde.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="produktversion" type="din91379:datatypeC" use="optional">
+         <xs:annotation>
+            <xs:documentation>In diesem Attribut werden ergänzende Hinweise zu dem Produkt eingetragen. Dies sind Angaben, die für eine möglichst präzise Identifikation im Fehlerfall hilfreich sind, wie zum Beispiel Version und Patchlevel.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="standard" type="din91379:datatypeC" use="required">
+         <xs:annotation>
+            <xs:documentation>In diesem Attribut wird der Name des XÖV-Standards angegeben, aus dem die Nachricht stammt.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="test" type="din91379:datatypeC" use="optional">
+         <xs:annotation>
+            <xs:documentation>Ist dieses Attribut vorhanden, handelt es sich aus Sicht des Autors um eine Testnachricht, die nicht im normalen Produktivbetrieb verarbeitet werden darf. Autor und Leser können bilateral weitere Absprachen über den konkreten Inhalt des Attributs treffen.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="version" type="din91379:datatypeC" use="required">
+         <xs:annotation>
+            <xs:documentation>In diesem Attribut wird die Version des XÖV-Standards eingetragen, aus dem die Nachricht stammt.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+   </xs:complexType>
+   <xs:complexType name="Nachrichtenkopf.G2GType">
+      <xs:annotation>
+         <xs:documentation>Nachrichtenkopf für Nachrichten zwischen Behörden und anderen (öffentlichen) Stellen. Der Nachrichtenkopf umfasst Angaben zur eindeutigen Identifikation des Autors und des Lesers der Nachricht sowie der Nachricht selbst.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="identifikation.nachricht"
+                     type="bn-uq-g2g:Identifikation.NachrichtType">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält Angaben zur eindeutigen Identifikation einer Nachricht.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="leser" type="bn-uq-g2g:BehoerdeType">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält Angaben zum Leser der Nachricht. Der Leser ist die fachlich zuständige Behörde / öffentliche Stelle, der die Nachricht zugestellt werden soll und die die Nachricht fachlich verarbeiten soll.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="autor" type="bn-uq-g2g:BehoerdeType">
+            <xs:annotation>
+               <xs:documentation>Dieses Element enthält Angaben zum Autor der Nachricht, die es dem Leser ermöglichen, bei Bedarf mit dem Autor in Verbindung zu treten. Der Autor ist die fachlich zuständige Behörde / öffentliche Stelle, die die Nachricht erstellt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="UUID">
+      <xs:annotation>
+         <xs:documentation>Ein „Universally Unique IDentifier (UUID)“ entsprechend rfc4122.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:normalizedString">
+         <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
+           xmlns:bn-uq-g2g="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"
+           targetNamespace="urn:xoev-de:xdomea:schema:4.0.0"
+           version="4.0.0"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>xdomea - XÖV-Standard für den IT-gestützten Austausch und die IT-gestützte Aussonderung behördlichen Schriftgutes</nameLang>
+            <nameKurz>xdomea</nameKurz>
+            <nameTechnisch>xdomea</nameTechnisch>
+            <kennung>urn:xoev-de:xdomea:kosit:standard:xdomea</kennung>
+            <beschreibung>xdomea ist der vom IT-Planungsrat verabschiedete verbindliche Standard für den Austausch von Akten, Vorgängen und Dokumenten im Kontext der Übermittlung, der Abgabe sowie der Aussonderung von Schriftgutobjekten (www.it-planungsrat.de, Beschluss 2017/39). Weiterhin kann xdomea für den Austausch zwischen Fachverfahren und DMS / VBS sowie für die Zwischenarchivierung genutzt werden. 
+
+Um diese Anwendungsszenarien bestmöglich zu unterstützen, ist xdomea gemäß des XÖV-Rahmenwerkes nach dem Baukastenprinzip aufgebaut und bietet einzelne Nachrichten(gruppen) für die jeweiligen Prozesse an. 
+
+Der Standard xdomea wird von der gleichnamigen Arbeitsgruppe des IT-Planungsrates weiterentwickelt und gepflegt. Der Betrieb des Standards erfolgt durch die Koordinierungsstelle für IT-Standards (KoSIT).
+</beschreibung>
+         </standard>
+         <versionStandard>
+            <version>4.0.0</version>
+            <beschreibung>Die Version 4.0.0 ist durch den IT-Planungsrat beschlossen. Details zum Beschluss sowie zu den Fristen der Umsetzung sind der Veröffentlichung im Bundesanzeiger unter www.bundesanzeiger.de zu entnehmen.</beschreibung>
+            <versionXOEVProfil>3.0.0</versionXOEVProfil>
+            <versionXOEVHandbuch>3.0.0</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:include schemaLocation="xdomea-Baukasten.xsd"/>
+   <xs:import schemaLocation="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1/xoev-basisnachricht-unqualified-g2g_1.1.xsd"
+              namespace="http://xoev.de/schemata/basisnachricht/unqualified/g2g/1_1"/>
+   <xs:complexType name="AkteAussonderungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>AkteAussonderung</title>
+         </xs:appinfo>
+         <xs:documentation>Akte enthält die Metadatenfelder für den Austausch von Akten einschließlich der allgemeinen Metadaten, Aussonderungsmetadaten, anwendungsspezifischer Metadaten, Historien- und Protokollinformationen sowie Informationen zum internen Geschäftsgang.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Identifikation" type="xdomea:IdentifikationObjektType">
+            <xs:annotation>
+               <xs:documentation>Über Identifikation werden zur systemübergreifend eindeutigen Identifizierung der Akte spezifische Merkmale übergeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Kontextobjekt" type="xs:boolean">
+            <xs:annotation>
+               <xs:documentation>Das Element Kontextobjekt mit Wert "1" kennzeichnet, dass die Metadaten zu einem Objekt im Rahmen der Aussonderung nur zur Information und nicht zur Aussonderung selbst übermittelt werden. Mit dem Wert "0" wird gekennzeichnet, dass es sich um ein auszusonderndes Objekt handelt. Das Element Kontextobjekt ist führend, so dass bspw. in Fällen, in denen es widersprüchliche Angaben zwischen den Feldern zdA, zdA-Datum, Aufbewahrungsdauer, Aufbewahrungsende und dem Element Kontextobjekt gibt, die Informationen im Element Kontextobjekt über den tatsächlichen Status des betreffenden Schriftgutobjekts bzw. der betreffenden Schriftgutobjekte (Akten oder Vorgänge) entscheiden. Kontextobjekte sind immer bis zur höchsten Aktenebene unterhalb der Betreffseinheit mitzuliefern.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AllgemeineMetadaten"
+                     minOccurs="0"
+                     type="xdomea:AllgemeineMetadatenType">
+            <xs:annotation>
+               <xs:documentation>Über AllgemeineMetadaten werden allgemeine Metadaten zu einer Akte angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aussonderungsmetadaten"
+                     minOccurs="0"
+                     type="xdomea:AussonderungsmetadatenType">
+            <xs:annotation>
+               <xs:documentation>Über Aussonderungsmetadaten werden die für die Aussonderung relevanten Metadaten zu einer Akte angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Standort" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Der Aufbewahrungsort der Akte.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Typ" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Die weitere Spezifikation der Akte, um u. a. Recherche durchzuführen oder um zusätzliche Metadaten festzulegen. Beispiele sind Bauakte oder auch Personalakte.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Laufzeit" minOccurs="0" type="xdomea:ZeitraumType">
+            <xs:annotation>
+               <xs:documentation>Die Laufzeit der Akte, d.h. Zeitpunkt des Beginns und des Endes.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="HistorienProtokollInformation"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:HistorienProtokollInformationType">
+            <xs:annotation>
+               <xs:documentation>Über HistorienProtokollInformation werden die zur Historisierung und Protokollierung relevanten Metadaten zu einer Akte angegeben, in der die Veränderungen an den beschreibenden Attributen und dem Zustand der Akte erfasst werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="InternerGeschaeftsgang"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:GeschaeftsgangType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Der interne Geschäftsgang kann nach organisatorischer Absprache zwischen den austauschenden Systemen genutzt werden, ist aber nicht verpflichtender Bestandteil von xdomea.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>Über InternerGeschaeftsgang wird der Akte zum Nachweis des internen Geschäftsgangs eine spezifische Ausprägung eines Geschäftsgangs zugeordnet.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Akteninhalt" minOccurs="0">
+            <xs:annotation>
+               <xs:documentation>Die Sachverhalte in der Akte sind inhaltlich mittels üblicher Akteninhalte wie z. B. Vorgänge abgegrenzt.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="DokumentOderDokumentMitSchriftstueck"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Dokument, das hierarchisch in die Akte eingebunden bzw. der Akte untergeordnet ist.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Vorgang"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:VorgangAussonderungType">
+                     <xs:annotation>
+                        <xs:documentation>Ein Vorgang, der hierarchisch in die Akte eingebunden bzw. der Akte untergeordnet ist.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Teilakte"
+                              minOccurs="0"
+                              maxOccurs="unbounded"
+                              type="xdomea:AkteAussonderungType">
+                     <xs:annotation>
+                        <xs:documentation>Über eine Teilakte wird eine Akte hierarchisch in eine andere Akte eingebunden bzw. einer anderen Akte untergeordnet.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Verweis"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:VerweisType">
+            <xs:annotation>
+               <xs:documentation>Ein Verweis stellt eine inhaltliche Querbeziehung eines Schriftgutobjekts z. B. zu einem anderen Schriftgutobjekt oder zu einem Objekt auf einem Datenspeicher oder einem Datenträger dar.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Kontakt"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:KontaktType">
+            <xs:annotation>
+               <xs:documentation>Eine Kontaktinformation zu einem Geschäftsprozessbeteiligten.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ZdA" minOccurs="0" type="xs:boolean">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>ZdA (zu den Akten) steht für das Schließen eines Schriftgutobjekts (Teilvorgang, Vorgang, Teilakte oder Akte). Die hierfür in den Verwaltungen genutzten Bezeichnungen können anders lauten (z. B. „Schließen der Akte oder des Vorgangs“).</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>ZdA kennzeichnet, ob die Akte zu den Akten verfügt wurde (Wert "1") oder nicht (Wert "0").</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ZdADatum" minOccurs="0" type="xs:date">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>ZdA (zu den Akten) steht für das Schließen eines Schriftgutobjekts (Teilvorgang, Vorgang, Teilakte oder Akte). Die hierfür in den Verwaltungen genutzten Bezeichnungen können anders lauten (z. B. „Schließen der Akte oder des Vorgangs“).</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>ZdADatum kennzeichnet, wann die Akte geschlossen wurde.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AnwendungsspezifischeErweiterung"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:AnwendungsspezifischeErweiterungType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>AnwendungsspezifischeErweiterung darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AnwendungsspezifischeErweiterungXML"
+                     minOccurs="0"
+                     type="xdomea:AnwendungsspezifischeErweiterungXMLType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>AnwendungsspezifischeErweiterungXML darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist. Die AnwendungsspezifischeErweiterungXML bietet die Möglichkeit, mittels Einbindung externer XML-Schemata diese Metadaten zu spezifizieren. Es können beliebige XML-Schemata mit unterschiedlichen Namensräumen angegeben werden. Die XML-Schema-Validierung der weiterführenden Metadaten erfolgt innerhalb der xdomea-Nachricht selbst "lax".</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="AktenplanBewertungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>AktenplanBewertung</title>
+         </xs:appinfo>
+         <xs:documentation>Der Aktenplan enthält ein aufgabenbezogenes mehrstufiges Ordnungssystem mit einer hierarchischen Gliederung für das Bilden und Kennzeichnen von Akten und Vorgängen sowie das Zuordnen von Dokumenten.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Die xdomeaUUID des Aktenplans.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Bezeichnung" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Der Name des Aktenplans.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Typ" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Der Typ des Aktenplans, z. B. Teilaktenplan.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Version" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Die Version des Aktenplans.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Einheit"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:AktenplaneinheitAktenplanBewertungType">
+            <xs:annotation>
+               <xs:documentation>Die Einheit eines Aktenplans, die Auskunft über die hierarchische Strukturierung eines Aktenplans gibt. Eine Aktenplaneinheit entspricht z. B. einer Hauptgruppe, Obergruppe, Gruppe, Untergruppe oder Betreffseinheit.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Gueltigkeit" minOccurs="0" type="xdomea:ZeitraumType">
+            <xs:annotation>
+               <xs:documentation>Die Gültigkeit des Aktenplans mit Beginn und Ende.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aktenplandatei"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:FormatType">
+            <xs:annotation>
+               <xs:documentation>Die Datei zum Aktenplan als Primärdokument.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="AktenplaneinheitAktenplanBewertungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>AktenplaneinheitAktenplanBewertung</title>
+         </xs:appinfo>
+         <xs:documentation>Eine Aktenplaneinheit gibt Auskunft über die hierarchische Strukturierung eines Aktenplans. Eine Aktenplaneinheit entspricht z. B. einer Hauptgruppe, Obergruppe, Gruppe, Untergruppe oder Betreffseinheit. Zusätzlich zu allgemeinen Metadaten einer Aktenplaneinheit werden auch diejenigen Daten angegeben, die für eine Bewertung relevant sind.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xdomea:AktenplaneinheitType">
+            <xs:sequence>
+               <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+                  <xs:annotation>
+                     <xs:documentation>Die xdomeaUUID der Aktenplaneinheit.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Aussonderungsart" type="xdomea:AussonderungsartType">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <implementationHint>Die Aussonderungsart vererbt sich auf alle unter einer Hierarchiestufe angelegten Schriftgutobjekte.</implementationHint>
+                     </xs:appinfo>
+                     <xs:documentation>Die Aussonderungsart gibt für eine Akte oder einen Vorgang das Ergebnis der archivischen Bewertung an.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Gueltigkeit" minOccurs="0" type="xdomea:ZeitraumType">
+                  <xs:annotation>
+                     <xs:documentation>Die Gültigkeit einer Aktenplaneinheit in einem Aktenplan.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Stillgelegt" type="xs:boolean">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <implementationHint>Für die Umsetzung in den Systemen wird empfohlen, sofern kein anderer Wert hinterlegt wurde, als Standardwert den Wert "0" für "nicht stillgelegt" anzugeben.</implementationHint>
+                     </xs:appinfo>
+                     <xs:documentation>Stillgelegt gibt an, ob eine Aktenplaneinheit inaktiv ist (Wert "1") oder nicht (Wert "0"). Der Grund für eine Stilllegung kann eintreten, wenn z. B. auf einen bestimmten Zeitpunkt hin der alte Aktenplan "stillgelegt" und der neue Aktenplan in Kraft tritt - aktive Einheiten werden dann in den neuen Aktenplan übernommen, stillgelegte werden abgeschlossen und nicht übernommen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Aufbewahrungsdauer" type="xdomea:AufbewahrungsdauerType">
+                  <xs:annotation>
+                     <xs:documentation>Die Aufbewahrungsdauer legt fest, wie viele Jahre eine Akte oder ein Vorgang nach der Verfügung zur Akte (zdA-Verfügung) innerhalb der aktenführenden Stelle aufzubewahren ist oder ob die Aufbewahrung unbefristet erfolgen soll. Nach Ablauf der Aufbewahrungsfrist erfolgt die Aussonderung in Abhängigkeit von der Aussonderungsart.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Einheit"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xdomea:AktenplaneinheitAktenplanBewertungType">
+                  <xs:annotation>
+                     <xs:documentation>Eine Aktenplaneinheit, die hierarchisch einer anderen Aktenplaneinheit untergeordnet ist.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="VerweisAktenplaneinheit"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xs:string">
+                  <xs:annotation>
+                     <xs:documentation>Ein Verweis auf eine andere Aktenplaneinheit in einem aktuellen oder früheren Aktenplan.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="AnwendungsspezifischeErweiterung"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xdomea:AnwendungsspezifischeErweiterungType">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+                     </xs:appinfo>
+                     <xs:documentation>AnwendungsspezifischeErweiterung darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="AnwendungsspezifischeErweiterungXML"
+                           minOccurs="0"
+                           type="xdomea:AnwendungsspezifischeErweiterungXMLType">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+                     </xs:appinfo>
+                     <xs:documentation>AnwendungsspezifischeErweiterungXML darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist. Die AnwendungsspezifischeErweiterungXML bietet die Möglichkeit, mittels Einbindung externer XML-Schemata diese Metadaten zu spezifizieren. Es können beliebige XML-Schemata mit unterschiedlichen Namensräumen angegeben werden. Die XML-Schema-Validierung der weiterführenden Metadaten erfolgt innerhalb der xdomea-Nachricht selbst "lax".</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="AktenplaneinheitAktenplanBewertungskatalogType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>AktenplaneinheitAktenplanBewertungskatalog</title>
+         </xs:appinfo>
+         <xs:documentation>Eine Aktenplaneinheit gibt Auskunft über die hierarchische Strukturierung eines Aktenplans. Eine Aktenplaneinheit entspricht z. B. einer Hauptgruppe, Obergruppe, Gruppe, Untergruppe oder Betreffseinheit.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Die xdomeaUUID der Aktenplaneinheit.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aussonderungsart" type="xdomea:AussonderungsartType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Die Aussonderungsart vererbt sich auf alle unter einer Hierarchiestufe angelegten Schriftgutobjekte.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>Die Aussonderungsart gibt für eine Akte oder einen Vorgang das Ergebnis der archivischen Bewertung an.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ErfolgOderMisserfolgAussonderungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>ErfolgOderMisserfolgAussonderung</title>
+         </xs:appinfo>
+         <xs:documentation>Die Information zum erfolgreichen oder nicht erfolgreichen Import eines auszusondernden Schriftgutobjekts.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Die xdomeaUUID des Schriftgutobjekts, das ausgesondert werden sollte.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ErfolgOderMisserfolg"
+                     type="xdomea:ErfolgOderMisserfolgImportType">
+            <xs:annotation>
+               <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einem auszusondernden Schriftgutobjekt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Archivkennung" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Die ID, unter der das ausgesonderte Schriftgutobjekt im Archiv verwahrt wird. Für den Fall, dass "Erfolgreich" positiv belegt ist und von der aussondernden Behörde die Rückgabe der Archivkennungen gewünscht ist ("RueckmeldungArchivkennung" ist positiv belegt), können durch das archivierende System die Archivkennungen zu den einzelnen Schriftgutobjekt übergeben werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ErfolgOderMisserfolgBewertungskatalogType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>ErfolgOderMisserfolgBewertungskatalog</title>
+         </xs:appinfo>
+         <xs:documentation>Die Information zum erfolgreichen oder nicht erfolgreichen Import einer zu bewertenden Aktenplaneinheit.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Die xdomeaUUID der Aktenplaneinheit, die bewertet werden sollte.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ErfolgOderMisserfolg"
+                     type="xdomea:ErfolgOderMisserfolgImportType">
+            <xs:annotation>
+               <xs:documentation>Die Angaben des erfolgreichen oder nicht erfolgreichen Imports zu einem zu bewertenden Schriftgutobjekt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="NkAussonderungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>NkAussonderung</title>
+         </xs:appinfo>
+         <xs:documentation>Der Kopf der Nachricht enthält allgemeine Informationen für den Leser einer Nachricht, bei der es sich um die konkrete Aussonderung handelt.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xdomea:NachrichtType">
+            <xs:sequence>
+               <xs:element name="Importbestaetigung" fixed="1" type="xs:boolean">
+                  <xs:annotation>
+                     <xs:documentation>Die Angabe, dass eine Importbestätigung vom Leser der Nachricht angefordert wird.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="RueckmeldungArchivkennung" type="xs:boolean">
+                  <xs:annotation>
+                     <xs:documentation>Die Angabe, ob die Rückübermittlung der Archivkennungen vom Leser erwünscht wird. Sollen die Archivkennungen übermittelt werden, so ist der Wert "1" anzugeben. Sollen keine Archivkennungen übermittelt werden, so ist der Wert "0" anzugeben.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Empfangsbestaetigung" type="xs:boolean">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <implementationHint>Für die Umsetzung in den Systemen wird empfohlen, sofern kein anderer Wert hinterlegt wurde, als Standardwert den Wert "0" für "keine Empfangsbestätigung senden" anzugeben.</implementationHint>
+                     </xs:appinfo>
+                     <xs:documentation>Die Angabe, ob vom Leser der Nachricht eine Empfangsbestätigung angefordert wird. Eine angeforderte Empfangsbestätigung wird mit "1" gekennzeichnet. Wird keine Empfangsbestätigung angefordert, so wird dies mit "0" gekennzeichnet. Der Leser ist bei angeforderter Empfangsbestätigung aber nicht verpflichtet, eine Empfangsbestätigung zu versenden.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RueckgabeparameterAnbietungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>RueckgabeparameterAnbietung</title>
+         </xs:appinfo>
+         <xs:documentation>Die Rückmeldung des Archivs zu einem zur Bewertung übergegebenen Schriftgutobjekt zur Steuerung des weiteren Aussonderungsprozesses.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xdomeaUUID" type="bn-uq-g2g:UUID">
+            <xs:annotation>
+               <xs:documentation>Die xdomeaUUID des angebotenen Schriftgutobjektes, in der Regel die eines Vorgangs.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aussonderungsart" type="xdomea:AussonderungsartType">
+            <xs:annotation>
+               <xs:documentation>Die Beschreibung des Bewertungsergebnisses für ein angebotenes Schriftgutobjekt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="VorgangAussonderungType">
+      <xs:annotation>
+         <xs:appinfo>
+            <title>VorgangAussonderung</title>
+         </xs:appinfo>
+         <xs:documentation>Vorgang enthält die Metadatenfelder für den Austausch von Vorgängen einschließlich der allgemeinen Metadaten, Aussonderungsmetadaten, anwendungsspezifischer Metadaten, Historien- und Protokollinformationen sowie Informationen zum internen Geschäftsgang.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Identifikation" type="xdomea:IdentifikationObjektType">
+            <xs:annotation>
+               <xs:documentation>Über Identifikation werden zur systemübergreifend eindeutigen Identifizierung des Vorgangs spezifische Merkmale übergeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Kontextobjekt" type="xs:boolean">
+            <xs:annotation>
+               <xs:documentation>Das Element Kontextobjekt mit Wert "1" kennzeichnet, dass die Metadaten zu einem Objekt im Rahmen der Aussonderung nur zur Information und nicht zur Aussonderung selbst übermittelt werden. Mit dem Wert "0" wird gekennzeichnet, dass es sich um ein auszusonderndes Objekt handelt. Das Element Kontextobjekt ist führend, so dass bspw. in Fällen, in denen es widersprüchliche Angaben zwischen den Feldern zdA, zdA-Datum, Aufbewahrungsdauer, Aufbewahrungsende und dem Element Kontextobjekt gibt, die Informationen im Element Kontextobjekt über den tatsächlichen Status des betreffenden Schriftgutobjekts bzw. der betreffenden Schriftgutobjekte (Akten oder Vorgänge) entscheiden. Kontextobjekte sind immer bis zur höchsten Aktenebene unterhalb der Betreffseinheit mitzuliefern.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AllgemeineMetadaten"
+                     minOccurs="0"
+                     type="xdomea:AllgemeineMetadatenType">
+            <xs:annotation>
+               <xs:documentation>Über AllgemeineMetadaten werden allgemeine Metadaten zu einem Vorgang angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aussonderungsmetadaten"
+                     minOccurs="0"
+                     type="xdomea:AussonderungsmetadatenType">
+            <xs:annotation>
+               <xs:documentation>Über Aussonderungsmetadaten werden die für die Aussonderung relevanten Metadaten zu einem Vorgang angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Aktenbetreff" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Der Betreff der Akte, der der Vorgang untergeordnet ist. Dies ist relevant als Kontextinformation bei der Versendung von Vorgängen ohne die Akte.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Typ" minOccurs="0" type="xs:string">
+            <xs:annotation>
+               <xs:documentation>Die weitere Spezifikation des Vorgangs über einen Typ, u.a zur Recherche oder zur Festlegung zusätzlicher Metadaten. Mögliche Werte sind z. B. Genehmigungsverfahren, Widerspruchsverfahren, Kabinettsvorlage etc.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ZdA" minOccurs="0" type="xs:boolean">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>ZdA (zu den Akten) steht für das Schließen eines Schriftgutobjekts (Teilvorgang, Vorgang, Teilakte oder Akte). Die hierfür in den Verwaltungen genutzten Bezeichnungen können anders lauten (z. B. „Schließen der Akte oder des Vorgangs“).</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>ZdA kennzeichnet, ob der Vorgang zu den Akten verfügt wurde (Wert "1") oder nicht (Wert "0").</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ZdADatum" minOccurs="0" type="xs:date">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>ZdA (zu den Akten) steht für das Schließen eines Schriftgutobjekts (Teilvorgang, Vorgang, Teilakte oder Akte). Die hierfür in den Verwaltungen genutzten Bezeichnungen können anders lauten (z. B. „Schließen der Akte oder des Vorgangs“).</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>ZdADatum kennzeichnet, wann der Vorgang zu den Akten verfügt wurde.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Laufzeit" minOccurs="0" type="xdomea:ZeitraumType">
+            <xs:annotation>
+               <xs:documentation>Die Laufzeit des Vorgangs, d.h. Zeitpunkt des Beginns und des Endes.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="HistorienProtokollInformation"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:HistorienProtokollInformationType">
+            <xs:annotation>
+               <xs:documentation>Über HistorienProtokollInformation werden die zur Historisierung und Protokollierung relevanten Metadaten zu einem Vorgang angegeben, in der die Veränderungen an den beschreibenden Attributen und dem Zustand des Vorgangs erfasst werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="InternerGeschaeftsgang"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:GeschaeftsgangType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Der interne Geschäftsgang kann nach organisatorischer Absprache zwischen den austauschenden Systemen genutzt werden, ist aber nicht verpflichtender Bestandteil von xdomea.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>Die spezifische Ausprägung eines Geschäftsgangs, über die der interne Geschäftsgang am Vorgang nachgewiesen wird.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="DokumentOderDokumentMitSchriftstueck"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:DokumentOderDokumentMitSchriftstueckType">
+            <xs:annotation>
+               <xs:documentation>Ein Dokument, das hierarchisch in den Vorgang eingebunden bzw. dem Vorgang untergeordnet ist.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Verweis"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:VerweisType">
+            <xs:annotation>
+               <xs:documentation>Ein Verweis stellt eine inhaltliche Querbeziehung eines Schriftgutobjekts z. B. zu einem anderen Schriftgutobjekt oder zu einem Objekt auf einem Datenspeicher oder einem Datenträger dar.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Kontakt"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:KontaktType">
+            <xs:annotation>
+               <xs:documentation>Eine Kontaktinformation zu einem Geschäftsprozessbeteiligten.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Teilvorgang"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:VorgangAussonderungType">
+            <xs:annotation>
+               <xs:documentation>Über einen Teilvorgang kann ein Vorgang hierarchisch in einen anderen Vorgang eingebunden bzw. einem anderen Vorgang untergeordnet werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AnwendungsspezifischeErweiterung"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xdomea:AnwendungsspezifischeErweiterungType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>AnwendungsspezifischeErweiterung darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="AnwendungsspezifischeErweiterungXML"
+                     minOccurs="0"
+                     type="xdomea:AnwendungsspezifischeErweiterungXMLType">
+            <xs:annotation>
+               <xs:appinfo>
+                  <implementationHint>Die Speicherung der nicht-auflösbaren Daten beim Empfang erfolgt in einer XML-Datei zum Schriftgutobjekt im empfangenden System. Die Umsetzung muss systemspezifisch gelöst werden - hierbei muss durch das System sichergestellt sein, dass die empfangenen Informationen nicht verloren gehen.</implementationHint>
+               </xs:appinfo>
+               <xs:documentation>AnwendungsspezifischeErweiterungXML darf nur dazu genutzt werden, weitere (z. B. fachspezifische) Metadaten zu spezifizieren, deren Übermittlung mit den bereits in xdomea spezifizierten Metadaten nicht möglich ist. Die AnwendungsspezifischeErweiterungXML bietet die Möglichkeit, mittels Einbindung externer XML-Schemata diese Metadaten zu spezifizieren. Es können beliebige XML-Schemata mit unterschiedlichen Namensräumen angegeben werden. Die XML-Schema-Validierung der weiterführenden Metadaten erfolgt innerhalb der xdomea-Nachricht selbst "lax".</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

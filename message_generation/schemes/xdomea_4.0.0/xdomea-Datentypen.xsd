@@ -1,0 +1,2786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xdomea="urn:xoev-de:xdomea:schema:4.0.0"
+           xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+           targetNamespace="urn:xoev-de:xdomea:schema:4.0.0"
+           version="4.0.0"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>xdomea - XÖV-Standard für den IT-gestützten Austausch und die IT-gestützte Aussonderung behördlichen Schriftgutes</nameLang>
+            <nameKurz>xdomea</nameKurz>
+            <nameTechnisch>xdomea</nameTechnisch>
+            <kennung>urn:xoev-de:xdomea:kosit:standard:xdomea</kennung>
+            <beschreibung>xdomea ist der vom IT-Planungsrat verabschiedete verbindliche Standard für den Austausch von Akten, Vorgängen und Dokumenten im Kontext der Übermittlung, der Abgabe sowie der Aussonderung von Schriftgutobjekten (www.it-planungsrat.de, Beschluss 2017/39). Weiterhin kann xdomea für den Austausch zwischen Fachverfahren und DMS / VBS sowie für die Zwischenarchivierung genutzt werden. 
+
+Um diese Anwendungsszenarien bestmöglich zu unterstützen, ist xdomea gemäß des XÖV-Rahmenwerkes nach dem Baukastenprinzip aufgebaut und bietet einzelne Nachrichten(gruppen) für die jeweiligen Prozesse an. 
+
+Der Standard xdomea wird von der gleichnamigen Arbeitsgruppe des IT-Planungsrates weiterentwickelt und gepflegt. Der Betrieb des Standards erfolgt durch die Koordinierungsstelle für IT-Standards (KoSIT).
+</beschreibung>
+         </standard>
+         <versionStandard>
+            <version>4.0.0</version>
+            <beschreibung>Die Version 4.0.0 ist durch den IT-Planungsrat beschlossen. Details zum Beschluss sowie zu den Fristen der Umsetzung sind der Veröffentlichung im Bundesanzeiger unter www.bundesanzeiger.de zu entnehmen.</beschreibung>
+            <versionXOEVProfil>3.0.0</versionXOEVProfil>
+            <versionXOEVHandbuch>3.0.0</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+      </xs:appinfo>
+      <xs:documentation>Datentypen enthält spezifische Datentypen, welche von Datentypen aus anderen Namensräumen (z. B. UN/CEFACT, W3C) abgeleitet wurden.</xs:documentation>
+   </xs:annotation>
+   <xs:import schemaLocation="../xoev/code/1_0/xoev-code.xsd"
+              namespace="http://xoev.de/schemata/code/1_0"/>
+   <xs:complexType name="AllgemeineRueckmeldungCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>AllgemeineRueckmeldung</nameLang>
+               <nameKurz>AllgemeineRueckmeldung</nameKurz>
+               <nameTechnisch>allgemeinerueckmeldung</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung</kennung>
+               <beschreibung>Die Werteliste der allgemeinen Rückmeldungen.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Rückmeldungen für Fachverfahrensnachrichten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:allgemeinerueckmeldung"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="AnschriftstypCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Anschriftstyp</nameLang>
+               <nameKurz>Anschriftstyp</nameKurz>
+               <nameTechnisch>anschriftstyp</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:anschriftstyp</kennung>
+               <beschreibung>Die Werteliste der Anschriftentypen.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Anschriftentypen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:anschriftstyp"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="AussonderungsartCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Aussonderungsart</nameLang>
+               <nameKurz>Aussonderungsart</nameKurz>
+               <nameTechnisch>aussonderungsart</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:aussonderungsart</kennung>
+               <beschreibung>Die Werteliste der Aussonderungsarten.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.0</version>
+               <datumGueltigkeitAb>2016-01-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Aussonderungsarten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="A">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Das Schriftgutobjekt ist archivwürdig.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="B">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Das Schriftgutobjekt ist zum Bewerten markiert.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="V">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Das Schriftgutobjekt ist zum Vernichten markiert.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:aussonderungsart"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="BeteiligungsstatusCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Beteiligungsstatus</nameLang>
+               <nameKurz>Beteiligungsstatus</nameKurz>
+               <nameTechnisch>beteiligungsstatus</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:beteiligungsstatus</kennung>
+               <beschreibung>Die Liste der Statuswerte eines Beteiligungsschrittes im Geschäftsgang.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Beteiligungsstatus unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes. Für die Umsetzung in den Systemen wird empfohlen, sofern kein anderer Wert hinterlegt wurde, als Standardwert den Wert "001" für "Der Schritt liegt in der Zukunft." anzugeben.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:beteiligungsstatus"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="BewertungsvorschlagCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Bewertungsvorschlag</nameLang>
+               <nameKurz>Bewertungsvorschlag</nameKurz>
+               <nameTechnisch>bewertungsvorschlag</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:bewertungsvorschlag</kennung>
+               <beschreibung>Die Werteliste der Bewertungsvorschläge.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Bewertungsvorschlägen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:bewertungsvorschlag"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="DateiformatCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Dateiformat</nameLang>
+               <nameKurz>Dateiformat</nameKurz>
+               <nameTechnisch>dateiformat</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:dateiformat</kennung>
+               <beschreibung>Die Werteliste der gängigen Dateiformate. Für sonstige Formate existiert der Wert "Sonstiges". Die Angaben stammen größtenteils aus der internationalen Formatdatenbank PRONOM (http://www.nationalarchives.gov.uk/pronom/).</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Dateiformaten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:dateiformat"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="DatenaustauschartCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Datenaustauschart</nameLang>
+               <nameKurz>Datenaustauschart</nameKurz>
+               <nameTechnisch>datenaustauschart</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:datenaustauschart</kennung>
+               <beschreibung>Die Werteliste der Datenaustauscharten.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.1</version>
+               <datumGueltigkeitAb>2021-10-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Datenaustauscharten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="001">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Freigegebenes Verzeichnis</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="002">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Datenbanktabelle</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="003">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>WebDAV und http(s)</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:datenaustauschart"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.1"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="DatenschutzstufeCodeType">
+      <xs:annotation>
+         <xs:documentation>Der Datentyp zur Werteliste von Datenschutzstufen. Hinweise zur Erstellung und Nutzung von Codelisten sind im XÖV-Handbuch 3.0.0 (siehe Abschnitt 8.3. Szenarien der Codelistennutzung unter https://docs.xoev.de/xoev-handbuch/%C3%BCbersicht#_betrieb) zu finden.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI" type="xs:anyURI" use="required"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="DatentypCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Datentyp</nameLang>
+               <nameKurz>Datentyp</nameKurz>
+               <nameTechnisch>datentyp</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:datentyp</kennung>
+               <beschreibung>Die Werteliste der W3C-Datentypen (http://www.w3.org/TR/xmlschema-2, W3C Recommendation 28 October 2004) ergänzt um anySimpleType als Metadatentyp.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.1</version>
+               <datumGueltigkeitAb>2021-10-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Datentypen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="001">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>anyURI</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="002">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>base64Binary</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="003">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>boolean</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="004">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>byte</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="005">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>date</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="006">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>dateTime</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="007">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>decimal</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="008">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>double</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="009">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>duration</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="010">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>ENTITIES</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="011">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>ENTITY</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="012">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>float</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="013">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>gDay</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="014">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>gMonth</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="015">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>gMonthDay</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="016">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>gYear</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="017">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>gYearMonth</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="018">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>hexBinary</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="019">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>ID</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="020">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>IDREF</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="021">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>IDREFS</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="022">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>int</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="023">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>integer</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="024">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>language</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="025">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>long</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="026">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Name</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="027">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>NCNAME</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="028">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>negativeInteger</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="029">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>NMTOKEN</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="030">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>NMTOKENS</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="031">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>nonNegativeInteger</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="032">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>nonPositiveInteger</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="033">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>normalizedString</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="034">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>NOTATION</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="035">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>positiveInteger</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="036">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>QName</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="037">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>short</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="038">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>string</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="039">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>time</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="040">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>token</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="041">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>unsignedByte</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="042">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>unsignedInt</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="043">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>unsignedLong</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="044">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>unsignedShort</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="045">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>anySimpleType</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:datentyp"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.1"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="GeheimhaltungsgradCodeType">
+      <xs:annotation>
+         <xs:documentation>Der Datentyp zur Werteliste von Geheimhaltungsgraden unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI" type="xs:anyURI" use="required"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="KompressionsverfahrenCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Kompressionsverfahren</nameLang>
+               <nameKurz>Kompressionsverfahren</nameKurz>
+               <nameTechnisch>kompressionsverfahren</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:kompressionsverfahren</kennung>
+               <beschreibung>Die Werteliste der Kompressionsverfahren.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Kompressionsverfahren unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:kompressionsverfahren"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="KonfigurationsparameterCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Konfigurationsparameter</nameLang>
+               <nameKurz>Konfigurationsparameter</nameKurz>
+               <nameTechnisch>konfigurationsparameter</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:konfigurationsparameter</kennung>
+               <beschreibung>Die Werteliste der Konfigurationsparameter.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Konfigurationsparametern unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:konfigurationsparameter"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="KonfigurationsparameterGruppeCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>KonfigurationsparameterGruppe</nameLang>
+               <nameKurz>KonfigurationsparameterGruppe</nameKurz>
+               <nameTechnisch>konfigurationsparametergruppe</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:konfigurationsparametergruppe</kennung>
+               <beschreibung>Die Werteliste der Konfigurationsparametergruppen.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Konfigurationsparametergruppen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:konfigurationsparametergruppe"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="KryptographischeAlgorithmenCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>XTA-SP Bezeichner für kryptographische Verfahren</nameLang>
+               <nameKurz>XTA-SP Bezeichner für kryptographische Verfahren</nameKurz>
+               <nameTechnisch>xta.serviceprofile.kryptographische-algorithmen</nameTechnisch>
+               <kennung>urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-algorithmen</kennung>
+               <beschreibung>Diese Codeliste definiert die in den Service Profilen zu verwendenden eindeutigen Bezeichner kryptographischer Verfahren. Es handelt sich um Bezeichner nach "XML Security Algorithm Cross-Reference" der W3 Gruppe, verfügbar unter http://www.w3.org/TR/xmlsec-algorithms/. In diesem Dokument der W3 Gruppe ist jedem Verfahren eine eindeutige URI zugeordnet, diese URI wird in XTA als Bezeichner für kryptographische Verfahren verwendet und ist in der Spalte „Wert“ aufgeführt. Die Spalte „Schlüssel“ enthält den Namen des Verfahrens, wie er im Dokument der W3 verwendet wird.</beschreibung>
+               <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+               <herausgebernameKurz>KoSIT</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von kryptographischen Algorithmen.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-algorithmen"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="MediumCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Medium</nameLang>
+               <nameKurz>Medium</nameKurz>
+               <nameTechnisch>medium</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:medium</kennung>
+               <beschreibung>Die Werteliste der Medienarten.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.0</version>
+               <datumGueltigkeitAb>2016-01-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Medientypen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="001">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Elektronisch: Das Schriftgutobjekt liegt ausschließlich in elektronischer Form vor.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="002">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Hybrid: Das Schriftgutobjekt liegt teilweise in elektronischer Form und teilweise als Papier vor.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="003">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Papier: Das Schriftgutobjekt liegt ausschließlich als Papier vor.</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:medium"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="NachrichtentypCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Nachrichtentyp</nameLang>
+               <nameKurz>Nachrichtentyp</nameKurz>
+               <nameTechnisch>nachrichtentyp</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:nachrichtentyp</kennung>
+               <beschreibung>Die Werteliste der Nachrichtentypen, die den Namen der jeweiligen Nachricht angeben. Der Schlüssel wird entsprechend folgender Regel gebildet: Die ersten zwei Zeichen geben die Nachrichtengruppe an, zu der der Nachrichtentyp gehört, z. B. "01" für "Information". Die letzten zwei Zeichen ergeben die fortlaufende Nummerierung der Nachrichtentypen in einer Nachrichtengruppe.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>3.0</version>
+               <datumGueltigkeitAb>2024-11-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Nachrichtentypen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="0101">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Information.Information</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0102">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Information.EmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0201">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Geschaeftsgang.Geschaeftsgang</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0202">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Geschaeftsgang.EmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0203">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Geschaeftsgang.GeaendertenLaufwegMitteilen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0301">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aktenplan.Aktenplan</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0302">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aktenplan.EmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0401">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Abgabe.Abgabe</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0402">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Abgabe.ImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0403">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Abgabe.EmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0501">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.Anbieteverzeichnis</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0502">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.Bewertungsverzeichnis</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0503">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.Aussonderung</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0504">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.AnbietungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0505">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.BewertungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0506">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.AussonderungImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0507">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.AussonderungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0511">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.AktenplanZurBewertung</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0512">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.AktenplanZurBewertungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0513">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.Bewertungskatalog</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0514">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.BewertungskatalogImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0515">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Aussonderung.BewertungskatalogEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0601">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.DokumentAktualisieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0602">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOAnsehen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0603">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOBearbeiten</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0604">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOErstellen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0605">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOAblegen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0606">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGODrucken</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0607">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.ProtokolleintragErstellen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0608">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOSuchen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0609">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.MetadatenAnlegen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0610">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.MetadatenAktualisieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0611">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.MetadatenAnsehen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0612">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.MetadatenLoeschen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0613">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOLoeschenMarkieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0614">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOLoeschmarkierungAufheben</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0615">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOEndgueltigLoeschen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0616">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOLoeschstatusAbfragen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0617">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOUngueltigKennzeichnen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0618">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.DatensatzLoeschen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0619">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.BenachrichtigungAbrufen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0620">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.VertretungAktivierenOderDeaktivieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0621">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.VertretungsstatusAbfragen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0622">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.ZustaendigkeitAendern</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0623">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.GesamtprotokollAblegen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0624">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOZDAVerfuegen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0625">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SystemstatusAbfragen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0626">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.KonfigurationsparameterErstellen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0627">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.KonfigurationsparameterAktualisieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0628">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.KonfigurationsparameterAbrufen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0629">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.EmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0630">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.ImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0631">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.PrimaerdokumentExportieren</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0632">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>FVDaten.SGOZDAAufheben</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0701">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.Auslagerung</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0702">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.AuslagerungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0703">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.AuslagerungImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0711">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckleiheAnforderung</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0712">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckleiheUebergabe</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0713">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckleiheEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0721">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckuebertragungAnforderung</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0722">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckuebertragungUebergabe</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0723">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckuebertragungImportBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="0724">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Zwischenarchivierung.RueckuebertragungEmpfangBestaetigen</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:nachrichtentyp"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="3.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RolleCodeType">
+      <xs:annotation>
+         <xs:documentation>Der Datentyp zur Rolle aus einer Codeliste für Kontakte unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes. Hinweise zur Erstellung und Nutzung von Codelisten sind im XÖV-Handbuch 3.0.0 (siehe Abschnitt 8.3. Szenarien der Codelistennutzung unter https://docs.xoev.de/xoev-handbuch/%C3%BCbersicht#_betrieb) zu finden.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI" type="xs:anyURI" use="required"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SchriftgutobjekttypCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Schriftgutobjekttyp</nameLang>
+               <nameKurz>Schriftgutobjekttyp</nameKurz>
+               <nameTechnisch>schriftgutobjekttyp</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:schriftgutobjekttyp</kennung>
+               <beschreibung>Die Werteliste der Typen von Schriftgutobjekten.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.0</version>
+               <datumGueltigkeitAb>2016-01-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Schriftgutobjekttypen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="001">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Akte</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="002">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Dokument</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="003">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Vorgang</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:schriftgutobjekttyp"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SonstigeFehlermeldungCodeType">
+      <xs:annotation>
+         <xs:documentation>Der Datentyp zu sonstigen, nicht im Standard xdomea definierten Fehlermeldungen für die Importbestätigungen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes. Hinweise zur Erstellung und Nutzung von Codelisten sind im XÖV-Handbuch 3.0.0 (siehe Abschnitt 8.3. Szenarien der Codelistennutzung unter https://docs.xoev.de/xoev-handbuch/%C3%BCbersicht#_betrieb) zu finden.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI" type="xs:anyURI" use="required"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0601CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0601.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0601.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0601</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0601</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0601.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0601 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0601"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0602CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0602.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0602.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0602</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0602</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0602.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0602 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0602"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0603CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0603.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0603.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0603</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0603</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0603.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0603 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0603"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0604CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0604.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0604.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0604</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0604</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0604.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0604 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0604"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0605CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0605.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0605.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0605</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0605</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0605.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0605 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0605"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0606CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0606.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0606.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0606</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0606</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0606.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0606 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0606"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0607CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0607.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0607.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0607</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0607</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0607.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0607 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0607"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0608CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0608.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0608.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0608</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0608</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0608.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0608 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0608"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0609CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0609.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0609.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0609</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0609</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0609.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0609 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0609"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0610CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0610.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0610.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0610</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0610</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0610.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0610 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0610"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0611CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0611.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0611.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0611</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0611</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0611.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0611 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0611"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0612CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0612.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0612.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0612</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0612</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0612.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0612 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0612"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0613CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0613.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0613.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0613</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0613</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0613.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0613 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0613"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0614CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0614.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0614.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0614</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0614</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0614.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0614 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0614"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0615CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0615.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0615.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0615</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0615</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0615.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0615 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0615"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0616CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0616.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0616.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0616</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0616</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0616.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0616 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0616"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0617CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0617.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0617.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0617</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0617</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0617.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0617 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0617"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0618CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0618.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0618.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0618</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0618</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0618.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0618 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0618"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0619CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0619.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0619.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0619</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0619</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0619.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0619 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0619"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0620CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0620.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0620.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0620</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0620</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0620.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0620 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0620"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0621CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0621.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0621.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0621</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0621</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0621.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0621 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0621"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0622CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0622.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0622.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0622</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0622</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0622.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0622 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0622"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0623CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0623.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0623.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0623</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0623</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0623.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0623 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0623"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0624CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0624.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0624.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0624</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0624</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0624.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0624 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0624"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0625CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0625.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0625.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0625</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0625</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0625.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0625 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0625"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0626CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0626.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0626.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0626</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0626</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0626.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0626 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0626"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0627CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0627.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0627.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0627</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0627</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0627.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0627 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0627"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0628CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0628.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0628.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0628</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0628</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0628.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0628 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0628"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0631CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0631.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0631.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0631</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0631</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0631.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0631 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0631"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SpezifischeFehlermeldung0632CodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>0632.SpezifischeFehlermeldung</nameLang>
+               <nameKurz>0632.SpezifischeFehlermeldung</nameKurz>
+               <nameTechnisch>spezifischefehlermeldung0632</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0632</kennung>
+               <beschreibung>Die Werteliste der spezifischen Rückmeldungen zur Nachricht 0632.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von spezifischen Fehlermeldungen für die Nachricht 0632 unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:spezifischefehlermeldung0632"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="StaatCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Country Codes</nameLang>
+               <nameKurz>Country Codes</nameKurz>
+               <nameTechnisch>Country-Codes</nameTechnisch>
+               <kennung>urn:xoev-de:kosit:codeliste:country-codes</kennung>
+               <beschreibung>Die Codeliste basiert auf der Staats- und Gebietssystematik des Statistischen Bundesamtes (DESTATIS) und dem Standard "Country codes" der International Organization for Standardization (ISO). Die vorliegende Liste enthält alle "officially assigned codes" (Alpha-2 und Numerisch) der ISO-Liste. Kurz- und Langnamen der aufgeführten Einträge wurden, sofern vorhanden, der DESTATIS-Liste entnommen. Zu den nicht in der DESTATIS-Liste geführten Codeeinträgen wurden die zugehörigen Namen der Deutschen Fassung der Norm entnommen.</beschreibung>
+               <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+               <herausgebernameKurz>KoSIT</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>ISO Alpha-2 code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Staaten unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes. Genutzt wird hier die ISO-3166-1-Liste. Für den Schlüssel (code) wird die Spalte "ALPHA2" und für den beschreibenden Namen (name) die Spalte "Name des Landes" verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:kosit:codeliste:country-codes"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="StrukturelementTypCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Strukturelementtyp</nameLang>
+               <nameKurz>Strukturelementtyp</nameKurz>
+               <nameTechnisch>strukturelementtyp</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:strukturelementtyp</kennung>
+               <beschreibung>Die Werteliste der Typen von Strukturelementen.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <versionCodeliste>
+               <version>1.0</version>
+               <datumGueltigkeitAb>2024-11-01</datumGueltigkeitAb>
+               <versionCodelistenHandbuch>1.2</versionCodelistenHandbuch>
+            </versionCodeliste>
+            <codelistenspalten>
+               <code>
+                  <spaltennameLang>Code</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>true</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>true</empfohleneCodeSpalte>
+               </code>
+               <beschreibung>
+                  <spaltennameLang>Beschreibung</spaltennameLang>
+                  <datentyp>string</datentyp>
+                  <codeSpalte>false</codeSpalte>
+                  <verwendung>required</verwendung>
+                  <empfohleneCodeSpalte>false</empfohleneCodeSpalte>
+               </beschreibung>
+            </codelistenspalten>
+            <genutzteCodeSpalte>code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Typen von Strukturelementen.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" form="unqualified">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:token">
+                        <xs:enumeration value="001">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Akte</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="002">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Teilakte</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="003">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Vorgang</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="004">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Teilvorgang</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="005">
+                           <xs:annotation>
+                              <xs:appinfo>
+                                 <beschreibung>Sonstiges Strukturelement</beschreibung>
+                              </xs:appinfo>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:strukturelementtyp"/>
+            <xs:attribute name="listVersionID"
+                          type="xs:normalizedString"
+                          use="optional"
+                          fixed="1.0"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="TransportwegCodeType">
+      <xs:annotation>
+         <xs:appinfo>
+            <codeliste>
+               <nameLang>Transportweg</nameLang>
+               <nameKurz>Transportweg</nameKurz>
+               <nameTechnisch>transportweg</nameTechnisch>
+               <kennung>urn:xoev-de:xdomea:codeliste:transportweg</kennung>
+               <beschreibung>Die Werteliste der Transportwege.</beschreibung>
+               <herausgebernameLang>AG xdomea des IT-Planungsrates</herausgebernameLang>
+               <herausgebernameKurz>ag-xdomea</herausgebernameKurz>
+            </codeliste>
+            <genutzteCodeSpalte>Code</genutzteCodeSpalte>
+         </xs:appinfo>
+         <xs:documentation>Der Datentyp zur Werteliste von Transportwegen unter Angabe weiterer Informationen zur konkreten Angabe eines Wertes.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:restriction base="xoev-code:Code">
+            <xs:sequence>
+               <xs:element name="code" type="xs:token" form="unqualified"/>
+               <xs:element name="name"
+                           type="xs:normalizedString"
+                           form="unqualified"
+                           minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="listURI"
+                          type="xs:anyURI"
+                          use="optional"
+                          fixed="urn:xoev-de:xdomea:codeliste:transportweg"/>
+            <xs:attribute name="listVersionID" type="xs:normalizedString" use="required"/>
+         </xs:restriction>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:simpleType name="stringDateinameType">
+      <xs:annotation>
+         <xs:documentation>Der Datentyp zur Angabe eines Dateinamens nach dem Muster "xdomeaUUID", "xdomeaUUID.Dateiformat" oder "xdomeaUUID_Dokumentname.Dateiformat". Bei den ersten 32 Zeichen handelt es sich um eine generierte UUID gemäß XÖV-Basisnachricht-UUID nach RFC 4122.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:pattern value="[0-9|A-F|a-f]{8}-[0-9|A-F|a-f]{4}-[0-9|A-F|a-f]{4}-[0-9|A-F|a-f]{4}-[0-9|A-F|a-f]{12}[_]?.*[\.]?.*"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>
